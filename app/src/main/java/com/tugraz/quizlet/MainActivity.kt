@@ -1,4 +1,4 @@
-package com.example.quizlet
+package com.tugraz.quizlet
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

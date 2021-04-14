@@ -1,4 +1,4 @@
-package com.example.quizlet
+package com.tugraz.quizlet
 
 import org.junit.Test
 
