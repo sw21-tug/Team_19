@@ -26,28 +26,13 @@
 
 ### Attendance
 
-#### Date 24.03.2021
-
-| Role            | Name                    | Present     |
-| :---            |    :----:               |    :----:   |
-| Product Owner:  | Sebastian Überreiter    | &#9745;     |
-| Scrum Master:   | Lukas Neuhold           | &#9745;     |
-| Dev 1:          | Bodirnea, Oana-Emilia   | &#9745;     |
-| Dev 2:          | Gigerl, Ronald          | &#9745;     |
-| Dev 3:          | Gruber, Dominik Dieter  | &#9745;     |
-| Dev 4:          | Köstl, Markus           | &#9745;     |
-| Dev 5:          | Potthast, Gregor        | &#9745;     |
-| Dev 6:          | Rinesch, Fabian         | &#9745;     |
-
-#### Date 14.04.2021
-
-| Role            | Name                    | Present     |
-| :---            |    :----:               |    :----:   |
-| Product Owner:  | Sebastian Überreiter    | &#9745;     |
-| Scrum Master:   | Lukas Neuhold           | &#9745;     |
-| Dev 1:          | Bodirnea, Oana-Emilia   | &#9745;     |
-| Dev 2:          | Gigerl, Ronald          | &#9745;     |
-| Dev 3:          | Gruber, Dominik Dieter  | &#9745;     |
-| Dev 4:          | Köstl, Markus           | &#9745;     |
-| Dev 5:          | Potthast, Gregor        | &#9745;     |
-| Dev 6:          | Rinesch, Fabian         | &#9745;     |
+| Role            | 24.03.2021    | 24.03.2021    |
+| :---            |    :----:     |    :----:     |
+| Product Owner:  | &#9745;       | &#9745;       |
+| Scrum Master:   | &#9745;       | &#9745;       |
+| Dev 1:          | &#9745;       | &#9745;       |
+| Dev 2:          | &#9745;       | &#9745;       |
+| Dev 3:          | &#9745;       | &#9745;       |
+| Dev 4:          | &#9745;       | &#9745;       |
+| Dev 5:          | &#9745;       | &#9745;       |
+| Dev 6:          | &#9745;       | &#9745;       |
