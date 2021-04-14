@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Quizlet</string>
+    <string name="app_title">QuApp</string>
+    <string name="app_login_email_example">fake@mail.com</string>
+    <string name="app_login_email_description">Email:</string>
+    <string name="app_login_password_example">*******</string>
+    <string name="app_login_pw_description">Password:</string>
+    <string name="app_login_button">Login</string>
 </resources>
