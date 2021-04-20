@@ -1,5 +1,6 @@
 package com.tugraz.quizlet.backend
 
+import com.google.common.collect.ImmutableList
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -42,5 +43,15 @@ class RequestHandlerUnitTest {
         assertEquals(expectedUser, actualUser)
     }
 
+    @Test
+    fun testAddQuestion() {
+        val category: String = "animals"
+        val question: String = "what is the fastest mammal?"
+        val answer: String = "cheetah"
+        val wrongAnswers: ImmutableList<String> = ImmutableList.of("sloth","antelope","rabbit")
+        val expectedQuestion = Question(category, question, answer, wrongAnswers)
+        requestHandler.addQuestion(category, question, answer, wrongAnswers)
+        verify(mockDBInterface, times(1)).addQuestion(expectedQuestion)
+    }
 
 }

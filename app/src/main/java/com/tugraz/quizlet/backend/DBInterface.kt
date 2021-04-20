@@ -20,4 +20,7 @@ interface DBInterface {
 
     fun addUser(user: User)
     fun getUser(email: String, password: String) : User
+
+    fun addQuestion(question: Question)
+
 }
