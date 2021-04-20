@@ -1,11 +1,10 @@
 package com.tugraz.quizlet.backend
 
+import com.google.common.collect.ImmutableList
+
 interface DBInterface {
 
-    /*public fun addQuestions(question: Question) {
-
-    }
-
+    /*
     public fun getAllQuestions() : List<Question> {
         return ArrayList<Question>()
     }
@@ -22,5 +21,6 @@ interface DBInterface {
     fun getUser(email: String, password: String) : User
 
     fun addQuestion(question: Question)
-
+    fun getAllQuestionsForCategory(category: String) : ImmutableList<Question>
+    fun getAllQuestions() : ImmutableList<Question>
 }

@@ -3,6 +3,7 @@ package com.tugraz.quizlet.backend
 import com.google.common.collect.ImmutableList
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 import org.junit.Before
@@ -53,5 +54,52 @@ class RequestHandlerUnitTest {
         requestHandler.addQuestion(category, question, answer, wrongAnswers)
         verify(mockDBInterface, times(1)).addQuestion(expectedQuestion)
     }
+
+    @Test
+    fun testGetAllQuestions() {
+        val expectedQuestions:ImmutableList<Question> = generateRandomQuestion(5)
+        `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
+        val actualQuestions = requestHandler.getAllQuestion()
+        verify(mockDBInterface, times(1)).getAllQuestions()
+        assertEquals(expectedQuestions, actualQuestions)
+    }
+
+    @Test
+    fun testGetAllQuestionsOfCategoryWithFoundCategory() {
+        val category = "hi"
+        val expectedQuestions:ImmutableList<Question> = generateRandomQuestionForCategory(4, category)
+        `when`(mockDBInterface.getAllQuestionsForCategory(category)).thenReturn(expectedQuestions)
+        val actualQuestions = requestHandler.getAllQuestionForCategory(category)
+        verify(mockDBInterface, times(1)).getAllQuestionsForCategory(category)
+        assertEquals(expectedQuestions, actualQuestions)
+    }
+
+    @Test
+    fun testGetAllQuestionsOfCategoryWithNoFoundCategory() {
+        val category = "YOU SHALL NOT PASS"
+        `when`(mockDBInterface.getAllQuestionsForCategory(category)).thenReturn(ImmutableList.of())
+        val actualQuestions = requestHandler.getAllQuestionForCategory(category)
+        verify(mockDBInterface, times(1)).getAllQuestionsForCategory(category)
+        assertTrue(actualQuestions.isEmpty())
+    }
+
+    private fun generateRandomQuestion(numberOfRandomQuestions: Int): ImmutableList<Question> {
+        val immutableListBuilder: ImmutableList.Builder<Question> = ImmutableList.Builder()
+        for (i in 1..numberOfRandomQuestions) {
+            val question = generateRandomQuestionForCategory(1, "a$i")[0]
+            immutableListBuilder.add(question)
+        }
+        return immutableListBuilder.build()
+    }
+
+    private fun generateRandomQuestionForCategory(numberOfRandomQuestions: Int, category: String): ImmutableList<Question> {
+        val immutableListBuilder: ImmutableList.Builder<Question> = ImmutableList.Builder()
+        for (i in 1..numberOfRandomQuestions) {
+            val question = Question(category, "b$i", "c$i", ImmutableList.of("d$i", "e$i", "f$i"))
+            immutableListBuilder.add(question)
+        }
+        return immutableListBuilder.build()
+    }
+
 
 }

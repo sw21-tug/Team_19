@@ -1,11 +1,10 @@
 package com.tugraz.quizlet.backend
 
-import androidx.annotation.NonNull
 import com.google.common.collect.ImmutableList
 
 class RequestHandler(private val dBInterface: DBInterface) {
 
-    @NonNull
+    // TODO: add boolean for feedback?
     fun addUser(email: String, password: String) {
         val newUser = User(email, password)
         dBInterface.addUser(newUser)
@@ -15,7 +14,17 @@ class RequestHandler(private val dBInterface: DBInterface) {
         return dBInterface.getUser(email, password)
     }
 
+    // TODO: add boolean for feedback?
     fun addQuestion(category: String, question: String, rightAnswer: String, wrongAnswers: ImmutableList<String>) {
+        val newQuestion = Question(category, question, rightAnswer, wrongAnswers)
+        dBInterface.addQuestion(newQuestion)
+    }
 
+    fun getAllQuestion(): ImmutableList<Question> {
+        return ImmutableList.of()
+    }
+
+    fun getAllQuestionForCategory(category: String): ImmutableList<Question> {
+        return ImmutableList.of()
     }
 }
