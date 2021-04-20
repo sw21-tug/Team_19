@@ -1,13 +1,11 @@
 package com.tugraz.quizlet.backend
 
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 import org.junit.Before
-import org.mockito.ArgumentMatchers
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.times
+import org.mockito.Mockito.*
 
 class RequestHandlerUnitTest {
 
@@ -30,7 +28,18 @@ class RequestHandlerUnitTest {
         val password: String = "123456"
         val user: User = User(email, password)
         requestHandler.addUser(email, password)
-        Mockito.verify(mockDBInterface, times(1)).addUser(ArgumentMatchers.eq(user))
+        verify(mockDBInterface, times(1)).addUser(user)
+    }
+
+    @Test
+    fun testGetUser() {
+        val email: String = "test@mock.junit"
+        val password: String = "123456"
+        val expectedUser: User = User(email, password)
+        `when`(mockDBInterface.getUser(email, password)).thenReturn(expectedUser)
+        val actualUser = requestHandler.getUser(email, password)
+        verify(mockDBInterface, times(1)).getUser(email, password)
+        assertEquals(expectedUser, actualUser)
     }
 
 
