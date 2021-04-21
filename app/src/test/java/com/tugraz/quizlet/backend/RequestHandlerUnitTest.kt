@@ -38,9 +38,9 @@ class RequestHandlerUnitTest {
         val email: String = "test@mock.junit"
         val password: String = "123456"
         val expectedUser: User = User(email, password)
-        `when`(mockDBInterface.getUser(email, password)).thenReturn(expectedUser)
-        val actualUser = requestHandler.getUser(email, password)
-        verify(mockDBInterface, times(1)).getUser(email, password)
+        `when`(mockDBInterface.getUser(email)).thenReturn(expectedUser)
+        val actualUser = requestHandler.getUser(email)
+        verify(mockDBInterface, times(1)).getUser(email)
         assertEquals(expectedUser, actualUser)
     }
 
@@ -62,6 +62,7 @@ class RequestHandlerUnitTest {
         val actualQuestions = requestHandler.getAllQuestion()
         verify(mockDBInterface, times(1)).getAllQuestions()
         assertEquals(expectedQuestions, actualQuestions)
+        WebServer(requestHandler).startServer()
     }
 
     @Test
@@ -76,7 +77,7 @@ class RequestHandlerUnitTest {
 
     @Test
     fun testGetAllQuestionsOfCategoryWithNoFoundCategory() {
-        val category = "YOU SHALL NOT PASS"
+        val category = "category1"
         `when`(mockDBInterface.getAllQuestionsForCategory(category)).thenReturn(ImmutableList.of())
         val actualQuestions = requestHandler.getAllQuestionForCategory(category)
         verify(mockDBInterface, times(1)).getAllQuestionsForCategory(category)
@@ -100,6 +101,4 @@ class RequestHandlerUnitTest {
         }
         return immutableListBuilder.build()
     }
-
-
 }

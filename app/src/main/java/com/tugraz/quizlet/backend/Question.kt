@@ -25,4 +25,10 @@ class Question(val category: String, val question: String, val rightAnswer: Stri
         result = 31 * result + wrongAnswers.hashCode()
         return result
     }
+
+    override fun toString(): String {
+        return "Question(category='$category', question='$question', rightAnswer='$rightAnswer', wrongAnswers=$wrongAnswers)"
+    }
+
+
 }
