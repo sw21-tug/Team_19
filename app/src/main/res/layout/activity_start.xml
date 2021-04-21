@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/orange">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pacifico"
+        android:text="@string/app_title"
+        android:textColor="#000000"
+        android:textSize="56sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="354dp"
+        android:layout_height="43dp"
+        android:text="@string/app_start_play_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.321" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="354dp"
+        android:layout_height="43dp"
+        android:text="@string/app_start_exit_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.059" />
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/yellow"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/play"
+            style="?borderlessButtonStyle"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/play_button"
+            tools:layout_editor_absoluteX="65dp"
+            tools:layout_editor_absoluteY="607dp"
+            android:contentDescription="@string/app_start_layout_start_button" />
+
+        <ImageView
+            android:id="@+id/plus"
+            style="?borderlessButtonStyle"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/plus_icon"
+            tools:layout_editor_absoluteX="119dp"
+            tools:layout_editor_absoluteY="619dp"
+            android:contentDescription="@string/app_start_layout_plus_button" />
+
+        <ImageView
+            android:id="@+id/profil"
+            style="?borderlessButtonStyle"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/profil"
+            tools:layout_editor_absoluteX="154dp"
+            tools:layout_editor_absoluteY="550dp"
+            android:contentDescription="@string/app_start_layout_profile_button" />
+
+        <ImageView
+            android:id="@+id/highscore"
+            style="?borderlessButtonStyle"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/highscore"
+            tools:layout_editor_absoluteX="112dp"
+            tools:layout_editor_absoluteY="559dp"
+            android:contentDescription="@string/app_start_layout_highscore_button" />
+
+        <ImageView
+            android:id="@+id/settings"
+            style="?borderlessButtonStyle"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/settings_button"
+            tools:layout_editor_absoluteX="160dp"
+            tools:layout_editor_absoluteY="578dp"
+            android:contentDescription="@string/app_start_layout_settings_button" />
+
+
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
