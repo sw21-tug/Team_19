@@ -21,10 +21,10 @@ class RequestHandler(private val dBInterface: DBInterface) {
     }
 
     fun getAllQuestion(): ImmutableList<Question> {
-        return ImmutableList.of()
+        return dBInterface.getAllQuestions();
     }
 
     fun getAllQuestionForCategory(category: String): ImmutableList<Question> {
-        return ImmutableList.of()
+        return dBInterface.getAllQuestionsForCategory(category);
     }
 }
