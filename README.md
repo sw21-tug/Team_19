@@ -2,11 +2,11 @@
 
 Product Owner: Sebastian Überreiter\
 Scrum Master: Lukas Neuhold\
-Senior Developer: Dominik Dieter Gruber
-Senior Developer: Fabian Rinesch
-Developer: Gregor Potthast
-Developer: Oana-Emilia Bodirnea
-Developer: Ronald Giegerl
+Senior Developer: Dominik Dieter Gruber\
+Senior Developer: Fabian Rinesch\
+Developer: Gregor Potthast\
+Developer: Oana-Emilia Bodirnea\
+Developer: Ronald Giegerl\
 Developer: Markus Köstl
 
 QUIZLET
