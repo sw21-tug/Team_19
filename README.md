@@ -1,7 +1,7 @@
 # Team_19
 
-Product Owner: Sebastian Überreiter
-Scrum Master: Lukas Neuhold
+Product Owner: Sebastian Überreiter\
+Scrum Master: Lukas Neuhold\
 Senior Developer: Dominik Dieter Gruber
 Senior Developer: Fabian Rinesch
 Developer: Gregor Potthast
