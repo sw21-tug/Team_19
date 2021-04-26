@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // test functionality
         Realm.init(this)
         quizletApp = App(
             AppConfiguration.Builder(BuildConfig.MONGODB_REALM_APP_ID)

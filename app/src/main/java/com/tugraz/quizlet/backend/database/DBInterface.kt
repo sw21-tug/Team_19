@@ -7,13 +7,13 @@ import com.tugraz.quizlet.backend.database.model.User
 interface DBInterface {
     fun addQuestion(question: Question)
 
-    fun getAllQuestions() : List<Question>
+    fun getAllQuestions() : MutableList<Question>?
 
     fun getAllQuestionsForCategory(category: Question_category) : List<Question>
 
-    fun addUser(user: User)
+    fun addUser(user: User): Boolean
 
-    fun getUser(email: String, password: String) : User
+    fun loginUser(email: String, password: String) : User
     fun onDestroy()
     fun onStop()
 }
