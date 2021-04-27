@@ -1,9 +1,8 @@
-package com.example.quizlet
+package com.tugraz.quizlet.frontend
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quizlet.R
 
 class StartActivity : AppCompatActivity()
 {

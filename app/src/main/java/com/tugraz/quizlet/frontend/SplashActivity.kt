@@ -1,9 +1,10 @@
-package com.example.quizlet
+package com.tugraz.quizlet.frontend
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quizlet.R
 
 
 class SplashActivity : AppCompatActivity(){

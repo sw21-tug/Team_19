@@ -8,12 +8,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Quizlet">
-        <activity android:name=".MainActivity"
+        <activity android:name="com.tugraz.quizlet.frontend.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
         </activity>
-        <activity android:name=".SplashActivity"
+        <activity android:name="com.tugraz.quizlet.frontend.SplashActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".StartActivity"
+        <activity android:name="com.tugraz.quizlet.frontend.StartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
