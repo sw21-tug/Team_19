@@ -2,7 +2,7 @@ package com.tugraz.quizlet.frontend
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quizlet.R
+import com.tugraz.quizlet.R
 
 class StartActivity : AppCompatActivity()
 {
