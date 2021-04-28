@@ -13,4 +13,7 @@
     <string name="app_start_layout_profile_button">Layout_Profile</string>
     <string name="app_start_layout_highscore_button">Layout_Highscore</string>
     <string name="app_start_layout_settings_button">Layout_Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_play_title">Play</string>
 </resources>
