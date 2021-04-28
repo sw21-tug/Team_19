@@ -1,13 +1,16 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'realm-android'
 }
+
 
 android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.example.quizlet"
+        applicationId "com.tugraz.quizlet"
         minSdkVersion 26
         targetSdkVersion 29
         versionCode 1
@@ -17,7 +20,12 @@ android {
     }
 
     buildTypes {
+        def appId = "quizlet-sxmwi"
+        debug {
+            buildConfigField "String", "MONGODB_REALM_APP_ID", "\"${appId}\""
+        }
         release {
+            buildConfigField "String", "MONGODB_REALM_APP_ID", "\"${appId}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -28,6 +36,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    realm {
+        syncEnabled = true
     }
 }
 
