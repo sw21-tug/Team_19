@@ -13,22 +13,6 @@ import com.github.kittinunf.fuel.httpGet
 class ApiHandler {
 
 
-
-    public fun doGetRequest(type: String, Body: String, URL: String) {
-
-        Fuel.get(URL)
-            .body(Body)
-            .response { request, response, result ->
-                println(request)
-                println(response)
-                val (bytes, error) = result
-                if (bytes != null) {
-                    println("[response bytes] ${String(bytes)}")
-                }
-            }
-
-    }
-
     public fun doGetRequest(type: String, URL: String) {
 
 
