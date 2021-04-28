@@ -1,6 +1,12 @@
 package com.tugraz.quizlet.backend
 
 import com.google.common.collect.ImmutableList
+import com.tugraz.quizlet.backend.database.DBInterface
+import com.tugraz.quizlet.backend.database.model.Question
+import com.tugraz.quizlet.backend.database.model.Question_category
+import com.tugraz.quizlet.backend.database.model.User
+import io.realm.RealmList
+import org.bson.types.ObjectId
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -38,20 +44,21 @@ class RequestHandlerUnitTest {
         val email: String = "test@mock.junit"
         val password: String = "123456"
         val expectedUser: User = User(email, password)
-        `when`(mockDBInterface.getUser(email)).thenReturn(expectedUser)
-        val actualUser = requestHandler.getUser(email)
-        verify(mockDBInterface, times(1)).getUser(email)
+        `when`(mockDBInterface.loginUser(email, password)).thenReturn(expectedUser)
+        val actualUser = requestHandler.loginUser(email, password)
+        verify(mockDBInterface, times(1)).loginUser(email, password)
         assertEquals(expectedUser, actualUser)
     }
 
     @Test
     fun testAddQuestion() {
-        val category: String = "animals"
+        val category = Question_category("animals", "desc")
         val question: String = "what is the fastest mammal?"
         val answer: String = "cheetah"
-        val wrongAnswers: ImmutableList<String> = ImmutableList.of("sloth","antelope","rabbit")
-        val expectedQuestion = Question(category, question, answer, wrongAnswers)
-        requestHandler.addQuestion(category, question, answer, wrongAnswers)
+        val wrongAnswersRealmList: RealmList<String> = RealmList("sloth","antelope","rabbit")
+        val wrongAnswersImmutableList: ImmutableList<String> = ImmutableList.of("sloth","antelope","rabbit")
+        val expectedQuestion = Question(ObjectId(), category, question, answer, wrongAnswersRealmList)
+        requestHandler.addQuestion(category, question, answer, wrongAnswersImmutableList)
         verify(mockDBInterface, times(1)).addQuestion(expectedQuestion)
     }
 
@@ -62,7 +69,6 @@ class RequestHandlerUnitTest {
         val actualQuestions = requestHandler.getAllQuestion()
         verify(mockDBInterface, times(1)).getAllQuestions()
         assertEquals(expectedQuestions, actualQuestions)
-        WebServer(requestHandler).startServer()
     }
 
     @Test
@@ -94,9 +100,10 @@ class RequestHandlerUnitTest {
     }
 
     private fun generateRandomQuestionForCategory(numberOfRandomQuestions: Int, category: String): ImmutableList<Question> {
+        val questionCategory = Question_category(category, "")
         val immutableListBuilder: ImmutableList.Builder<Question> = ImmutableList.Builder()
         for (i in 1..numberOfRandomQuestions) {
-            val question = Question(category, "b$i", "c$i", ImmutableList.of("d$i", "e$i", "f$i"))
+            val question = Question(ObjectId(), questionCategory, "b$i", "c$i", RealmList("d$i", "e$i", "f$i"))
             immutableListBuilder.add(question)
         }
         return immutableListBuilder.build()
