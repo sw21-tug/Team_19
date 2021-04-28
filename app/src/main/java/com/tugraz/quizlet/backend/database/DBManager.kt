@@ -4,7 +4,7 @@ import android.util.Log
 import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.Question_category
 import com.tugraz.quizlet.backend.database.model.User
-import com.tugraz.quizlet.quizletApp
+import com.tugraz.quizlet.frontend.quizletApp
 import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmResults
