@@ -1,14 +1,15 @@
 package com.tugraz.quizlet.backend
 
+import androidx.annotation.VisibleForTesting
 import com.google.common.collect.ImmutableList
 import com.tugraz.quizlet.backend.database.DBInterface
 import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.Question_category
-import com.tugraz.quizlet.backend.database.model.User
 import io.realm.RealmList
 import io.realm.mongodb.AppException
 import org.bson.types.ObjectId
 import java.util.logging.Logger
+import kotlin.jvm.Throws
 
 class RequestHandler(private val dBInterface: DBInterface) {
     companion object {
@@ -18,12 +19,11 @@ class RequestHandler(private val dBInterface: DBInterface) {
     // TODO: add boolean for feedback?
     fun addUser(email: String, password: String) {
         LOG.fine("Processing adding user with email=$email")
-        val newUser = User(email, password)
-        dBInterface.addUser(newUser)
+        dBInterface.addUser(email, password)
     }
 
     @Throws(AppException::class)
-    fun loginUser(email: String, password: String): User {
+    fun loginUser(email: String, password: String): Boolean {
         LOG.fine("Processing getting user with email=$email")
         return dBInterface.loginUser(email, password)
     }
@@ -35,6 +35,7 @@ class RequestHandler(private val dBInterface: DBInterface) {
             category,
             question,
             rightAnswer,
+            null,
             getRealmListFromImmutableList(wrongAnswers)
         )
         LOG.fine("Processing getting user with email=$newQuestion")
@@ -57,5 +58,31 @@ class RequestHandler(private val dBInterface: DBInterface) {
     fun getAllQuestionForCategory(categoryName: String): ImmutableList<Question> {
         LOG.fine("Processing getting all questions for category=$categoryName")
         return dBInterface.getAllQuestionsForCategory(categoryName);
+    }
+
+    fun startNewGameAndReturnTheFirstQuestion(): Question? {
+        return null
+    }
+
+    @VisibleForTesting
+    fun setRemainingQuestionForCurrentGame(expectedQuestions: ImmutableList<Question>) {
+
+    }
+
+    @VisibleForTesting
+    fun getHighscoreCurrentGame(): Int {
+        return 0
+    }
+
+    @VisibleForTesting
+    fun setHighscoreCurrentGame(score: Int) {
+    }
+
+    fun getNextQuestionAndUpdateRemainingAndUpdateHighscore(): Question? {
+        return null
+    }
+
+    fun endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase(): Int {
+        return 0
     }
 }
