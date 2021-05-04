@@ -38,6 +38,9 @@ After succesfully loging in or creating an account the user will be sent to a ba
 Once the user has choosen a category he wants to play (or choosen the random category), the screen will change and the first question will be displayed to the user. Questions are randomly choosen and the sequence will always change so the user can’t memorize a pattern or it will be too easy. After successfully answering a question, the user will be rewarded with a point which will add to his highscore. The highscore will be displayed all the time while the user plays so he knows how far he has already gotten. If a question is answered wrong, the app will display a popup message to the user consisting of a small text congratulating the user for getting so far and the number of points he has achieved. After closing the message, the user will be sent back to the home screen and the high score will be saved in his account. High scores are individually saved for each user. 
 
 Currently Implementing:\
+QL-015 Play logic behind intro screen\
+QL-014 Login Logic behind Intro Screen\
+QL-010 Gameplay Frontend\
 
 
 Already implemented:\
