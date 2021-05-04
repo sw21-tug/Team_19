@@ -27,7 +27,7 @@ class LoginTest {
 
     @Rule
     @JvmField
-    var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
+    var mActivityTestRule = ActivityTestRule(LoginActivity::class.java)
 
     @Test
     fun loginTest() {

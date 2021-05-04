@@ -1,35 +1,37 @@
 package com.tugraz.quizlet.backend.database
 
-import android.util.Log
+import com.google.common.collect.ImmutableList
 import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.Question_category
 import com.tugraz.quizlet.backend.database.model.User
-import com.tugraz.quizlet.frontend.quizletApp
 import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmResults
+import io.realm.mongodb.App
 import io.realm.mongodb.AppException
 import io.realm.mongodb.Credentials
 import io.realm.mongodb.sync.SyncConfiguration
 import org.bson.types.ObjectId
-import java.util.*
+import java.util.logging.Logger
 
-public object DBManager : DBInterface {
+class DBManager(private val quizletApp: App) : DBInterface {
+    companion object {
+        val LOG: Logger = Logger.getLogger(DBManager::class.java.name)
+    }
     private var user: io.realm.mongodb.User? = null
     private var userRealm: Realm? = null
 
     init {
         // testFunctionality - how to use the db manager
         loginUser("testuser", "testpassword")
-        var list: RealmList<String> = RealmList()
+        val rightAnswer = "1923"
+        val list: RealmList<String> = RealmList()
         list.add("1921")
-        list.add("1923")
         list.add("1950")
         list.add("1930")
-        var category = Question_category( "für die gerti" ,"Gertis Geburtstag")
-        var question = Question(
-            ObjectId(),
-            list, category,  "Gertis Geburtstag3" ,"Wann ist Gerti geboren?",1, )
+        val category = Question_category( "für die gerti" ,"Gertis Geburtstag")
+        val question = Question(
+            ObjectId(), category,"Wann ist Gerti geboren?", rightAnswer, list)
         addQuestion(question)
 
         Thread.sleep(100)
@@ -45,11 +47,11 @@ public object DBManager : DBInterface {
         userRealm = Realm.getInstance(config)
         userRealm?.executeTransactionAsync() { transactionRealm ->
             transactionRealm.insert(question)
-            Log.e("INSERT", "did something")
+            LOG.severe( "did something")
         }
     }
 
-    override fun getAllQuestions() : MutableList<Question>? {
+    override fun getAllQuestions() : ImmutableList<Question> {
         user = quizletApp.currentUser()
         val config = SyncConfiguration.Builder(user!!, ObjectId(user!!.id) )
             .allowWritesOnUiThread(true)
@@ -62,21 +64,21 @@ public object DBManager : DBInterface {
             results = transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>;
         }
 
-        return results?.subList(0, results!!.size)
+        return ImmutableList.copyOf(results?.subList(0, results!!.size))
     }
 
 
-    override fun getAllQuestionsForCategory(category: Question_category) : List<Question> {
-        return ArrayList<Question>()
+    override fun getAllQuestionsForCategory(categoryName: String) : ImmutableList<Question> {
+        return ImmutableList.of()
     }
 
     override fun addUser(user: User): Boolean {
         return try {
             quizletApp.emailPassword.registerUserAsync(user.email, user.password) {
                 if (!it.isSuccess) {
-                    Log.e("TAG", "Error: ${it.error}")
+                    LOG.fine("Error: ${it.error}")
                 } else {
-                    Log.i("TAG", "Successfully registered user.")
+                    LOG.fine( "Successfully registered user.")
                 }
             }
             true;
@@ -91,14 +93,14 @@ public object DBManager : DBInterface {
         return try {
             quizletApp.loginAsync(creds) {
                 if (!it.isSuccess) {
-                    Log.e("TAG", "Error: ${it.error}")
+                    LOG.fine( "Error: ${it.error}")
                 } else {
-                    Log.i("TAG", "Successfully logged in user.")
+                    LOG.fine( "Successfully logged in user.")
                 }
             }
-            User(email, password, null)
+            User(email, password)
         } catch (app: AppException) {
-            User(null, null, null);
+            User("Invalid", "Invalid");
         }
     }
 

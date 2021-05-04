@@ -1,11 +1,21 @@
 package com.tugraz.quizlet.backend.database.model
 
-import java.util.*
+class User(var email: String, var password: String){
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-public class User public constructor(
-    public val email: String?,
-    public var password: String?,
-    public val privateQuestion: List<Question>?
-){
-    public constructor(name: String, password: String) : this(name, password, ArrayList<Question>())
+        other as User
+
+        if (email != other.email) return false
+        if (password != other.password) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = email.hashCode()
+        result = 31 * result + password.hashCode()
+        return result
+    }
 }
