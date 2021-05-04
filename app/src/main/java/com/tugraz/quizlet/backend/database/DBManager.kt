@@ -18,6 +18,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
     companion object {
         val LOG: Logger = Logger.getLogger(DBManager::class.java.name)
     }
+
     private var user: io.realm.mongodb.User? = null
     private var userRealm: Realm? = null
 
@@ -29,9 +30,10 @@ class DBManager(private val quizletApp: App) : DBInterface {
         list.add("1921")
         list.add("1950")
         list.add("1930")
-        val category = Question_category( "für die gerti" ,"Gertis Geburtstag")
+        val category = Question_category("für die gerti", "Gertis Geburtstag")
         val question = Question(
-            ObjectId(), category,"Wann ist Gerti geboren?", rightAnswer, list)
+            ObjectId(), category, "Wann ist Gerti geboren?", rightAnswer, list
+        )
         addQuestion(question)
 
         Thread.sleep(100)
@@ -47,13 +49,13 @@ class DBManager(private val quizletApp: App) : DBInterface {
         userRealm = Realm.getInstance(config)
         userRealm?.executeTransactionAsync() { transactionRealm ->
             transactionRealm.insert(question)
-            LOG.severe( "did something")
+            LOG.severe("did something")
         }
     }
 
-    override fun getAllQuestions() : ImmutableList<Question> {
+    override fun getAllQuestions(): ImmutableList<Question> {
         user = quizletApp.currentUser()
-        val config = SyncConfiguration.Builder(user!!, ObjectId(user!!.id) )
+        val config = SyncConfiguration.Builder(user!!, ObjectId(user!!.id))
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
@@ -61,14 +63,15 @@ class DBManager(private val quizletApp: App) : DBInterface {
         var results: RealmResults<Question>? = null
         userRealm = Realm.getInstance(config)
         userRealm?.executeTransaction { transactionRealm ->
-            results = transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>;
+            results =
+                transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>;
         }
 
         return ImmutableList.copyOf(results?.subList(0, results!!.size))
     }
 
 
-    override fun getAllQuestionsForCategory(categoryName: String) : ImmutableList<Question> {
+    override fun getAllQuestionsForCategory(categoryName: String): ImmutableList<Question> {
         return ImmutableList.of()
     }
 
@@ -78,7 +81,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
                 if (!it.isSuccess) {
                     LOG.fine("Error: ${it.error}")
                 } else {
-                    LOG.fine( "Successfully registered user.")
+                    LOG.fine("Successfully registered user.")
                 }
             }
             true;
@@ -88,20 +91,17 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     // returns user with NULL, NULL, NULL if login fails
-    override fun loginUser(email: String, password: String) : User {
+    @Throws(AppException::class)
+    override fun loginUser(email: String, password: String): User {
         val creds = Credentials.emailPassword(email, password)
-        return try {
-            quizletApp.loginAsync(creds) {
-                if (!it.isSuccess) {
-                    LOG.fine( "Error: ${it.error}")
-                } else {
-                    LOG.fine( "Successfully logged in user.")
-                }
+        quizletApp.loginAsync(creds) {
+            if (!it.isSuccess) {
+                LOG.fine("Error: ${it.error}")
+            } else {
+                LOG.fine("Successfully logged in user.")
             }
-            User(email, password)
-        } catch (app: AppException) {
-            User("Invalid", "Invalid");
         }
+        return User(email, password)
     }
 
     override fun onDestroy() {
