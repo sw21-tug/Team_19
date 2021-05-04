@@ -14,6 +14,12 @@ import io.realm.mongodb.AppConfiguration
 
 class SplashActivity : AppCompatActivity(){
 
+    companion object {
+        lateinit var requestHandler: RequestHandler
+    }
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -25,7 +31,8 @@ class SplashActivity : AppCompatActivity(){
 
         val dbManager = DBManager(quizletApp)
         // TODO: make requestHandler Singleton?
-        val requestHandler = RequestHandler(dbManager)
+        requestHandler = RequestHandler(dbManager)
+
 
         val handler = Handler()
         handler.postDelayed({
