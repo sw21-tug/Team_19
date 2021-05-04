@@ -6,6 +6,7 @@ import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.Question_category
 import com.tugraz.quizlet.backend.database.model.User
 import io.realm.RealmList
+import io.realm.mongodb.AppException
 import org.bson.types.ObjectId
 import java.util.logging.Logger
 
@@ -21,6 +22,7 @@ class RequestHandler(private val dBInterface: DBInterface) {
         dBInterface.addUser(newUser)
     }
 
+    @Throws(AppException::class)
     fun loginUser(email: String, password: String): User {
         LOG.fine("Processing getting user with email=$email")
         return dBInterface.loginUser(email, password)
