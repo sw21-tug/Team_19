@@ -1,6 +1,6 @@
 package com.tugraz.quizlet.backend.database.model
 
-class User(var email: String, var password: String){
+class User(val email: String, val password: String){
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

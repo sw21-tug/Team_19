@@ -22,27 +22,10 @@ class DBManager(private val quizletApp: App) : DBInterface {
     private var user: io.realm.mongodb.User? = null
     private var userRealm: Realm? = null
 
-    init {
-        // testFunctionality - how to use the db manager
-        loginUser("testuser", "testpassword")
-        val rightAnswer = "1923"
-        val list: RealmList<String> = RealmList()
-        list.add("1921")
-        list.add("1950")
-        list.add("1930")
-        val category = Question_category("für die gerti", "Gertis Geburtstag")
-        val question = Question(
-            ObjectId(), category, "Wann ist Gerti geboren?", rightAnswer, list
-        )
-        addQuestion(question)
-
-        Thread.sleep(100)
-        val questions = getAllQuestions();
-    }
-
     override fun addQuestion(question: Question) {
         user = quizletApp.currentUser()
-        val config = SyncConfiguration.Builder(user!!, ObjectId(user!!.id))
+        checkNotNull(user)
+        val config = SyncConfiguration.Builder(user, ObjectId(user!!.id))
             .allowWritesOnUiThread(true)
             .build()
 
@@ -55,7 +38,8 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
     override fun getAllQuestions(): ImmutableList<Question> {
         user = quizletApp.currentUser()
-        val config = SyncConfiguration.Builder(user!!, ObjectId(user!!.id))
+        checkNotNull(user)
+        val config = SyncConfiguration.Builder(user, ObjectId(user!!.id))
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
@@ -67,32 +51,34 @@ class DBManager(private val quizletApp: App) : DBInterface {
                 transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>;
         }
 
+        if(results == null || results!!.isEmpty()) {
+            return ImmutableList.of()
+        }
+
         return ImmutableList.copyOf(results?.subList(0, results!!.size))
     }
 
 
     override fun getAllQuestionsForCategory(categoryName: String): ImmutableList<Question> {
-        return ImmutableList.of()
+        throw NotImplementedError()
     }
 
-    override fun addUser(user: User): Boolean {
-        return try {
-            quizletApp.emailPassword.registerUserAsync(user.email, user.password) {
+    @Throws(AppException::class)
+    override fun addUser(email: String, password: String): Boolean {
+            var wasSuccessful = false
+            quizletApp.emailPassword.registerUserAsync(email, password) {
                 if (!it.isSuccess) {
                     LOG.fine("Error: ${it.error}")
                 } else {
                     LOG.fine("Successfully registered user.")
+                    wasSuccessful = true
                 }
             }
-            true;
-        } catch (exe: AppException) {
-            false;
-        }
+            return wasSuccessful
     }
 
-    // returns user with NULL, NULL, NULL if login fails
     @Throws(AppException::class)
-    override fun loginUser(email: String, password: String): User {
+    override fun loginUser(email: String, password: String): Boolean {
         val creds = Credentials.emailPassword(email, password)
         quizletApp.loginAsync(creds) {
             if (!it.isSuccess) {
@@ -101,15 +87,15 @@ class DBManager(private val quizletApp: App) : DBInterface {
                 LOG.fine("Successfully logged in user.")
             }
         }
-        return User(email, password)
+        return true
     }
 
-    override fun onDestroy() {
-        userRealm?.close()
+    override fun getHighscoreForCurrentUser(): Int {
+        TODO("Not yet implemented")
     }
 
-    override fun onStop() {
-        userRealm?.close()
+    override fun updateUserHighscore(newHighscore: Int) {
+        TODO("Not yet implemented")
     }
 
 }
