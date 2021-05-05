@@ -1,5 +1,6 @@
 package com.tugraz.quizlet.frontend
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,7 @@ import com.tugraz.quizlet.backend.database.DBManager
 import io.realm.Realm
 import io.realm.mongodb.App
 import io.realm.mongodb.AppConfiguration
+import java.util.*
 
 
 class SplashActivity : AppCompatActivity(){
@@ -34,7 +36,12 @@ class SplashActivity : AppCompatActivity(){
 
         val handler = Handler()
         handler.postDelayed({
-            val intent = Intent(this, LoginActivity::class.java)
+            val newLocale = LocaleHelper.getLocale(this)
+
+            //resources.updateConfiguration(configuration, resources.displayMetrics)
+            val newContext = LocaleHelper.setLocale(this, newLocale)
+
+            val intent = Intent(newContext, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }, 3000)

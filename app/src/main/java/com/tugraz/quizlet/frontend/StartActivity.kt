@@ -25,6 +25,18 @@ class StartActivity : AppCompatActivity()
         }
     }
 
+    fun onSettingsClicked(view: View) {
+        val prevLanguage = LocaleHelper.getLocale(this)
+
+        val newLanguage = if (prevLanguage == "en") "zh" else "en"
+
+        LocaleHelper.saveLocale(this, newLanguage)
+
+        val toastText = getString(R.string.toast_language_change)
+        val toast = Toast.makeText(applicationContext, toastText, Toast.LENGTH_SHORT)
+        toast.show()
+    }
+
     override fun onBackPressed() {
         val transaction = supportFragmentManager.beginTransaction();
         val startFragment = StartFragment()
