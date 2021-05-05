@@ -14,8 +14,10 @@ public object LocaleHelper {
         val configuration = context.resources.configuration
         configuration.setLocale(newLocale)
         configuration.setLayoutDirection(newLocale)
+        context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
 
-        return context.createConfigurationContext(configuration);
+//      return context.createConfigurationContext(configuration);
+        return context
     }
 
     fun saveLocale(context: Context, language: String) {
