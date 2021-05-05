@@ -1,8 +1,6 @@
-package com.tugraz.quizlet.database
+package com.tugraz.quizlet.backend
 
-import com.tugraz.quizlet.backend.database.DBManager
 import org.junit.Test
-import org.junit.Assert.*
 
 class QuestionDatabaseTest {
     @Test

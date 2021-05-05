@@ -4,22 +4,33 @@
 
 ### Key
 
+| Role            | Name                    |
+| :---            |    :----:               |
+| Product Owner:  | Sebastian Überreiter    |
+| Scrum Master:   | Lukas Neuhold           |
+| Dev 1:          | Bodirnea, Oana-Emilia   |
+| Dev 2:          | Gigerl, Ronald          |
+| Dev 3:          | Gruber, Dominik Dieter  |
+| Dev 4:          | Köstl, Markus           |
+| Dev 5:          | Potthast, Gregor        |
+| Dev 6:          | Rinesch, Fabian         |
+
 | Symbol              |             |
 | :---                | :----:      |
 | Attended            | &#9989;     |
 | Absent              | &#10060;    |
 | Partial Attendance  | **&#9083;** |
 
-| Role            | 24.03.2021  | 14.04.2021  | 21.04.2021  | 28.04.2021  |
-| :---            |    :----:   |    :----:   |    :----:   |    :----:   |
-| Product Owner:  | &#9989;     | &#9989;     | &#9989;     | <!--**&#9083;**--> |
-| Scrum Master:   | &#9989;     | &#9989;     | &#9989;     | <!--&#9989;-->     |
-| Dev 1:          | &#9989;     | &#9989;     | &#10060;    | <!--&#9989;-->     |
-| Dev 2:          | &#9989;     | &#9989;     | &#10060;    | <!--&#9989;-->     |
-| Dev 3:          | &#9989;     | &#9989;     | &#9989;     | <!--&#9989;-->     |
-| Dev 4:          | &#9989;     | &#9989;     | &#9989;     | <!--&#9989;-->     |
-| Dev 5:          | &#9989;     | &#9989;     | &#9989;     | <!--&#9989;-->     |
-| Dev 6:          | &#9989;     | &#9989;     | &#9989;     | <!--&#9989;-->     |
+| Role            | 24.03.2021  | 14.04.2021  | 21.04.2021  | 28.04.2021  | 5.05.2021 |
+| :---            |    :----:   |    :----:   |    :----:   |    :----:   | :----:    |
+| Product Owner:  | &#9989;     | &#9989;     | &#9989;     | **&#9083;** | |
+| Scrum Master:   | &#9989;     | &#9989;     | &#9989;     | &#9989;     | |
+| Dev 1:          | &#9989;     | &#9989;     | &#10060;    | &#9989;     | |
+| Dev 2:          | &#9989;     | &#9989;     | &#10060;    | &#9989;     | |
+| Dev 3:          | &#9989;     | &#9989;     | &#9989;     | &#9989;     | |
+| Dev 4:          | &#9989;     | &#9989;     | &#9989;     | &#9989;     | |
+| Dev 5:          | &#9989;     | &#9989;     | &#9989;     | &#9989;     | |
+| Dev 6:          | &#9989;     | &#9989;     | &#9989;     | &#9989;     | |
 
 ### Notes
 
@@ -30,4 +41,4 @@ Dev 1 and Dev 2 missed the session due to having to attend an exam for the lectu
 
 #### 28.04.2021
 
-<!--Product Owner was only in attendence for the first hour as he had to leave for an exam for the lecture *'Logik und Berechenbarkeit' (IND.04033UF)*-->
+Product Owner was only in attendence for the first hour as he had to leave for an exam for the lecture *'Logik und Berechenbarkeit' (IND.04033UF)*

@@ -5,9 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -20,17 +17,22 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class LoginTest {
+class LoginRequestTest {
 
     @Rule
     @JvmField
-    var mActivityTestRule = ActivityTestRule(LoginActivity::class.java)
+    var mActivityTestRule = ActivityTestRule(SplashActivity::class.java)
 
     @Test
-    fun loginTest() {
+    fun loginRequestTest() {
+
+        val email : String = "test@test.com"
+        val password : String = "1234"
+
         val appCompatEditText = onView(
             allOf(
                 withId(R.id.editTextTextEmailAddress),
@@ -44,9 +46,24 @@ class LoginTest {
                 isDisplayed()
             )
         )
-        appCompatEditText.perform(replaceText("test@test.com"), closeSoftKeyboard())
+        appCompatEditText.perform(replaceText(email), closeSoftKeyboard())
 
         val appCompatEditText2 = onView(
+            allOf(
+                withId(R.id.editTextTextEmailAddress), withText(email),
+                childAtPosition(
+                    childAtPosition(
+                        withId(android.R.id.content),
+                        0
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatEditText2.perform(pressImeActionButton())
+
+        val appCompatEditText3 = onView(
             allOf(
                 withId(R.id.editTextTextPassword),
                 childAtPosition(
@@ -59,7 +76,22 @@ class LoginTest {
                 isDisplayed()
             )
         )
-        appCompatEditText2.perform(replaceText("123"), closeSoftKeyboard())
+        appCompatEditText3.perform(replaceText(password), closeSoftKeyboard())
+
+        val appCompatEditText4 = onView(
+            allOf(
+                withId(R.id.editTextTextPassword), withText(password),
+                childAtPosition(
+                    childAtPosition(
+                        withId(android.R.id.content),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatEditText4.perform(pressImeActionButton())
 
         val materialButton = onView(
             allOf(
@@ -75,10 +107,8 @@ class LoginTest {
             )
         )
 
-        Intents.init();
         materialButton.perform(click())
-        intended(hasComponent(StartActivity::class.java.getName()))
-        Intents.release()
+        Mockito.verify(SplashActivity.requestHandler, Mockito.times(1)).loginUser(email, password)
     }
 
     private fun childAtPosition(

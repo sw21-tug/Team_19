@@ -8,7 +8,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Quizlet">
-        <activity android:name="com.tugraz.quizlet.frontend.MainActivity"
+        <activity android:name="com.tugraz.quizlet.frontend.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
