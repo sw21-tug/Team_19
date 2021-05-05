@@ -16,6 +16,7 @@ import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.Question_category
 import io.realm.RealmList
 import org.bson.types.ObjectId
+import java.util.Collections.shuffle
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -61,7 +62,8 @@ class PlayFragment : Fragment(), View.OnClickListener {
         for (i: Int in 0 .. 3 ) {
             view.findViewById<Button>(ANSWER_BUTTONS[i]).setOnClickListener(this)
         }
-
+        //TODO implement once database is set
+        //SplashActivity.requestHandler.startNewGameAndReturnTheFirstQuestion()
         displayNewQuestion(view)
 
         return view
@@ -96,15 +98,31 @@ class PlayFragment : Fragment(), View.OnClickListener {
     }
 
     private fun displayNewQuestion(view: View) {
+
+        //TODO Implement once database is ready
+        //val newQuestion  = SplashActivity.requestHandler.getNextQuestionAndUpdateRemainingAndUpdateHighscore()
         val newQuestion  = loadNewQuestion()
         currentQuestion = newQuestion
+        val currentscore = view.findViewById<TextView>(R.id.text_view_current_score)
+        //currentscore.text = SplashActivity.requestHandler.getHighscoreOfCurrentUser
+        currentscore.text = score.toString()
 
-        for (i: Int in 0 .. 2) {
+        /*for (i: Int in 0 .. 2) {
             view.findViewById<Button>(ANSWER_BUTTONS[i]).text = newQuestion.wrongAnswers[i]
         }
-        view.findViewById<Button>(ANSWER_BUTTONS[3]).text = newQuestion.rightAnswer
+        view.findViewById<Button>(ANSWER_BUTTONS[3]).text = newQuestion.rightAnswer*/
 
-        correctAnswer = 3
+
+        val answers: MutableList<Int> = (0..3).toMutableList();
+        shuffle(answers)
+        var j = 0;
+        for (i in answers.subList(0,3))
+        {
+            view.findViewById<Button>(ANSWER_BUTTONS[i]).text = newQuestion.wrongAnswers[j]
+            j++;
+        }
+        view.findViewById<Button>(ANSWER_BUTTONS[answers[3]]).text = newQuestion.rightAnswer
+        correctAnswer = answers[3]
 
         view.findViewById<TextView>(R.id.text_view_question_text).text = newQuestion.question
     }
@@ -141,6 +159,7 @@ class PlayFragment : Fragment(), View.OnClickListener {
 
                             val arguments = Bundle()
                             arguments.putInt("score", score)
+                            //arguments.putInt("score", SplashActivity.requestHandler.getHighscoreOfCurrentUser())
                             score = 0
 
                             scoreFragment.arguments = arguments
