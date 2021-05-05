@@ -88,8 +88,7 @@ class PlayFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loadNewQuestion() : Question {
-        return Question(ObjectId(), Question_category("Category", "Category"), "What is the answer?", "Answer " + Math.random().toString()
-            , RealmList(
+        return Question(ObjectId(), Question_category("Category", "Category"), "What is the answer?", "Answer " + Math.random().toString(), null, RealmList(
                 "Answer " + Math.random().toString(),
                 "Answer " + Math.random().toString(),
                 "Answer " + Math.random().toString()))

@@ -9,11 +9,11 @@ import java.security.InvalidParameterException
 
 open class Question(
     @PrimaryKey var _id: ObjectId = ObjectId(),
-
     var category: Question_category? = null,
     var question: String? = null,
-    @Required
     var rightAnswer: String? = null,
+    var userCreated: String? = null,
+    @Required
     var wrongAnswers: RealmList<String> = RealmList()
 ):RealmObject() {
 
