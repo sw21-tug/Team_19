@@ -3,16 +3,21 @@ package com.tugraz.quizlet.backend.database
 import com.google.common.collect.ImmutableList
 import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.Question_category
-import com.tugraz.quizlet.backend.database.model.User
+
 import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmResults
 import io.realm.mongodb.App
 import io.realm.mongodb.AppException
 import io.realm.mongodb.Credentials
+import io.realm.mongodb.mongo.MongoClient
+import io.realm.mongodb.mongo.MongoCollection
+import io.realm.mongodb.mongo.MongoDatabase
 import io.realm.mongodb.sync.SyncConfiguration
+import org.bson.Document
 import org.bson.types.ObjectId
 import java.util.logging.Logger
+import kotlin.jvm.Throws
 
 class DBManager(private val quizletApp: App) : DBInterface {
     companion object {
@@ -20,7 +25,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     private var user: io.realm.mongodb.User? = null
-    private var userRealm: Realm? = null
+    private var realm: Realm? = null
 
     init {
         // testFunctionality - how to use the db manager
@@ -32,12 +37,9 @@ class DBManager(private val quizletApp: App) : DBInterface {
         list.add("1930")
         val category = Question_category("für die gerti", "Gertis Geburtstag")
         val question = Question(
-            ObjectId(), category, "Wann ist Gerti geboren?", rightAnswer, list
+            ObjectId(), category, "Wann ist Gerti geboren?", rightAnswer, null, list
         )
-        addQuestion(question)
 
-        Thread.sleep(100)
-        val questions = getAllQuestions();
     }
 
     override fun addQuestion(question: Question) {
@@ -120,7 +122,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
     // returns user with NULL, NULL, NULL if login fails
     @Throws(AppException::class)
-    override fun loginUser(email: String, password: String): User {
+    override fun loginUser(email: String, password: String): Boolean {
         val creds = Credentials.emailPassword(email, password)
         quizletApp.loginAsync(creds) {
             if (!it.isSuccess) {
@@ -133,7 +135,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
         return true
     }
 
-    override fun getHighscoreForCurrentUser(): Int? {
+    override fun getHighscoreOfCurrentUser(): Int {
         var customUserScore: Document = Document()
         customUserScore = quizletApp.currentUser()?.customData!!
         /*
@@ -167,14 +169,6 @@ class DBManager(private val quizletApp: App) : DBInterface {
                     }
             }
         }
-    }
-
-    override fun onDestroy() {
-        realm?.close()
-    }
-
-    override fun onStop() {
-        realm?.close()
     }
 
 }
