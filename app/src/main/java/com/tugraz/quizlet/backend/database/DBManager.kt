@@ -126,16 +126,16 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getHighscoreOfCurrentUser(): Int {
-        var customUserScore: Document = Document()
+        /*var customUserScore: Document = Document()
         customUserScore = user?.customData!!
-        Thread.sleep(1000)
+        Thread.sleep(1000)*/
 
         //return (customUserScore.get("highscore") as Int).absoluteValue
         return 0;
     }
 
     override fun updateUserHighscore(newHighscore: Int) {
-        val anonymousCredentials: Credentials = Credentials.anonymous()
+        /*val anonymousCredentials: Credentials = Credentials.anonymous()
         quizletApp.loginAsync(anonymousCredentials) {
             if (it.isSuccess) {
                 val mongoClient: MongoClient =
@@ -151,7 +151,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
                         }
                     }
             }
-        }
+        }*/
     }
 
 }

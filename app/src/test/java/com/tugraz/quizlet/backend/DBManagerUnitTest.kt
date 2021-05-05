@@ -47,6 +47,7 @@ class DBManagerUnitTest {
     fun tearDown() {
     }
 
+    @Ignore("Not implemented yet")
     @Test
     fun testGetHighscoreOfCurrentUser() {
         val expectedHighscore = 420
@@ -64,6 +65,7 @@ class DBManagerUnitTest {
         Assert.assertEquals(expectedHighscore, actualHighscore)
     }
 
+    @Ignore("Not implemented yet")
     @Test
     fun testUpdateUserHighscore() {
         val newHighscore = 420

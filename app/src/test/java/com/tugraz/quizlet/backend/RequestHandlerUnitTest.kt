@@ -52,7 +52,7 @@ class RequestHandlerUnitTest {
         val answer: String = "cheetah"
         val wrongAnswersRealmList: RealmList<String> = RealmList("sloth","antelope","rabbit")
         val wrongAnswersImmutableList: ImmutableList<String> = ImmutableList.of("sloth","antelope","rabbit")
-        val expectedQuestion = Question(ObjectId(), category, question, answer, wrongAnswersRealmList)
+        val expectedQuestion = Question(ObjectId(), category, question, answer, null, wrongAnswersRealmList)
         requestHandler.addQuestion(category, question, answer, wrongAnswersImmutableList)
         verify(mockDBInterface, times(1)).addQuestion(expectedQuestion)
     }
@@ -143,7 +143,7 @@ class RequestHandlerUnitTest {
         val questionCategory = Question_category(category, "")
         val immutableListBuilder: ImmutableList.Builder<Question> = ImmutableList.Builder()
         for (i in 1..numberOfRandomQuestions) {
-            val question = Question(ObjectId(), questionCategory, "b$i", "c$i",  RealmList("d$i", "e$i", "f$i"))
+            val question = Question(ObjectId(), questionCategory, "b$i", "c$i", null, RealmList("d$i", "e$i", "f$i"))
             immutableListBuilder.add(question)
         }
         return immutableListBuilder.build()
