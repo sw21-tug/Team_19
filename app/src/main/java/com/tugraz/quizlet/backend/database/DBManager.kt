@@ -5,22 +5,14 @@ import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.Question_category
 import com.tugraz.quizlet.backend.database.model.User
 import io.realm.Realm
-import io.realm.RealmConfiguration
 import io.realm.RealmList
 import io.realm.RealmResults
 import io.realm.mongodb.App
 import io.realm.mongodb.AppException
 import io.realm.mongodb.Credentials
-import io.realm.mongodb.mongo.MongoClient
-import io.realm.mongodb.mongo.MongoCollection
-import io.realm.mongodb.mongo.MongoDatabase
-import io.realm.mongodb.mongo.iterable.FindIterable
 import io.realm.mongodb.sync.SyncConfiguration
-import kotlinx.coroutines.awaitAll
-import org.bson.Document
 import org.bson.types.ObjectId
 import java.util.logging.Logger
-import kotlin.jvm.Throws
 
 class DBManager(private val quizletApp: App) : DBInterface {
     companion object {
@@ -28,14 +20,24 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     private var user: io.realm.mongodb.User? = null
-    private var realm: Realm? = null
+    private var userRealm: Realm? = null
 
     init {
-        loginUser("domitestere", "lalalal123e")
+        // testFunctionality - how to use the db manager
+        loginUser("testuser", "testpassword")
+        val rightAnswer = "1923"
+        val list: RealmList<String> = RealmList()
+        list.add("1921")
+        list.add("1950")
+        list.add("1930")
+        val category = Question_category("für die gerti", "Gertis Geburtstag")
+        val question = Question(
+            ObjectId(), category, "Wann ist Gerti geboren?", rightAnswer, list
+        )
+        addQuestion(question)
 
-        Thread.sleep(1000)
-        //updateUserHighscore(5)
-        getHighscoreForCurrentUser()
+        Thread.sleep(100)
+        val questions = getAllQuestions();
     }
 
     override fun addQuestion(question: Question) {
@@ -63,7 +65,11 @@ class DBManager(private val quizletApp: App) : DBInterface {
         realm = Realm.getInstance(config)
         realm?.executeTransaction { transactionRealm ->
             results =
-                transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>;
+                    transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>;
+        }
+
+        if (results == null || results!!.isEmpty()) {
+            return ImmutableList.of()
         }
 
         return ImmutableList.copyOf(results?.subList(0, results!!.size))
@@ -71,7 +77,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
 
     override fun getAllQuestionsForCategory(categoryName: String): ImmutableList<Question> {
-        return ImmutableList.of()
+        throw NotImplementedError()
     }
 
     override fun addUser(email: String, password: String): Boolean {
@@ -114,7 +120,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
     // returns user with NULL, NULL, NULL if login fails
     @Throws(AppException::class)
-    override fun loginUser(email: String, password: String): Boolean {
+    override fun loginUser(email: String, password: String): User {
         val creds = Credentials.emailPassword(email, password)
         quizletApp.loginAsync(creds) {
             if (!it.isSuccess) {

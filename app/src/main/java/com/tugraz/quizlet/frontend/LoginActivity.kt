@@ -16,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        var login = findViewById(R.id.login) as Button
+        val login = findViewById(R.id.login) as Button
         login.setOnClickListener{
             val intent = Intent(this, StartActivity::class.java)
             val email = findViewById<EditText>(R.id.editTextTextEmailAddress).text

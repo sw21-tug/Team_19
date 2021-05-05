@@ -3,7 +3,6 @@ package com.tugraz.quizlet.backend.database
 import com.google.common.collect.ImmutableList
 import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.User
-import org.bson.Document
 
 interface DBInterface {
     fun addQuestion(question: Question)
@@ -16,9 +15,7 @@ interface DBInterface {
 
     fun loginUser(email: String, password: String) : Boolean
 
-    fun getHighscoreForCurrentUser(): Int?
+    fun getHighscoreOfCurrentUser(): Int
 
     fun updateUserHighscore(newHighscore: Int)
-    fun onDestroy()
-    fun onStop()
 }
