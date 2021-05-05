@@ -10,13 +10,13 @@ import android.widget.Toast
 import com.tugraz.quizlet.R
 import com.tugraz.quizlet.frontend.StartActivity
 import io.realm.mongodb.AppException
+import org.intellij.lang.annotations.Language
 import java.util.*
 
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_login)
 
         var login = findViewById<Button>(R.id.login)

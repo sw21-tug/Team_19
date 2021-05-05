@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quizlet</string>
+    <string name="app_start_play_button">播放</string>
+    <string name="app_login_button">登入</string>
+    <string name="app_login_email_description">電子郵件：</string>
+    <string name="app_login_pw_description">密码：</string>
+    <string name="app_start_exit_button">"結束"</string>
+    <string name="app_play_title">播放</string>
+    <string name="toast_language_change">語言已更改。請重新啟動應用程序以應用更改。</string>
+    <string name="toast_wrong_answer">錯誤的答案</string>
+    <string name="text_view_score">分數</string>
+</resources>
