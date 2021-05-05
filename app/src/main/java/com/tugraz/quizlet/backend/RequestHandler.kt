@@ -38,7 +38,9 @@ class RequestHandler(private val dBInterface: DBInterface) {
             ObjectId(),
             category,
             question,
+            null,
             rightAnswer,
+
             getRealmListFromImmutableList(wrongAnswers)
         )
         LOG.fine("Processing getting user with email=$newQuestion")

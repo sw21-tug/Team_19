@@ -18,6 +18,7 @@ import org.bson.Document
 import org.bson.types.ObjectId
 import java.util.logging.Logger
 import kotlin.jvm.Throws
+import kotlin.math.absoluteValue
 
 class DBManager(private val quizletApp: App) : DBInterface {
     companion object {
@@ -28,17 +29,6 @@ class DBManager(private val quizletApp: App) : DBInterface {
     private var realm: Realm? = null
 
     init {
-        // testFunctionality - how to use the db manager
-        loginUser("testuser", "testpassword")
-        val rightAnswer = "1923"
-        val list: RealmList<String> = RealmList()
-        list.add("1921")
-        list.add("1950")
-        list.add("1930")
-        val category = Question_category("für die gerti", "Gertis Geburtstag")
-        val question = Question(
-            ObjectId(), category, "Wann ist Gerti geboren?", rightAnswer, null, list
-        )
 
     }
 
@@ -137,22 +127,15 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
     override fun getHighscoreOfCurrentUser(): Int {
         var customUserScore: Document = Document()
-        customUserScore = quizletApp.currentUser()?.customData!!
-        /*
-        val anonymousCredentials: Credentials = Credentials.anonymous()
-        quizletApp.loginAsync(anonymousCredentials) {
-            if (it.isSuccess) {
-
-            }
-        }*/
+        customUserScore = user?.customData!!
         Thread.sleep(1000)
 
-        return 0
+        //return (customUserScore.get("highscore") as Int).absoluteValue
+        return 0;
     }
 
     override fun updateUserHighscore(newHighscore: Int) {
         val anonymousCredentials: Credentials = Credentials.anonymous()
-        val user = quizletApp.currentUser()
         quizletApp.loginAsync(anonymousCredentials) {
             if (it.isSuccess) {
                 val mongoClient: MongoClient =
@@ -161,7 +144,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
                     mongoClient.getDatabase("Quizlet")!!
                 val mongoCollection: MongoCollection<Document> =
                     mongoDatabase.getCollection("Users")!!
-                mongoCollection.updateOne(Document("_id", user.id), Document("highscore", newHighscore))
+                mongoCollection.updateOne(Document("_id", user!!.id), Document("highscore", newHighscore))
                     .getAsync { result ->
                         if (result.isSuccess) {
                             LOG.fine("jsda")
