@@ -8,18 +8,70 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/pacifico"
         android:text="@string/app_play_title"
         android:textColor="#000000"
         android:textSize="56sp"
         android:textStyle="bold"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.19" />
+
+    <Button
+        android:id="@+id/button_answer_1"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
+        android:text="Answer 1"
+        app:layout_constraintBottom_toTopOf="@+id/button_answer_3"
+        app:layout_constraintEnd_toStartOf="@+id/button_answer_2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_answer_2"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
+        android:text="Answer 2"
+        app:layout_constraintBottom_toTopOf="@+id/button_answer_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_answer_1" />
+
+    <Button
+        android:id="@+id/button_answer_3"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="64dp"
+        android:text="Answer 3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_answer_4"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_answer_4"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="64dp"
+        android:text="Answer 4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_answer_3" />
+
+    <TextView
+        android:id="@+id/text_view_question_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Question Text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

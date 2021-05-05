@@ -1,5 +1,6 @@
 package com.tugraz.quizlet.frontend
 
+import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.tugraz.quizlet.R
+import kotlin.system.exitProcess
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +42,9 @@ class StartFragment : Fragment(), View.OnClickListener {
         val startButton = view.findViewById<Button>(R.id.button_start)
         startButton.setOnClickListener(this)
 
+        val exitButton = view.findViewById<Button>(R.id.button_exit)
+        exitButton.setOnClickListener(this)
+
         return view
     }
 
@@ -68,10 +73,14 @@ class StartFragment : Fragment(), View.OnClickListener {
                 R.id.button_start -> {
                     val transaction = parentFragmentManager.beginTransaction();
                     val playFragment = PlayFragment()
-                    transaction.addToBackStack("Play")
+                    transaction.addToBackStack("Start-Play")
                     transaction.hide(this)
                     transaction.add(R.id.main_fragment_view, playFragment)
                     transaction.commit()
+                }
+                R.id.button_exit -> {
+                    activity?.finish()
+                    exitProcess(0)
                 }
             }
         }
