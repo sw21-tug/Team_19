@@ -18,7 +18,7 @@ class RequestHandler(private val dBInterface: DBInterface) {
     }
 
     private var remainingQuestionForCurrentGame: ArrayList<Question> = ArrayList()
-    private var highscoreForCurrentGame = 0
+    private var highscoreForCurrentGame = -POINTS_FOR_RIGHT_ANSWER
 
     // TODO: add boolean for feedback?
     fun addUser(email: String, password: String) {
@@ -53,10 +53,9 @@ class RequestHandler(private val dBInterface: DBInterface) {
         return realmList
     }
 
-    fun startNewGameAndReturnTheFirstQuestion() : Question? {
+    fun startNewGameAndReturnTheFirstQuestion() {
         this.highscoreForCurrentGame = 0
         remainingQuestionForCurrentGame.addAll(dBInterface.getAllQuestions())
-        return getNextQuestionAndUpdateRemaining()
     }
 
     private fun getNextQuestionAndUpdateRemaining(): Question? {
@@ -77,7 +76,7 @@ class RequestHandler(private val dBInterface: DBInterface) {
     }
 
     fun getHighscoreOfCurrentUser(): Int {
-        return dBInterface.getHighscoreForCurrentUser()
+        return dBInterface.getHighscoreOfCurrentUser()
     }
 
     fun getAllQuestion(): ImmutableList<Question> {
@@ -93,6 +92,11 @@ class RequestHandler(private val dBInterface: DBInterface) {
     @VisibleForTesting
     fun setRemainingQuestionForCurrentGame(questions: ArrayList<Question>) {
         this.remainingQuestionForCurrentGame = questions
+    }
+
+    @VisibleForTesting
+    fun getRemainingQuestionForCurrentGame(): ArrayList<Question> {
+        return this.remainingQuestionForCurrentGame
     }
 
     @VisibleForTesting

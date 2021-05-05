@@ -87,12 +87,11 @@ class RequestHandlerUnitTest {
     @Test
     fun testStartNewGame() {
         val expectedQuestions:ImmutableList<Question> = generateRandomQuestion(5)
-        val firstQuestion = expectedQuestions.first()
 
         `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
-        val question = requestHandler.startNewGameAndReturnTheFirstQuestion()
+        requestHandler.startNewGameAndReturnTheFirstQuestion()
         verify(mockDBInterface, times(1)).getAllQuestions()
-        assertEquals(firstQuestion, question)
+        assertEquals(expectedQuestions, requestHandler.getRemainingQuestionForCurrentGame())
     }
 
     @Test
@@ -100,9 +99,9 @@ class RequestHandlerUnitTest {
         val expectedQuestions:ImmutableList<Question> = ImmutableList.of()
 
         `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
-        val question = requestHandler.startNewGameAndReturnTheFirstQuestion()
+        requestHandler.startNewGameAndReturnTheFirstQuestion()
         verify(mockDBInterface, times(1)).getAllQuestions()
-        assertNull(question)
+        assertEquals(expectedQuestions, requestHandler.getRemainingQuestionForCurrentGame())
     }
 
     @Test
@@ -114,7 +113,7 @@ class RequestHandlerUnitTest {
         val question = requestHandler.getNextQuestionAndUpdateRemainingAndUpdateHighscore()
 
         assertEquals(firstQuestion, question)
-        assertEquals(5, requestHandler.getHighscoreCurrentGame())
+        assertEquals(0, requestHandler.getHighscoreCurrentGame()) // 0 because of first question of the game
     }
 
     @Test
@@ -124,7 +123,7 @@ class RequestHandlerUnitTest {
         requestHandler.setHighscoreCurrentGame(expectedHighscore)
         val question = requestHandler.getNextQuestionAndUpdateRemainingAndUpdateHighscore()
 
-        `when`(mockDBInterface.getHighscoreForCurrentUser()).thenReturn(0)
+        `when`(mockDBInterface.getHighscoreOfCurrentUser()).thenReturn(0)
 
         val currHighscore = requestHandler.endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase()
         assertEquals(expectedHighscore + pointsPerRightAnswer, currHighscore)
