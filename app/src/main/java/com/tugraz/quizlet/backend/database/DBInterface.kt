@@ -15,7 +15,7 @@ interface DBInterface {
 
     fun loginUser(email: String, password: String) : Boolean
 
-    fun getHighscoreForCurrentUser(): Int
+    fun getHighscoreOfCurrentUser(): Int
 
     fun updateUserHighscore(newHighscore: Int)
 }
