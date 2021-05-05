@@ -7,44 +7,14 @@
     android:layout_height="match_parent"
     android:background="@color/orange">
 
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/pacifico"
-        android:text="@string/app_title"
-        android:textColor="#000000"
-        android:textSize="56sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/main_fragment_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.22" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="354dp"
-        android:layout_height="43dp"
-        android:text="@string/app_start_play_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.321" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="354dp"
-        android:layout_height="43dp"
-        android:text="@string/app_start_exit_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/layout"
@@ -109,20 +79,17 @@
         <ImageView
             android:id="@+id/settings"
             style="?borderlessButtonStyle"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/app_start_layout_settings_button"
+            android:focusable="true"
             app:srcCompat="@drawable/settings_button"
             tools:layout_editor_absoluteX="160dp"
-            tools:layout_editor_absoluteY="578dp"
-            android:contentDescription="@string/app_start_layout_settings_button" />
-
-
+            tools:layout_editor_absoluteY="578dp" />
 
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
