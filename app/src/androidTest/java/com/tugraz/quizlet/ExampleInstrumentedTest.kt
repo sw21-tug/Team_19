@@ -1,4 +1,4 @@
-package com.example.quizlet
+package com.tugraz.quizlet
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
