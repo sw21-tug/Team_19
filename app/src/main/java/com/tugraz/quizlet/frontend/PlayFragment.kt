@@ -31,7 +31,6 @@ private val ANSWER_BUTTONS = arrayOf(
 )
 private var currentQuestion: Question? = null
 private var correctAnswerIndex = 0
-private var score = 0
 
 /**
  * A simple [Fragment] subclass.
@@ -101,7 +100,7 @@ class PlayFragment : Fragment(), View.OnClickListener {
         val newQuestion  = SplashActivity.requestHandler.getNextQuestionAndUpdateRemainingAndUpdateHighscore()
         currentQuestion = newQuestion
         val currentscore = view.findViewById<TextView>(R.id.text_view_current_score)
-        currentscore.text = score.toString()
+        currentscore.text = SplashActivity.requestHandler.getHighscoreCurrentGame().toString()
 
         //TODO handle no new question
         if(newQuestion == null) {
@@ -132,7 +131,6 @@ class PlayFragment : Fragment(), View.OnClickListener {
 
             if (answer in 0 .. 3) {
                 if (answer == correctAnswerIndex) {
-                    score++
                     displayNewQuestion(view.rootView)
                 } else {
                     val toastText = getString(R.string.toast_wrong_answer)
@@ -165,8 +163,7 @@ class PlayFragment : Fragment(), View.OnClickListener {
         val scoreFragment = ScoreFragment()
 
         val arguments = Bundle()
-        arguments.putInt("score", score)
-        score = 0
+        arguments.putInt("score", SplashActivity.requestHandler.endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase())
 
         scoreFragment.arguments = arguments
         transaction.addToBackStack("Play-Score")
