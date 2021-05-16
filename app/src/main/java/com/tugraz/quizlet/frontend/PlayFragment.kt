@@ -1,7 +1,6 @@
 package com.tugraz.quizlet.frontend
 
 import android.os.Bundle
-import android.text.Selection.moveDown
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +30,7 @@ private val ANSWER_BUTTONS = arrayOf(
     R.id.button_answer_4
 )
 private var currentQuestion: Question? = null
-private var correctAnswer = 0
+private var correctAnswerIndex = 0
 private var score = 0
 
 /**
@@ -62,8 +61,8 @@ class PlayFragment : Fragment(), View.OnClickListener {
         for (i: Int in 0 .. 3 ) {
             view.findViewById<Button>(ANSWER_BUTTONS[i]).setOnClickListener(this)
         }
-        //TODO implement once database is set
-        //SplashActivity.requestHandler.startNewGameAndReturnTheFirstQuestion()
+
+        SplashActivity.requestHandler.startNewGameAndReturnTheFirstQuestion()
         displayNewQuestion(view)
 
         return view
@@ -90,8 +89,7 @@ class PlayFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loadNewQuestion() : Question {
-        return Question(ObjectId(), Question_category("Category", "Category"), "What is the answer?", "Answer " + Math.random().toString()
-            , RealmList(
+        return Question(ObjectId(), Question_category("Category", "Category"), "What is the answer?", "Answer " + Math.random().toString(), null, RealmList(
                 "Answer " + Math.random().toString(),
                 "Answer " + Math.random().toString(),
                 "Answer " + Math.random().toString()))
@@ -100,29 +98,25 @@ class PlayFragment : Fragment(), View.OnClickListener {
     private fun displayNewQuestion(view: View) {
 
         //TODO Implement once database is ready
-        //val newQuestion  = SplashActivity.requestHandler.getNextQuestionAndUpdateRemainingAndUpdateHighscore()
-        val newQuestion  = loadNewQuestion()
+        val newQuestion  = SplashActivity.requestHandler.getNextQuestionAndUpdateRemainingAndUpdateHighscore()
         currentQuestion = newQuestion
         val currentscore = view.findViewById<TextView>(R.id.text_view_current_score)
-        //currentscore.text = SplashActivity.requestHandler.getHighscoreOfCurrentUser
         currentscore.text = score.toString()
 
-        /*for (i: Int in 0 .. 2) {
-            view.findViewById<Button>(ANSWER_BUTTONS[i]).text = newQuestion.wrongAnswers[i]
+        //TODO handle no new question
+        if(newQuestion == null) {
+            switchToScoreFragment(this)
+            return
         }
-        view.findViewById<Button>(ANSWER_BUTTONS[3]).text = newQuestion.rightAnswer*/
 
-
-        val answers: MutableList<Int> = (0..3).toMutableList();
-        shuffle(answers)
-        var j = 0;
-        for (i in answers.subList(0,3))
+        val answersIndices = arrayListOf(0, 1, 2, 3)
+        shuffle(answersIndices)
+        for (i: Int in 0 until answersIndices.size - 1)
         {
-            view.findViewById<Button>(ANSWER_BUTTONS[i]).text = newQuestion.wrongAnswers[j]
-            j++;
+            view.findViewById<Button>(ANSWER_BUTTONS[answersIndices[i]]).text = newQuestion.wrongAnswers[i]
         }
-        view.findViewById<Button>(ANSWER_BUTTONS[answers[3]]).text = newQuestion.rightAnswer
-        correctAnswer = answers[3]
+        view.findViewById<Button>(ANSWER_BUTTONS[answersIndices[answersIndices.size - 1]]).text = newQuestion.rightAnswer
+        correctAnswerIndex = answersIndices[answersIndices.size - 1]
 
         view.findViewById<TextView>(R.id.text_view_question_text).text = newQuestion.question
     }
@@ -136,8 +130,8 @@ class PlayFragment : Fragment(), View.OnClickListener {
                     answer = i
             }
 
-            if (answer in 0..3) {
-                if (answer == correctAnswer) {
+            if (answer in 0 .. 3) {
+                if (answer == correctAnswerIndex) {
                     score++
                     displayNewQuestion(view.rootView)
                 } else {
@@ -154,19 +148,7 @@ class PlayFragment : Fragment(), View.OnClickListener {
                         override fun onAnimationStart(animation: Animation) {}
 
                         override fun onAnimationEnd(animation: Animation) {
-                            val transaction = parentFragmentManager.beginTransaction();
-                            val scoreFragment = ScoreFragment()
-
-                            val arguments = Bundle()
-                            arguments.putInt("score", score)
-                            //arguments.putInt("score", SplashActivity.requestHandler.getHighscoreOfCurrentUser())
-                            score = 0
-
-                            scoreFragment.arguments = arguments
-                            transaction.addToBackStack("Play-Score")
-                            transaction.hide(currentFragment)
-                            transaction.add(R.id.main_fragment_view, scoreFragment)
-                            transaction.commit()
+                            switchToScoreFragment(currentFragment)
                         }
 
                         override fun onAnimationRepeat(animation: Animation) {}
@@ -176,5 +158,20 @@ class PlayFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    private fun switchToScoreFragment(currentFragment: PlayFragment) {
+        val transaction = parentFragmentManager.beginTransaction();
+        val scoreFragment = ScoreFragment()
+
+        val arguments = Bundle()
+        arguments.putInt("score", score)
+        score = 0
+
+        scoreFragment.arguments = arguments
+        transaction.addToBackStack("Play-Score")
+        transaction.hide(currentFragment)
+        transaction.add(R.id.main_fragment_view, scoreFragment)
+        transaction.commit()
     }
 }

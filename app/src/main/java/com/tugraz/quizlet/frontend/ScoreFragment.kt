@@ -1,14 +1,12 @@
 package com.tugraz.quizlet.frontend
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.tugraz.quizlet.R
 
 
@@ -50,7 +48,7 @@ class ScoreFragment : Fragment(){
             val playFragment = PlayFragment()
             transaction.addToBackStack("Score-Play")
             transaction.hide(this)
-            transaction.add(R.id.main_fragment_view, playFragment)
+            transaction.replace(R.id.main_fragment_view, playFragment)
             transaction.commit()
         }
         return view

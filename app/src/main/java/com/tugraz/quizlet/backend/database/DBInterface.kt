@@ -11,9 +11,11 @@ interface DBInterface {
 
     fun getAllQuestionsForCategory(categoryName: String) : ImmutableList<Question>
 
-    fun addUser(user: User): Boolean
+    fun addUser(email: String, password: String): Boolean
 
-    fun loginUser(email: String, password: String) : User
-    fun onDestroy()
-    fun onStop()
+    fun loginUser(email: String, password: String) : Boolean
+
+    fun getHighscoreOfCurrentUser(): Int
+
+    fun updateUserHighscore(newHighscore: Int)
 }
