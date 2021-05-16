@@ -111,9 +111,9 @@ class PlayFragment : Fragment(), View.OnClickListener {
 
         val answersIndices = arrayListOf(0, 1, 2, 3)
         shuffle(answersIndices)
-        for (i: Int in 0 .. answersIndices.size - 2 )
+        for (i: Int in 0 until answersIndices.size - 1)
         {
-            view.findViewById<Button>(ANSWER_BUTTONS[i]).text = newQuestion.wrongAnswers[i]
+            view.findViewById<Button>(ANSWER_BUTTONS[answersIndices[i]]).text = newQuestion.wrongAnswers[i]
         }
         view.findViewById<Button>(ANSWER_BUTTONS[answersIndices[answersIndices.size - 1]]).text = newQuestion.rightAnswer
         correctAnswerIndex = answersIndices[answersIndices.size - 1]
