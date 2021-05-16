@@ -1,18 +1,13 @@
 package com.tugraz.quizlet.frontend
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.tugraz.quizlet.R
-import com.tugraz.quizlet.frontend.StartActivity
 import io.realm.mongodb.AppException
-import org.intellij.lang.annotations.Language
-import java.util.*
 
 
 class LoginActivity : AppCompatActivity() {
