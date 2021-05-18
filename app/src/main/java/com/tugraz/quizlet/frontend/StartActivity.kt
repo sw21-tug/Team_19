@@ -31,6 +31,13 @@ class StartActivity : AppCompatActivity()
         val newLanguage = if (prevLanguage == "en") "zh" else "en"
 
         LocaleHelper.saveLocale(this, newLanguage)
+        LocaleHelper.setLocale(this, newLanguage)
+
+        val transaction = supportFragmentManager.beginTransaction();
+        val startFragment = StartFragment()
+        //transaction.hide(this)
+        transaction.replace(R.id.main_fragment_view, startFragment)
+        transaction.commit()
 
         val toastText = getString(R.string.toast_language_change)
         val toast = Toast.makeText(applicationContext, toastText, Toast.LENGTH_SHORT)
