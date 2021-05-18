@@ -140,6 +140,7 @@ class PlayFragment : Fragment(), View.OnClickListener {
 
                             val arguments = Bundle()
                             arguments.putInt("score", score)
+                            arguments.putInt("highscore", SplashActivity.requestHandler.getHighscoreOfCurrentUser())
                             score = 0
 
                             scoreFragment.arguments = arguments
