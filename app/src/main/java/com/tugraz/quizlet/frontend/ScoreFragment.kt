@@ -39,6 +39,8 @@ class ScoreFragment : Fragment() {
         val scoreTextView = view.findViewById<TextView>(R.id.text_view_score)
         scoreTextView.text = score?.toString()
 
+        val highScoreTextView = view.findViewById<TextView>(R.id.text_view_high_score)
+        highScoreTextView.text = "getfromDatabase"
         return view
     }
 
