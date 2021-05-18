@@ -85,6 +85,7 @@
             android:clickable="true"
             android:contentDescription="@string/app_start_layout_settings_button"
             android:focusable="true"
+            android:onClick="onSettingsClicked"
             app:srcCompat="@drawable/settings_button"
             tools:layout_editor_absoluteX="160dp"
             tools:layout_editor_absoluteY="578dp" />
