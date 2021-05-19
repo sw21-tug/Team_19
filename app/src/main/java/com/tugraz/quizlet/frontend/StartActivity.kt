@@ -40,6 +40,13 @@ class StartActivity : AppCompatActivity()
         toast.show()
     }
 
+    fun onPlusClicked(view: View) {
+        val transaction = supportFragmentManager.beginTransaction()
+        val addQuestionFragment = AddQuestionFragment()
+        transaction.replace(R.id.main_fragment_view, addQuestionFragment)
+        transaction.commit()
+    }
+
     override fun onBackPressed() {
         val transaction = supportFragmentManager.beginTransaction();
         val startFragment = StartFragment()

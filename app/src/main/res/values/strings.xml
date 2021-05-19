@@ -18,4 +18,15 @@
     <string name="toast_wrong_answer">Wrong answer</string>
     <string name="text_view_score">Score</string>
     <string name="score_play_again">Play Again</string>
+    <string-array name="app_start_add_question_category">
+        <item>Science</item>
+        <item>Games</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="text_view_add_Question">Add a question!</string>
+    <string name="app_start_add_question_question_Hint">Enter your question here!</string>
+    <string name="app_start_add_question_right_answer_hint">Enter your right answer here!</string>
+    <string name="app_start_add_question_wrong_answer_hint">Enter one of the wrong answers here!</string>
+    <string name="app_start_add_question_submit">Save question</string>
 </resources>
