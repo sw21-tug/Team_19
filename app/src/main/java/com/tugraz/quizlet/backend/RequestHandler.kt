@@ -90,6 +90,10 @@ class RequestHandler(private val dBInterface: DBInterface) {
         return dBInterface.getAllQuestionsForCategory(categoryName);
     }
 
+    fun getHighscoreCurrentGame(): Int {
+        return this.highscoreForCurrentGame
+    }
+
     @VisibleForTesting
     fun setRemainingQuestionForCurrentGame(questions: ArrayList<Question>) {
         this.remainingQuestionForCurrentGame = questions
@@ -98,11 +102,6 @@ class RequestHandler(private val dBInterface: DBInterface) {
     @VisibleForTesting
     fun getRemainingQuestionForCurrentGame(): ArrayList<Question> {
         return this.remainingQuestionForCurrentGame
-    }
-
-    @VisibleForTesting
-    fun getHighscoreCurrentGame(): Int {
-        return this.highscoreForCurrentGame
     }
 
     @VisibleForTesting

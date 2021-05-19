@@ -17,4 +17,5 @@
     <string name="toast_language_change">Language has been changed. Please restart application to apply the changes.</string>
     <string name="toast_wrong_answer">Wrong answer</string>
     <string name="text_view_score">Score</string>
+    <string name="score_play_again">Play Again</string>
 </resources>
