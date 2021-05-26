@@ -1,7 +1,6 @@
 package com.tugraz.quizlet.frontend
 
 import android.os.Bundle
-import android.text.Selection.moveDown
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -165,7 +164,6 @@ class PlayFragment : Fragment(), View.OnClickListener {
 
         val arguments = Bundle()
         arguments.putInt("score", SplashActivity.requestHandler.endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase())
-        arguments.putInt("highscore", SplashActivity.requestHandler.getHighscoreOfCurrentUser())
 
         scoreFragment.arguments = arguments
         transaction.addToBackStack("Play-Score")

@@ -1,27 +1,18 @@
 package com.tugraz.quizlet.backend.database
 
-import androidx.annotation.UiThread
 import com.google.common.collect.ImmutableList
 import com.tugraz.quizlet.backend.database.model.Question
+import com.tugraz.quizlet.backend.database.model.User
 import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.RealmObject
 import io.realm.RealmResults
 import io.realm.kotlin.where
 import io.realm.mongodb.App
 import io.realm.mongodb.AppException
 import io.realm.mongodb.Credentials
-import io.realm.mongodb.ErrorCode
-import io.realm.mongodb.mongo.MongoClient
-import io.realm.mongodb.mongo.MongoCollection
-import io.realm.mongodb.mongo.MongoDatabase
 import io.realm.mongodb.sync.SyncConfiguration
-import kotlinx.coroutines.awaitAll
-import org.bson.Document
 import org.bson.types.ObjectId
 import java.util.logging.Logger
 import kotlin.jvm.Throws
-import com.tugraz.quizlet.backend.database.model.User as User
 
 class DBManager(private val quizletApp: App) : DBInterface {
     companion object {
@@ -35,13 +26,11 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
     init {
         /** This needs to be here for the public question **/
-        anonymousLogin()
-    }
-
-    fun anonymousLogin() {
-        val anonymousCredentials: Credentials = Credentials.anonymous()
-        quizletApp.login(anonymousCredentials)
-        anon = quizletApp.currentUser()
+        val thread = Thread(Runnable {
+            val creds = Credentials.anonymous()
+            quizletApp.login(creds)
+            anon = quizletApp.currentUser()
+        })
     }
 
     override fun addQuestion(question: Question){

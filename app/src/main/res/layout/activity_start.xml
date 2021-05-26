@@ -49,6 +49,7 @@
             app:srcCompat="@drawable/plus_icon"
             tools:layout_editor_absoluteX="119dp"
             tools:layout_editor_absoluteY="619dp"
+            android:onClick="onPlusClicked"
             android:contentDescription="@string/app_start_layout_plus_button" />
 
         <ImageView

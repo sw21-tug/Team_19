@@ -8,14 +8,15 @@ import org.bson.types.ObjectId
 import java.security.InvalidParameterException
 
 open class Question(
-@PrimaryKey var _id: ObjectId = ObjectId(),
-var category: Question_category? = null,
-var question: String? = null,
-var rightAnswer: String? = null,
-var userCreated: String? = null,
-@Required
-var wrongAnswers: RealmList<String> = RealmList()
-): RealmObject() {
+    @PrimaryKey var _id: ObjectId = ObjectId(),
+    var category: Question_category? = null,
+    var question: String? = null,
+    var rightAnswer: String? = null,
+    var userCreated: String? = null,
+    @Required
+    var wrongAnswers: RealmList<String> = RealmList()
+):RealmObject() {
+
     init {
         if(wrongAnswers.size > 3)
             throw InvalidParameterException("Invalid number of wrong answers. Must be 3")
