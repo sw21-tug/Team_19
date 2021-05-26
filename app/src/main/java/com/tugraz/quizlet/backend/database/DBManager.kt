@@ -11,6 +11,7 @@ import io.realm.kotlin.where
 import io.realm.mongodb.App
 import io.realm.mongodb.AppException
 import io.realm.mongodb.Credentials
+import io.realm.mongodb.ErrorCode
 import io.realm.mongodb.mongo.MongoClient
 import io.realm.mongodb.mongo.MongoCollection
 import io.realm.mongodb.mongo.MongoDatabase
@@ -33,38 +34,8 @@ class DBManager(private val quizletApp: App) : DBInterface {
     private var realm: Realm? = null
 
     init {
-        //addUser("emilia0@test.com", "itsmeemilia")
-
-        //Thread.sleep(1000)
-
-        //loginUser("something@something.com", "hihihizuujkj")
-
-        //LOG.fine("logged in user " + quizletApp.currentUser())
-        /*
-        var category = Question_category("description", "category name")
-        var listWrong: RealmList<String> = RealmList()
-        listWrong.add("wrong answer 1")
-        listWrong.add("wrong answer 2")
-        listWrong.add("wrong answer 3")
-
-        var question = Question(ObjectId(), category, "This is my question", "this is the right answer")*/
-
-        //loginUser("emilia0@test.com", "itsmeemilia")
-
-        //Thread.sleep(100)
-
-        /*
-        val questiongen = Generator8()
-        questiongen.foreach { q: Question -> addQuestion(q) }
-
-        */
-
         /** This needs to be here for the public question **/
         anonymousLogin()
-
-
-        loginUser("emilia0@test.com", "itsmeemilia")
-        updateUserHighscore(5)
     }
 
     fun anonymousLogin() {
@@ -74,7 +45,6 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun addQuestion(question: Question){
-        //user = quizletApp.currentUser()
         question.userCreated = anon!!.id
         val config = SyncConfiguration.Builder(anon!!, anon!!.id)
             .allowWritesOnUiThread(true)
@@ -87,7 +57,6 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getAllQuestions(): ImmutableList<Question> {
-        //user = quizletApp.currentUser()
         val config = SyncConfiguration.Builder(anon!!, anon!!.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
@@ -148,12 +117,8 @@ class DBManager(private val quizletApp: App) : DBInterface {
     @Throws(AppException::class)
     override fun loginUser(email: String, password: String): Boolean {
         val thread = Thread(Runnable {
-            try {
-                val creds = Credentials.emailPassword(email, password)
-                quizletApp.login(creds)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            val creds = Credentials.emailPassword(email, password)
+            quizletApp.login(creds)
         })
 
         thread.start()
@@ -164,9 +129,6 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getHighscoreOfCurrentUser(): Int {
-        //user = quizletApp.currentUser()
-
-        var results: RealmResults<User>? = null
         var highscore : Long = -1
 
         val config = SyncConfiguration.Builder(user!!, user!!.id)
