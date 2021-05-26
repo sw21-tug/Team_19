@@ -61,6 +61,10 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
         /** This needs to be here for the public question **/
         anonymousLogin()
+
+
+        loginUser("emilia0@test.com", "itsmeemilia")
+        updateUserHighscore(5)
     }
 
     fun anonymousLogin() {
@@ -186,22 +190,16 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun updateUserHighscore(newHighscore: Int) {
-        val anonymousCredentials: Credentials = Credentials.anonymous()
-        quizletApp.loginAsync(anonymousCredentials) {
-            if (it.isSuccess) {
-                val mongoClient: MongoClient =
-                    user?.getMongoClient("mongodb-atlas")!! // service for MongoDB Atlas cluster containing custom user data
-                val mongoDatabase: MongoDatabase =
-                    mongoClient.getDatabase("Quizlet")!!
-                val mongoCollection: MongoCollection<Document> =
-                    mongoDatabase.getCollection("Users")!!
-                mongoCollection.updateOne(Document("_id", user!!.id), Document("highscore", newHighscore))
-                    .getAsync { result ->
-                        if (result.isSuccess) {
-                            LOG.fine("jsda")
-                        }
-                    }
-            }
+        val config = SyncConfiguration.Builder(user!!, user!!.id)
+            .allowWritesOnUiThread(true)
+            .allowQueriesOnUiThread(true)
+            .build()
+
+        realm = Realm.getInstance(config)
+        realm?.executeTransaction { transactionRealm ->
+            val thisuser: User =
+                transactionRealm.where<User>().findFirst()!!
+            thisuser.highscore = newHighscore.toLong()
         }
     }
 
