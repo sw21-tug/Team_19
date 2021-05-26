@@ -5,7 +5,6 @@ import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.User
 
 interface DBInterface {
-
     fun addQuestion(question: Question)
 
     fun getAllQuestions() : ImmutableList<Question>
