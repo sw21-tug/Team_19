@@ -5,8 +5,10 @@ import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.Question_category
 
 import io.realm.Realm
+import io.realm.RealmChangeListener
 import io.realm.RealmList
 import io.realm.RealmResults
+import io.realm.kotlin.toFlow
 import io.realm.mongodb.App
 import io.realm.mongodb.AppException
 import io.realm.mongodb.Credentials
@@ -74,20 +76,21 @@ class DBManager(private val quizletApp: App) : DBInterface {
             .allowQueriesOnUiThread(true)
             .build()
 
-        var results: RealmResults<Question>? = null
-        realm = Realm.getInstance(config)
-        realm?.executeTransactionAsync( { transactionRealm ->
-            results = transactionRealm.where(Question::class.java)?.findAllAsync() as RealmResults<Question>;
-        }, {
-            if (results == null || results!!.isEmpty()) {
-                callback(ImmutableList.of())
+        Realm.getInstanceAsync(config, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm) {
+                val result = realm.where<Question>(Question::class.java).findAllAsync()
+
+                result?.addChangeListener(RealmChangeListener{ fetchedResult ->
+                    run {
+                        if (fetchedResult == null || fetchedResult.isEmpty())
+                            callback(ImmutableList.of())
+                        else
+                            callback(ImmutableList.copyOf(fetchedResult.subList(0, result.size)))
+                    }
+                })
             }
-            callback(ImmutableList.copyOf(results?.subList(0, results!!.size)))
-        }, {
-
-        } )
+        })
     }
-
 
     override fun getAllQuestionsForCategory(categoryName: String): ImmutableList<Question> {
         throw NotImplementedError()
