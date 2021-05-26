@@ -54,9 +54,19 @@ class RequestHandler(private val dBInterface: DBInterface) {
         return realmList
     }
 
-    fun startNewGameAndReturnTheFirstQuestion() {
+    fun fetchAddQuestions() {
         this.highscoreForCurrentGame = 0
         remainingQuestionForCurrentGame.addAll(dBInterface.getAllQuestions())
+    }
+
+    fun fetchAddQuestionsAsync(callback: () -> Unit) {
+        this.highscoreForCurrentGame = 0
+        dBInterface.getAllQuestionsAsync{questions ->
+            run {
+                remainingQuestionForCurrentGame.addAll(questions)
+                callback()
+            }
+        }
     }
 
     private fun getNextQuestionAndUpdateRemaining(): Question? {
