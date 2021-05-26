@@ -14,8 +14,9 @@
     <string name="app_start_layout_highscore_button" translatable="false">Layout_Highscore</string>
     <string name="app_start_layout_settings_button" translatable="false">Layout_Settings</string>
     <string name="app_play_title">Play</string>
-    <string name="toast_language_change">Language has been changed. Please restart application to apply the changes.</string>
+    <string name="toast_language_change">Language has been changed.</string>
     <string name="toast_wrong_answer">Wrong answer</string>
     <string name="text_view_score">Score</string>
+    <string name="text_view_high_score">Highscore</string>
     <string name="score_play_again">Play Again</string>
 </resources>

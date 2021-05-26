@@ -31,6 +31,9 @@ class StartActivity : AppCompatActivity()
         val newLanguage = if (prevLanguage == "en") "zh" else "en"
 
         LocaleHelper.saveLocale(this, newLanguage)
+        LocaleHelper.setLocale(this, newLanguage)
+
+        recreate();
 
         val toastText = getString(R.string.toast_language_change)
         val toast = Toast.makeText(applicationContext, toastText, Toast.LENGTH_SHORT)

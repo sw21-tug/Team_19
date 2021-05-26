@@ -13,6 +13,7 @@ import com.tugraz.quizlet.R
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_SCORE = "score"
+private const val ARG_HIGHSCORE= "highscore"
 private const val ARG_PARAM2 = "param2"
 
 
@@ -24,13 +25,14 @@ private const val ARG_PARAM2 = "param2"
 class ScoreFragment : Fragment(){
     // TODO: Rename and change types of parameters
     private var score: Int? = null
+    private var highscore: Int? = null
     private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             score = it.getInt(ARG_SCORE)
-            //score =  SplashActivity.requestHandler.getHighscoreOfCurrentUser
+            highscore = it.getInt(ARG_HIGHSCORE)
             param2 = it.getString(ARG_PARAM2)
         }
     }
@@ -42,6 +44,9 @@ class ScoreFragment : Fragment(){
 
         val scoreTextView = view.findViewById<TextView>(R.id.text_view_score)
         scoreTextView.text = score?.toString()
+
+        val highScoreTextView = view.findViewById<TextView>(R.id.text_view_high_score)
+        highScoreTextView.text = highscore?.toString()
         val playAgainButton = view.findViewById<Button>(R.id.play_again)
         playAgainButton.setOnClickListener {
             val transaction = parentFragmentManager.beginTransaction();
@@ -73,5 +78,4 @@ class ScoreFragment : Fragment(){
                     }
                 }
     }
-
 }
