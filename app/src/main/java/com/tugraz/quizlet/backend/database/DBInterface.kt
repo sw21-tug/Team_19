@@ -9,6 +9,8 @@ interface DBInterface {
 
     fun getAllQuestions() : ImmutableList<Question>
 
+    fun getAllQuestionsAsync(callback: (ImmutableList<Question>) -> Unit)
+
     fun getAllQuestionsForCategory(categoryName: String) : ImmutableList<Question>
 
     fun addUser(email: String, password: String): Boolean

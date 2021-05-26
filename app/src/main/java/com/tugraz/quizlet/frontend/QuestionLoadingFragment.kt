@@ -38,15 +38,11 @@ class QuestionLoadingFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_question_loading, container, false)
-
-        val navigateToPlayCallback = Callable {
-            activity?.runOnUiThread {
-                navigateToPlayFragment()
-            }
-        }
-        //SplashActivity.requestHandler.getAllQuestion(navigateToPlayCallback)
-
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        SplashActivity.requestHandler.fetchAddQuestionsAsync(this::navigateToPlayFragment)
     }
 
     companion object {

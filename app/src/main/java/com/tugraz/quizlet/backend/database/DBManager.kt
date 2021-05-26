@@ -67,6 +67,27 @@ class DBManager(private val quizletApp: App) : DBInterface {
         return ImmutableList.copyOf(results?.subList(0, results!!.size))
     }
 
+    override fun getAllQuestionsAsync(callback: (ImmutableList<Question>) -> Unit) {
+        user = quizletApp.currentUser()
+        val config = SyncConfiguration.Builder(user!!, user!!.id)
+            .allowWritesOnUiThread(true)
+            .allowQueriesOnUiThread(true)
+            .build()
+
+        var results: RealmResults<Question>? = null
+        realm = Realm.getInstance(config)
+        realm?.executeTransactionAsync( { transactionRealm ->
+            results = transactionRealm.where(Question::class.java)?.findAllAsync() as RealmResults<Question>;
+        }, {
+            if (results == null || results!!.isEmpty()) {
+                callback(ImmutableList.of())
+            }
+            callback(ImmutableList.copyOf(results?.subList(0, results!!.size)))
+        }, {
+
+        } )
+    }
+
 
     override fun getAllQuestionsForCategory(categoryName: String): ImmutableList<Question> {
         throw NotImplementedError()

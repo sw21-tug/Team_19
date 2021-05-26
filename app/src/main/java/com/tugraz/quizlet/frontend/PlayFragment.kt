@@ -61,7 +61,6 @@ class PlayFragment : Fragment(), View.OnClickListener {
             view.findViewById<Button>(ANSWER_BUTTONS[i]).setOnClickListener(this)
         }
 
-        SplashActivity.requestHandler.startNewGameAndReturnTheFirstQuestion()
         displayNewQuestion(view)
 
         return view
