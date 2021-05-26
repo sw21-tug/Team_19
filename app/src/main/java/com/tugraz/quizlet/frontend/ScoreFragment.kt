@@ -1,12 +1,14 @@
 package com.tugraz.quizlet.frontend
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.tugraz.quizlet.R
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -14,12 +16,13 @@ private const val ARG_SCORE = "score"
 private const val ARG_HIGHSCORE= "highscore"
 private const val ARG_PARAM2 = "param2"
 
+
 /**
  * A simple [Fragment] subclass.
  * Use the [ScoreFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ScoreFragment : Fragment() {
+class ScoreFragment : Fragment(){
     // TODO: Rename and change types of parameters
     private var score: Int? = null
     private var highscore: Int? = null
@@ -44,6 +47,15 @@ class ScoreFragment : Fragment() {
 
         val highScoreTextView = view.findViewById<TextView>(R.id.text_view_high_score)
         highScoreTextView.text = highscore?.toString()
+        val playAgainButton = view.findViewById<Button>(R.id.play_again)
+        playAgainButton.setOnClickListener {
+            val transaction = parentFragmentManager.beginTransaction();
+            val playFragment = PlayFragment()
+            transaction.addToBackStack("Score-Play")
+            transaction.hide(this)
+            transaction.replace(R.id.main_fragment_view, playFragment)
+            transaction.commit()
+        }
         return view
     }
 

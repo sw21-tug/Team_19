@@ -7,7 +7,7 @@
     <string name="app_login_pw_description">密码：</string>
     <string name="app_start_exit_button">"結束"</string>
     <string name="app_play_title">播放</string>
-    <string name="toast_language_change">語言已更改。請重新啟動應用程序以應用更改。</string>
+    <string name="toast_language_change">語言已更改。</string>
     <string name="toast_wrong_answer">錯誤的答案</string>
     <string name="text_view_score">分數</string>
     <string name="text_view_high_score">高分</string>
