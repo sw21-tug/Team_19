@@ -1,13 +1,12 @@
 package com.tugraz.quizlet.backend.database
 
-import androidx.annotation.UiThread
 import com.google.common.collect.ImmutableList
 import com.tugraz.quizlet.backend.database.model.Question
+import com.tugraz.quizlet.backend.database.model.Question_category
+
 import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.RealmObject
+import io.realm.RealmList
 import io.realm.RealmResults
-import io.realm.kotlin.where
 import io.realm.mongodb.App
 import io.realm.mongodb.AppException
 import io.realm.mongodb.Credentials
@@ -15,80 +14,41 @@ import io.realm.mongodb.mongo.MongoClient
 import io.realm.mongodb.mongo.MongoCollection
 import io.realm.mongodb.mongo.MongoDatabase
 import io.realm.mongodb.sync.SyncConfiguration
-import kotlinx.coroutines.awaitAll
 import org.bson.Document
 import org.bson.types.ObjectId
 import java.util.logging.Logger
 import kotlin.jvm.Throws
-import com.tugraz.quizlet.backend.database.model.User as User
+import kotlin.math.absoluteValue
 
 class DBManager(private val quizletApp: App) : DBInterface {
     companion object {
         val LOG: Logger = Logger.getLogger(DBManager::class.java.name)
     }
 
-    private var anon: io.realm.mongodb.User? = null
-
     private var user: io.realm.mongodb.User? = null
     private var realm: Realm? = null
 
     init {
-        //addUser("emilia0@test.com", "itsmeemilia")
 
-        //Thread.sleep(1000)
-
-        //loginUser("something@something.com", "hihihizuujkj")
-
-        //LOG.fine("logged in user " + quizletApp.currentUser())
-        /*
-        var category = Question_category("description", "category name")
-        var listWrong: RealmList<String> = RealmList()
-        listWrong.add("wrong answer 1")
-        listWrong.add("wrong answer 2")
-        listWrong.add("wrong answer 3")
-
-        var question = Question(ObjectId(), category, "This is my question", "this is the right answer")*/
-
-        //loginUser("emilia0@test.com", "itsmeemilia")
-
-        //Thread.sleep(100)
-
-        /*
-        val questiongen = Generator8()
-        questiongen.foreach { q: Question -> addQuestion(q) }
-
-        */
-
-        /** This needs to be here for the public question **/
-        anonymousLogin()
-
-
-        loginUser("emilia0@test.com", "itsmeemilia")
-        updateUserHighscore(5)
     }
 
-    fun anonymousLogin() {
-        val anonymousCredentials: Credentials = Credentials.anonymous()
-        quizletApp.login(anonymousCredentials)
-        anon = quizletApp.currentUser()
-    }
-
-    override fun addQuestion(question: Question){
-        //user = quizletApp.currentUser()
-        question.userCreated = anon!!.id
-        val config = SyncConfiguration.Builder(anon!!, anon!!.id)
+    override fun addQuestion(question: Question) {
+        user = quizletApp.currentUser()
+        question.userCreated = user!!.id;
+        val config = SyncConfiguration.Builder(user!!, user!!.id)
             .allowWritesOnUiThread(true)
             .build()
 
         realm = Realm.getInstance(config)
         realm?.executeTransactionAsync() { transactionRealm ->
             transactionRealm.insert(question)
+            LOG.severe("did something")
         }
     }
 
     override fun getAllQuestions(): ImmutableList<Question> {
-        //user = quizletApp.currentUser()
-        val config = SyncConfiguration.Builder(anon!!, anon!!.id)
+        user = quizletApp.currentUser()
+        val config = SyncConfiguration.Builder(user!!, user!!.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
@@ -112,95 +72,86 @@ class DBManager(private val quizletApp: App) : DBInterface {
         throw NotImplementedError()
     }
 
-
     override fun addUser(email: String, password: String): Boolean {
-        val thread = Thread(Runnable {
-            try {
-                quizletApp.emailPassword.registerUser(email, password)
-            } catch (e: Exception) {
-                e.printStackTrace()
+        try {
+            quizletApp.emailPassword.registerUserAsync(email, password) {
+                if (!it.isSuccess) {
+                    LOG.fine("Error: ${it.error}")
+                } else {
+                    LOG.fine("Successfully registered user.")
+                }
             }
-        })
-
-        thread.start()
-        thread.join()
-        loginUser(email, password)
-
-        // insert into custom user data
-        user = quizletApp.currentUser()
-
-        val config = SyncConfiguration.Builder(user!!, user!!.id)
-            .allowWritesOnUiThread(true)
-            .allowQueriesOnUiThread(true)
-            .build()
-        val user = User(ObjectId(user!!.id), 0, user!!.id)
-
-
-        realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
-            transactionRealm.insert(user)
-            LOG.severe("did something")
+        } catch (exe: AppException) {
+            false;
         }
-        return true
+        Thread.sleep(1000)
+        loginUser(email, password)
+        Thread.sleep(1000)
+        // insert into custom user data
+        val anonymousCredentials: Credentials = Credentials.anonymous()
+        user = quizletApp.currentUser()
+        val userid = quizletApp.currentUser()?.id
+        quizletApp.loginAsync(anonymousCredentials) {
+            if (it.isSuccess) {
+                val mongoClient: MongoClient =
+                    user?.getMongoClient("mongodb-atlas")!! // service for MongoDB Atlas cluster containing custom user data
+                val mongoDatabase: MongoDatabase =
+                    mongoClient.getDatabase("Quizlet")!!
+                val mongoCollection: MongoCollection<Document> =
+                    mongoDatabase.getCollection("Users")!!
+                mongoCollection.insertOne(Document("_id", userid).append("highscore", 0).append("userCreated", userid))
+                    .getAsync { result ->
+                        if (result.isSuccess) {
+                            LOG.fine("jsda")
+                        }
+                    }
+            }
+        }
+        return true;
     }
 
     // returns user with NULL, NULL, NULL if login fails
     @Throws(AppException::class)
     override fun loginUser(email: String, password: String): Boolean {
-        val thread = Thread(Runnable {
-            try {
-                val creds = Credentials.emailPassword(email, password)
-                quizletApp.login(creds)
-            } catch (e: Exception) {
-                e.printStackTrace()
+        val creds = Credentials.emailPassword(email, password)
+        quizletApp.loginAsync(creds) {
+            if (!it.isSuccess) {
+                LOG.fine("Error: ${it.error}")
+            } else {
+                LOG.fine("Successfully logged in user.")
             }
-        })
-
-        thread.start()
-        thread.join()
-
+        }
         user = quizletApp.currentUser()
         return true
     }
 
     override fun getHighscoreOfCurrentUser(): Int {
-        //user = quizletApp.currentUser()
+        /*var customUserScore: Document = Document()
+        customUserScore = user?.customData!!
+        Thread.sleep(1000)*/
 
-        var results: RealmResults<User>? = null
-        var highscore : Long = -1
-
-        val config = SyncConfiguration.Builder(user!!, user!!.id)
-            .allowWritesOnUiThread(true)
-            .allowQueriesOnUiThread(true)
-            .build()
-
-        realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
-            val result =
-                transactionRealm.where(User::class.java)?.findFirst()
-            highscore = result?.highscore!!
-        }
-
-
-        if (highscore.equals(-1)) {
-            return 0
-        }
-
-        return highscore.toInt()
+        //return (customUserScore.get("highscore") as Int).absoluteValue
+        return 0;
     }
 
     override fun updateUserHighscore(newHighscore: Int) {
-        val config = SyncConfiguration.Builder(user!!, user!!.id)
-            .allowWritesOnUiThread(true)
-            .allowQueriesOnUiThread(true)
-            .build()
-
-        realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
-            val thisuser: User =
-                transactionRealm.where<User>().findFirst()!!
-            thisuser.highscore = newHighscore.toLong()
-        }
+        /*val anonymousCredentials: Credentials = Credentials.anonymous()
+        quizletApp.loginAsync(anonymousCredentials) {
+            if (it.isSuccess) {
+                val mongoClient: MongoClient =
+                    user?.getMongoClient("mongodb-atlas")!! // service for MongoDB Atlas cluster containing custom user data
+                val mongoDatabase: MongoDatabase =
+                    mongoClient.getDatabase("Quizlet")!!
+                val mongoCollection: MongoCollection<Document> =
+                    mongoDatabase.getCollection("Users")!!
+                mongoCollection.updateOne(Document("_id", user!!.id), Document("highscore", newHighscore))
+                    .getAsync { result ->
+                        if (result.isSuccess) {
+                            LOG.fine("jsda")
+                        }
+                    }
+            }
+        }*/
     }
 
 }
