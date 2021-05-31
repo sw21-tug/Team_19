@@ -19,7 +19,6 @@ class AddQuestionFragmentTest {
     val activityRule: ActivityScenarioRule<StartActivity> =
         ActivityScenarioRule(StartActivity::class.java)
 
-
     @Before
     fun setUp() {
         launchFragmentInContainer<AddQuestionFragment>(

@@ -11,7 +11,6 @@ import io.realm.Realm
 import io.realm.mongodb.App
 import io.realm.mongodb.AppConfiguration
 
-
 class SplashActivity : AppCompatActivity() {
 
     companion object {
@@ -31,7 +30,6 @@ class SplashActivity : AppCompatActivity() {
         val dbManager = DBManager(quizletApp)
         // TODO: make requestHandler Singleton?
         requestHandler = RequestHandler(dbManager)
-
 
         val handler = Handler()
         handler.postDelayed({

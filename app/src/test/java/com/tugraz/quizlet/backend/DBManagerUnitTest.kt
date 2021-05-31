@@ -18,7 +18,6 @@ class DBManagerUnitTest {
         private const val USER_ID = "user id"
     }
 
-
     private lateinit var dbManager: DBManager
     private lateinit var mockedApp: App
     private lateinit var mockedUser: User
