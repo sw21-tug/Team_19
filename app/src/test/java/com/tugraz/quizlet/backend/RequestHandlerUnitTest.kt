@@ -41,7 +41,6 @@ class RequestHandlerUnitTest {
         val email: String = "test@mock.junit"
         val password: String = "123456"
         `when`(mockDBInterface.loginUser(email, password)).thenReturn(true)
-        val actualUser = requestHandler.loginUser(email, password)
         verify(mockDBInterface, times(1)).loginUser(email, password)
     }
 
@@ -128,7 +127,6 @@ class RequestHandlerUnitTest {
         val expectedHighscore = 3
         val pointsPerRightAnswer = 5
         requestHandler.setHighscoreCurrentGame(expectedHighscore)
-        val question = requestHandler.getNextQuestionAndUpdateRemainingAndUpdateHighscore()
 
         `when`(mockDBInterface.getHighscoreOfCurrentUser()).thenReturn(0)
 

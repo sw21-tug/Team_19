@@ -27,7 +27,6 @@ class AddQuestionFragmentTest {
             initialState = Lifecycle.State.RESUMED, // Lifecycle.State
             factory = null // FragmentFactory
         )
-        val scenario = launchFragmentInContainer<AddQuestionFragment>()
     }
 
     @Test
