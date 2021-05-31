@@ -6,7 +6,7 @@ import java.util.*
 object LocaleHelper {
     private const val LANGUAGE = "Locale.Language"
 
-    fun setLocale(context: Context, language: String) : Context {
+    fun setLocale(context: Context, language: String): Context {
         val newLocale = Locale(language)
         Locale.setDefault(newLocale)
 
@@ -15,20 +15,19 @@ object LocaleHelper {
         configuration.setLayoutDirection(newLocale)
         context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
 
-//      return context.createConfigurationContext(configuration);
         return context
     }
 
     fun saveLocale(context: Context, language: String) {
         val sharedPref = context.getSharedPreferences("main", Context.MODE_PRIVATE) ?: return
 
-        with (sharedPref.edit()) {
+        with(sharedPref.edit()) {
             putString(LANGUAGE, language)
             apply()
         }
     }
 
-    fun getLocale(context: Context) : String {
+    fun getLocale(context: Context): String {
         val sharedPref = context.getSharedPreferences("main", Context.MODE_PRIVATE)
 
         return if (sharedPref != null) {

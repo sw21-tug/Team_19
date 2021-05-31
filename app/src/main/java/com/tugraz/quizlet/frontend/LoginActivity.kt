@@ -17,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
 
         // TODO: Set new Text for lang support
         val login = findViewById<Button>(R.id.login)
-        login.setOnClickListener{
+        login.setOnClickListener {
             val intent = Intent(this, StartActivity::class.java)
             val email = findViewById<EditText>(R.id.editTextTextEmailAddress).text
             val password = findViewById<EditText>(R.id.editTextTextPassword).text

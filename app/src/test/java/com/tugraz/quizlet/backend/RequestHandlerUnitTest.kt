@@ -50,16 +50,18 @@ class RequestHandlerUnitTest {
         val category = Question_category("animals", "desc")
         val question: String = "what is the fastest mammal?"
         val answer: String = "cheetah"
-        val wrongAnswersRealmList: RealmList<String> = RealmList("sloth","antelope","rabbit")
-        val wrongAnswersImmutableList: ImmutableList<String> = ImmutableList.of("sloth","antelope","rabbit")
-        val expectedQuestion = Question(ObjectId(), category, question, answer, null, wrongAnswersRealmList)
+        val wrongAnswersRealmList: RealmList<String> = RealmList("sloth", "antelope", "rabbit")
+        val wrongAnswersImmutableList: ImmutableList<String> =
+            ImmutableList.of("sloth", "antelope", "rabbit")
+        val expectedQuestion =
+            Question(ObjectId(), category, question, answer, null, wrongAnswersRealmList)
         requestHandler.addQuestion(category, question, answer, wrongAnswersImmutableList)
         verify(mockDBInterface, times(1)).addQuestion(expectedQuestion)
     }
 
     @Test
     fun testGetAllQuestions() {
-        val expectedQuestions:ImmutableList<Question> = generateRandomQuestion(5)
+        val expectedQuestions: ImmutableList<Question> = generateRandomQuestion(5)
         `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
         val actualQuestions = requestHandler.getAllQuestion()
         verify(mockDBInterface, times(1)).getAllQuestions()
@@ -69,7 +71,8 @@ class RequestHandlerUnitTest {
     @Test
     fun testGetAllQuestionsOfCategoryWithFoundCategory() {
         val category = "hi"
-        val expectedQuestions:ImmutableList<Question> = generateRandomQuestionForCategory(4, category)
+        val expectedQuestions: ImmutableList<Question> =
+            generateRandomQuestionForCategory(4, category)
         `when`(mockDBInterface.getAllQuestionsForCategory(category)).thenReturn(expectedQuestions)
         val actualQuestions = requestHandler.getAllQuestionForCategory(category)
         verify(mockDBInterface, times(1)).getAllQuestionsForCategory(category)
@@ -84,9 +87,10 @@ class RequestHandlerUnitTest {
         verify(mockDBInterface, times(1)).getAllQuestionsForCategory(category)
         assertTrue(actualQuestions.isEmpty())
     }
+
     @Test
     fun testStartNewGame() {
-        val expectedQuestions:ImmutableList<Question> = generateRandomQuestion(5)
+        val expectedQuestions: ImmutableList<Question> = generateRandomQuestion(5)
 
         `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
         requestHandler.startNewGameAndReturnTheFirstQuestion()
@@ -96,7 +100,7 @@ class RequestHandlerUnitTest {
 
     @Test
     fun testStartNewGameNoQuestions() {
-        val expectedQuestions:ImmutableList<Question> = ImmutableList.of()
+        val expectedQuestions: ImmutableList<Question> = ImmutableList.of()
 
         `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
         requestHandler.startNewGameAndReturnTheFirstQuestion()
@@ -106,14 +110,17 @@ class RequestHandlerUnitTest {
 
     @Test
     fun testNextQuestion() {
-        val expectedQuestions:ImmutableList<Question> = generateRandomQuestion(10)
+        val expectedQuestions: ImmutableList<Question> = generateRandomQuestion(10)
         requestHandler.setRemainingQuestionForCurrentGame(ArrayList(expectedQuestions))
         val firstQuestion = expectedQuestions.first()
 
         val question = requestHandler.getNextQuestionAndUpdateRemainingAndUpdateHighscore()
 
         assertEquals(firstQuestion, question)
-        assertEquals(0, requestHandler.getHighscoreCurrentGame()) // 0 because of first question of the game
+        assertEquals(
+            0,
+            requestHandler.getHighscoreCurrentGame()
+        ) // 0 because of first question of the game
     }
 
     @Test
@@ -125,7 +132,8 @@ class RequestHandlerUnitTest {
 
         `when`(mockDBInterface.getHighscoreOfCurrentUser()).thenReturn(0)
 
-        val currHighscore = requestHandler.endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase()
+        val currHighscore =
+            requestHandler.endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase()
         assertEquals(expectedHighscore + pointsPerRightAnswer, currHighscore)
         verify(mockDBInterface, times(1)).updateUserHighscore(currHighscore)
     }
@@ -139,11 +147,21 @@ class RequestHandlerUnitTest {
         return immutableListBuilder.build()
     }
 
-    private fun generateRandomQuestionForCategory(numberOfRandomQuestions: Int, category: String): ImmutableList<Question> {
+    private fun generateRandomQuestionForCategory(
+        numberOfRandomQuestions: Int,
+        category: String
+    ): ImmutableList<Question> {
         val questionCategory = Question_category(category, "")
         val immutableListBuilder: ImmutableList.Builder<Question> = ImmutableList.Builder()
         for (i in 1..numberOfRandomQuestions) {
-            val question = Question(ObjectId(), questionCategory, "b$i", "c$i", null, RealmList("d$i", "e$i", "f$i"))
+            val question = Question(
+                ObjectId(),
+                questionCategory,
+                "b$i",
+                "c$i",
+                null,
+                RealmList("d$i", "e$i", "f$i")
+            )
             immutableListBuilder.add(question)
         }
         return immutableListBuilder.build()

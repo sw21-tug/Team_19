@@ -33,7 +33,12 @@ class RequestHandler(private val dBInterface: DBInterface) {
     }
 
     // TODO: add boolean for feedback?
-    fun addQuestion(category: Question_category, question: String, rightAnswer: String, wrongAnswers: ImmutableList<String>) {
+    fun addQuestion(
+        category: Question_category,
+        question: String,
+        rightAnswer: String,
+        wrongAnswers: ImmutableList<String>
+    ) {
         val newQuestion = Question(
             ObjectId(),
             category,
@@ -70,7 +75,7 @@ class RequestHandler(private val dBInterface: DBInterface) {
 
     fun endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase(): Int {
         remainingQuestionForCurrentGame.clear()
-        if(getHighscoreOfCurrentUser() < highscoreForCurrentGame) {
+        if (getHighscoreOfCurrentUser() < highscoreForCurrentGame) {
             dBInterface.updateUserHighscore(this.highscoreForCurrentGame)
         }
         return highscoreForCurrentGame

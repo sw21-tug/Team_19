@@ -7,7 +7,7 @@ import io.realm.annotations.RealmClass
 open class Question_category(
     var description: String? = null,
     var name: String? = null
-) :RealmObject() {
+) : RealmObject() {
     override fun toString(): String {
         return "Question_category(description=$description, name=$name)"
     }

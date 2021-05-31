@@ -33,7 +33,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
         })
     }
 
-    override fun addQuestion(question: Question){
+    override fun addQuestion(question: Question) {
         question.userCreated = anon!!.id
         val config = SyncConfiguration.Builder(anon!!, anon!!.id)
             .allowWritesOnUiThread(true)
@@ -55,7 +55,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
         realm = Realm.getInstance(config)
         realm?.executeTransaction { transactionRealm ->
             results =
-                    transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>;
+                transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>;
         }
 
         if (results == null || results!!.isEmpty()) {
@@ -118,7 +118,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getHighscoreOfCurrentUser(): Int {
-        var highscore : Long = -1
+        var highscore: Long = -1
 
         val config = SyncConfiguration.Builder(user!!, user!!.id)
             .allowWritesOnUiThread(true)

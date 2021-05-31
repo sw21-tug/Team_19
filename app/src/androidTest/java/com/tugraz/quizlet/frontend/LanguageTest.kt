@@ -16,7 +16,8 @@ import org.junit.runner.RunWith
 class LanguageTest {
 
     @get: Rule
-    val activityRule : ActivityScenarioRule<StartActivity> = ActivityScenarioRule(StartActivity::class.java)
+    val activityRule: ActivityScenarioRule<StartActivity> =
+        ActivityScenarioRule(StartActivity::class.java)
 
     @Test
     fun test_isActivityInView() {
@@ -27,9 +28,9 @@ class LanguageTest {
     fun test_areFragmentButtonDisplayed() {
 
         onView(withId(R.id.button_start))
-                .check(matches(isDisplayed()))
+            .check(matches(isDisplayed()))
         onView(withId(R.id.button_exit))
-                .check(matches(isDisplayed()))
+            .check(matches(isDisplayed()))
     }
 
     @Test

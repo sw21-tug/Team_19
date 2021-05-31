@@ -30,8 +30,8 @@ class LoginRequestTest {
     @Test
     fun loginRequestTest() {
 
-        val email : String = "test@test.com"
-        val password : String = "1234"
+        val email: String = "test@test.com"
+        val password: String = "1234"
 
         val appCompatEditText = onView(
             allOf(

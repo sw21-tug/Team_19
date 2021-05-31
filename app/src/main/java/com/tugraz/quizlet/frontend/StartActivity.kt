@@ -8,8 +8,7 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.tugraz.quizlet.R
 
-class StartActivity : AppCompatActivity()
-{
+class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
