@@ -2,7 +2,6 @@ package com.tugraz.quizlet.backend.database
 
 import com.google.common.collect.ImmutableList
 import com.tugraz.quizlet.backend.database.model.Question
-import com.tugraz.quizlet.backend.database.model.User
 
 interface DBInterface {
     fun addQuestion(question: Question)

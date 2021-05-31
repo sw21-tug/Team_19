@@ -1,10 +1,9 @@
 package com.tugraz.quizlet.frontend
 
 import android.content.Context
-import com.tugraz.quizlet.R
 import java.util.*
 
-public object LocaleHelper {
+object LocaleHelper {
     private const val LANGUAGE = "Locale.Language"
 
     fun setLocale(context: Context, language: String) : Context {

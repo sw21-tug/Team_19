@@ -16,17 +16,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         // TODO: Set new Text for lang support
-
-//        var locales = resources.configuration.locales
-//        if (!locales.isEmpty && locales.get(0).language != Locale.getDefault().language) {
-//            val email = findViewById<TextView>(R.id.text_view_email)
-//            val password = findViewById<TextView>(R.id.text_view_password)
-//            email.text = resources.getString(R.string.app_login_email_description)
-//            password.text = resources.getString(R.string.app_login_pw_description)
-//        }
-
-
-        var login = findViewById<Button>(R.id.login)
+        val login = findViewById<Button>(R.id.login)
         login.setOnClickListener{
             val intent = Intent(this, StartActivity::class.java)
             val email = findViewById<EditText>(R.id.editTextTextEmailAddress).text
