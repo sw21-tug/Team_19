@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.tugraz.quizlet.R
 import io.realm.mongodb.AppException
 
-
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

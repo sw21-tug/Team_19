@@ -12,11 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.tugraz.quizlet.R
 import com.tugraz.quizlet.backend.database.model.Question
-import com.tugraz.quizlet.backend.database.model.Question_category
-import io.realm.RealmList
-import org.bson.types.ObjectId
-import java.util.Collections.shuffle
-
+import java.util.Collections.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -155,7 +151,7 @@ class PlayFragment : Fragment(), View.OnClickListener {
     }
 
     private fun switchToScoreFragment(currentFragment: PlayFragment) {
-        val transaction = parentFragmentManager.beginTransaction();
+        val transaction = parentFragmentManager.beginTransaction()
         val scoreFragment = ScoreFragment()
 
         val arguments = Bundle()
