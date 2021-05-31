@@ -79,14 +79,23 @@ class AddQuestionFragment : Fragment() {
             val wrongAnswer3 = view.findViewById<EditText>(R.id.editTextWrong3).text.toString()
 
             if (category.isEmpty() || question.isEmpty() || rightAnswer.isEmpty() || wrongAnswer1.isEmpty() || wrongAnswer2.isEmpty() || wrongAnswer3.isEmpty()) {
-                Toast.makeText(view.context, R.string.app_start_add_question_error, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    view.context,
+                    R.string.app_start_add_question_error,
+                    Toast.LENGTH_SHORT
+                ).show()
                 return
             }
 
             val questionCategory = Question_category(null, category)
             val wrongAnswers = ImmutableList.of(wrongAnswer1, wrongAnswer2, wrongAnswer3)
 
-            SplashActivity.requestHandler.addQuestion(questionCategory, question, rightAnswer, wrongAnswers)
+            SplashActivity.requestHandler.addQuestion(
+                questionCategory,
+                question,
+                rightAnswer,
+                wrongAnswers
+            )
         }
     }
 }

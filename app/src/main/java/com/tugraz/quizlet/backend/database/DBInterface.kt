@@ -6,13 +6,13 @@ import com.tugraz.quizlet.backend.database.model.Question
 interface DBInterface {
     fun addQuestion(question: Question)
 
-    fun getAllQuestions() : ImmutableList<Question>
+    fun getAllQuestions(): ImmutableList<Question>
 
-    fun getAllQuestionsForCategory(categoryName: String) : ImmutableList<Question>
+    fun getAllQuestionsForCategory(categoryName: String): ImmutableList<Question>
 
     fun addUser(email: String, password: String): Boolean
 
-    fun loginUser(email: String, password: String) : Boolean
+    fun loginUser(email: String, password: String): Boolean
 
     fun getHighscoreOfCurrentUser(): Int
 
