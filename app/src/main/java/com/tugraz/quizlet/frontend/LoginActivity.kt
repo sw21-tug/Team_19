@@ -28,9 +28,13 @@ class LoginActivity : AppCompatActivity() {
         }
         val register = findViewById<Button>(R.id.register)
         register.setOnClickListener {
+            val intent = Intent(this, StartActivity::class.java)
             val email = findViewById<EditText>(R.id.editTextTextEmailAddress).text
             val password = findViewById<EditText>(R.id.editTextTextPassword).text
-            register(email.toString(), password.toString())
+            if(register(email.toString(), password.toString())){
+                startActivity(intent)
+                finish()
+            }
         }
     }
 
@@ -46,11 +50,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun register(email: String, password: String){
+    private fun register(email: String, password: String): Boolean{
         try {
             SplashActivity.requestHandler.addUser(email, password)
-        } catch (exception: AppException) {
-            Toast.makeText(this,"Invalid email or password", Toast.LENGTH_SHORT).show()
+            return true
+        } catch (exception: Exception) {
+            Toast.makeText(this,"Invalid email or password or the User is already registered", Toast.LENGTH_SHORT).show()
+            return false
         }
     }
 }
