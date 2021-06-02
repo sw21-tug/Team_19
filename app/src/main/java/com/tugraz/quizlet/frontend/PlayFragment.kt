@@ -14,6 +14,8 @@ import com.tugraz.quizlet.R
 import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.Question_category
 import io.realm.RealmList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.bson.types.ObjectId
 import java.util.Collections.shuffle
 
