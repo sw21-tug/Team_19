@@ -6,10 +6,20 @@
     <string name="app_login_email_description">電子郵件：</string>
     <string name="app_login_pw_description">密码：</string>
     <string name="app_start_exit_button">"結束"</string>
+    <string name="app_start_layout_start_button" translatable="false">布局_开始</string>
+    <string name="app_start_layout_plus_button" translatable="false">布局</string>
+    <string name="app_start_layout_profile_button" translatable="false">布局配置文件</string>
+    <string name="app_start_layout_highscore_button" translatable="false">布局高分</string>
+    <string name="app_start_layout_settings_button" translatable="false">布局设置</string>
     <string name="app_play_title">播放</string>
     <string name="toast_language_change">語言已更改。</string>
     <string name="toast_wrong_answer">錯誤的答案</string>
     <string name="text_view_score">分數</string>
+    <string name="score_play_again">再玩一次</string>
+    <string-array name="app_start_add_question_category">
+        <item>科学</item>
+        <item>游戏</item>
+    </string-array>
     <string name="text_view_add_Question">添加一个问题！</string>
     <string name="app_start_add_question_question_Hint">在这里输入您的问题！</string>
     <string name="app_start_add_question_right_answer_hint">在这里输入您的正确答案！</string>

@@ -12,11 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.tugraz.quizlet.R
 import com.tugraz.quizlet.backend.database.model.Question
-import com.tugraz.quizlet.backend.database.model.Question_category
-import io.realm.RealmList
-import org.bson.types.ObjectId
-import java.util.Collections.shuffle
-
+import java.util.Collections.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,9 +51,9 @@ class PlayFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_play, container, false)
+        val view = inflater.inflate(R.layout.fragment_play, container, false)
 
-        for (i: Int in 0 .. 3 ) {
+        for (i: Int in 0..3) {
             view.findViewById<Button>(ANSWER_BUTTONS[i]).setOnClickListener(this)
         }
 
@@ -87,34 +83,29 @@ class PlayFragment : Fragment(), View.OnClickListener {
             }
     }
 
-    private fun loadNewQuestion() : Question {
-        return Question(ObjectId(), Question_category("Category", "Category"), "What is the answer?", "Answer " + Math.random().toString(), null, RealmList(
-                "Answer " + Math.random().toString(),
-                "Answer " + Math.random().toString(),
-                "Answer " + Math.random().toString()))
-    }
-
     private fun displayNewQuestion(view: View) {
 
         //TODO Implement once database is ready
-        val newQuestion  = SplashActivity.requestHandler.getNextQuestionAndUpdateRemainingAndUpdateHighscore()
+        val newQuestion =
+            SplashActivity.requestHandler.getNextQuestionAndUpdateRemainingAndUpdateHighscore()
         currentQuestion = newQuestion
         val currentscore = view.findViewById<TextView>(R.id.text_view_current_score)
         currentscore.text = SplashActivity.requestHandler.getHighscoreCurrentGame().toString()
 
         //TODO handle no new question
-        if(newQuestion == null) {
+        if (newQuestion == null) {
             switchToScoreFragment(this)
             return
         }
 
         val answersIndices = arrayListOf(0, 1, 2, 3)
         shuffle(answersIndices)
-        for (i: Int in 0 until answersIndices.size - 1)
-        {
-            view.findViewById<Button>(ANSWER_BUTTONS[answersIndices[i]]).text = newQuestion.wrongAnswers[i]
+        for (i: Int in 0 until answersIndices.size - 1) {
+            view.findViewById<Button>(ANSWER_BUTTONS[answersIndices[i]]).text =
+                newQuestion.wrongAnswers[i]
         }
-        view.findViewById<Button>(ANSWER_BUTTONS[answersIndices[answersIndices.size - 1]]).text = newQuestion.rightAnswer
+        view.findViewById<Button>(ANSWER_BUTTONS[answersIndices[answersIndices.size - 1]]).text =
+            newQuestion.rightAnswer
         correctAnswerIndex = answersIndices[answersIndices.size - 1]
 
         view.findViewById<TextView>(R.id.text_view_question_text).text = newQuestion.question
@@ -124,12 +115,12 @@ class PlayFragment : Fragment(), View.OnClickListener {
         if (view != null) {
             var answer = -1
 
-            for (i: Int in 0 .. 3 ) {
-                if(view.id == ANSWER_BUTTONS[i])
+            for (i: Int in 0..3) {
+                if (view.id == ANSWER_BUTTONS[i])
                     answer = i
             }
 
-            if (answer in 0 .. 3) {
+            if (answer in 0..3) {
                 if (answer == correctAnswerIndex) {
                     displayNewQuestion(view.rootView)
                 } else {
@@ -138,7 +129,8 @@ class PlayFragment : Fragment(), View.OnClickListener {
                     toast.show()
 
                     val button = view.findViewById<Button>(ANSWER_BUTTONS[answer])
-                    val shakeAnimation = AnimationUtils.loadAnimation(context, R.anim.shake_animation)
+                    val shakeAnimation =
+                        AnimationUtils.loadAnimation(context, R.anim.shake_animation)
 
                     val currentFragment = this
 
@@ -159,11 +151,14 @@ class PlayFragment : Fragment(), View.OnClickListener {
     }
 
     private fun switchToScoreFragment(currentFragment: PlayFragment) {
-        val transaction = parentFragmentManager.beginTransaction();
+        val transaction = parentFragmentManager.beginTransaction()
         val scoreFragment = ScoreFragment()
 
         val arguments = Bundle()
-        arguments.putInt("score", SplashActivity.requestHandler.endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase())
+        arguments.putInt(
+            "score",
+            SplashActivity.requestHandler.endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase()
+        )
 
         scoreFragment.arguments = arguments
         transaction.addToBackStack("Play-Score")

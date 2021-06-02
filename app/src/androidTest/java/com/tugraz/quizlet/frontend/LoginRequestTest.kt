@@ -1,6 +1,5 @@
 package com.tugraz.quizlet.frontend
 
-
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
@@ -30,8 +29,8 @@ class LoginRequestTest {
     @Test
     fun loginRequestTest() {
 
-        val email : String = "test@test.com"
-        val password : String = "1234"
+        val email = "test@test.com"
+        val password = "1234"
 
         val appCompatEditText = onView(
             allOf(

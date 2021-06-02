@@ -18,36 +18,19 @@
         tools:layout_editor_absoluteX="-78dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <EditText
-            android:id="@+id/editTextQuestion"
-            android:layout_width="280dp"
-            android:layout_height="63dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/app_start_add_question_question_Hint"
-            android:inputType="textPersonName"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.442"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner"
-            app:layout_constraintVertical_bias="0.035" />
-
-        <TextView
-            android:id="@+id/textViewAddQuestion"
+        <Button
+            android:id="@+id/submitQuestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_view_add_Question"
-            android:textColor="@color/black"
-            android:textSize="36sp"
-            android:textStyle="bold"
+            android:text="@string/app_start_add_question_submit"
+            android:textColor="#000000"
+            app:iconTint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintHorizontal_bias="0.455"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.103" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextWrong3"
+            app:layout_constraintVertical_bias="0.149" />
 
         <EditText
             android:id="@+id/editTextWrong1"
@@ -65,32 +48,21 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextRightAnswer"
             app:layout_constraintVertical_bias="0.058" />
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="295dp"
-            android:layout_height="49dp"
-            android:entries="@array/app_start_add_question_category"
-            android:spinnerMode="dialog"
-            android:textColor="#000000"
+        <EditText
+            android:id="@+id/editTextQuestion"
+            android:layout_width="280dp"
+            android:layout_height="63dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/app_start_add_question_question_Hint"
+            android:inputType="textPersonName"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.442"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAddQuestion"
-            app:layout_constraintVertical_bias="0.063" />
-
-        <Button
-            android:id="@+id/submitQuestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_start_add_question_submit"
-            android:textColor="#000000"
-            app:iconTint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.455"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextWrong3"
-            app:layout_constraintVertical_bias="0.149" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner"
+            app:layout_constraintVertical_bias="0.035" />
 
         <EditText
             android:id="@+id/editTextRightAnswer"
@@ -149,6 +121,34 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="295dp"
+            android:layout_height="49dp"
+            android:entries="@array/app_start_add_question_category"
+            android:spinnerMode="dialog"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAddQuestion"
+            app:layout_constraintVertical_bias="0.063" />
+
+        <TextView
+            android:id="@+id/textViewAddQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_add_Question"
+            android:textColor="@color/black"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.103" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
