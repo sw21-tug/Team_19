@@ -47,8 +47,8 @@ class DBManager(private val quizletApp: App) : DBInterface {
             .allowWritesOnUiThread(true)
             .build()
 
-        val realm = Realm.getInstance(config)
-        realm?.executeTransactionAsync { transactionRealm ->
+        val realm = Realm.getInstance(config) ?: return
+        realm.executeTransactionAsync { transactionRealm ->
             transactionRealm.insert(question)
         }
     }
@@ -60,8 +60,9 @@ class DBManager(private val quizletApp: App) : DBInterface {
             .build()
 
         var results: RealmResults<Question>? = null
-        val realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
+        val realm = Realm.getInstance(config) ?: return ImmutableList.of()
+
+        realm.executeTransaction { transactionRealm ->
             results =
                 transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>
         }
@@ -81,9 +82,9 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
         Realm.getInstanceAsync(config, object : Realm.Callback() {
             override fun onSuccess(realm: Realm) {
-                val result = realm.where(Question::class.java).findAllAsync()
+                val result = realm.where(Question::class.java).findAllAsync() ?: return
 
-                result?.addChangeListener(RealmChangeListener{ fetchedResult ->
+                result.addChangeListener(RealmChangeListener{ fetchedResult ->
                     run {
                         if (fetchedResult == null)
                             callback(ImmutableList.of())
@@ -123,8 +124,8 @@ class DBManager(private val quizletApp: App) : DBInterface {
         val newUser = User(ObjectId(user.id), 0, user.id)
 
 
-        val realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
+        val realm = Realm.getInstance(config) ?: return false
+        realm.executeTransaction { transactionRealm ->
             transactionRealm.insert(newUser)
             LOG.severe("did something")
         }
@@ -155,8 +156,8 @@ class DBManager(private val quizletApp: App) : DBInterface {
             .allowQueriesOnUiThread(true)
             .build()
 
-        val realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
+        val realm = Realm.getInstance(config) ?: return 0
+        realm.executeTransaction { transactionRealm ->
             val result = transactionRealm.where(User::class.java)?.findFirst()
 
             if(result != null) {
@@ -180,8 +181,8 @@ class DBManager(private val quizletApp: App) : DBInterface {
             .allowQueriesOnUiThread(true)
             .build()
 
-        val realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
+        val realm = Realm.getInstance(config) ?: return
+        realm.executeTransaction { transactionRealm ->
             val thisuser: User =
                 transactionRealm.where<User>().findFirst()!!
             thisuser.highscore = newHighscore.toLong()
