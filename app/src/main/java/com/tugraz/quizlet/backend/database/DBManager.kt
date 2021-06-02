@@ -140,7 +140,6 @@ class DBManager(private val quizletApp: App) : DBInterface {
         thread.start()
         thread.join()
 
-        val user = quizletApp.currentUser() ?: return false
         return true
     }
 
