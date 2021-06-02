@@ -1,6 +1,5 @@
 package com.tugraz.quizlet.frontend
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -11,10 +10,8 @@ import com.tugraz.quizlet.backend.database.DBManager
 import io.realm.Realm
 import io.realm.mongodb.App
 import io.realm.mongodb.AppConfiguration
-import java.util.*
 
-
-class SplashActivity : AppCompatActivity(){
+class SplashActivity : AppCompatActivity() {
 
     companion object {
         lateinit var requestHandler: RequestHandler
@@ -27,18 +24,17 @@ class SplashActivity : AppCompatActivity(){
         Realm.init(this)
         val quizletApp = App(
             AppConfiguration.Builder("quizlet-sxmwi")
-                .build())
+                .build()
+        )
 
         val dbManager = DBManager(quizletApp)
         // TODO: make requestHandler Singleton?
         requestHandler = RequestHandler(dbManager)
 
-
         val handler = Handler()
         handler.postDelayed({
             val newLocale = LocaleHelper.getLocale(this)
 
-            //resources.updateConfiguration(configuration, resources.displayMetrics)
             val newContext = LocaleHelper.setLocale(this, newLocale)
 
             val intent = Intent(newContext, LoginActivity::class.java)

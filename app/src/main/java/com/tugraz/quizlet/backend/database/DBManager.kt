@@ -12,6 +12,7 @@ import io.realm.mongodb.AppException
 import io.realm.mongodb.Credentials
 import io.realm.mongodb.sync.SyncConfiguration
 import org.bson.types.ObjectId
+import java.util.*
 import java.util.logging.Logger
 import kotlin.jvm.Throws
 
@@ -32,16 +33,19 @@ class DBManager(private val quizletApp: App) : DBInterface {
             quizletApp.login(creds)
             anon = quizletApp.currentUser()
         })
+
+        thread.start()
+        thread.join()
     }
 
-    override fun addQuestion(question: Question){
+    override fun addQuestion(question: Question) {
         question.userCreated = anon!!.id
         val config = SyncConfiguration.Builder(anon!!, anon!!.id)
             .allowWritesOnUiThread(true)
             .build()
 
         realm = Realm.getInstance(config)
-        realm?.executeTransactionAsync() { transactionRealm ->
+        realm?.executeTransactionAsync { transactionRealm ->
             transactionRealm.insert(question)
         }
     }
@@ -56,7 +60,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
         realm = Realm.getInstance(config)
         realm?.executeTransaction { transactionRealm ->
             results =
-                    transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>;
+                transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>
         }
 
         if (results == null || results!!.isEmpty()) {
@@ -92,7 +96,6 @@ class DBManager(private val quizletApp: App) : DBInterface {
     override fun getAllQuestionsForCategory(categoryName: String): ImmutableList<Question> {
         throw NotImplementedError()
     }
-
 
     override fun addUser(email: String, password: String): Boolean {
         val thread = Thread(Runnable {
@@ -141,7 +144,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getHighscoreOfCurrentUser(): Int {
-        var highscore : Long = -1
+        var highscore: Long = -1
 
         val config = SyncConfiguration.Builder(user!!, user!!.id)
             .allowWritesOnUiThread(true)
@@ -156,7 +159,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
         }
 
 
-        if (highscore.equals(-1)) {
+        if (Objects.equals(highscore, -1L)) {
             return 0
         }
 

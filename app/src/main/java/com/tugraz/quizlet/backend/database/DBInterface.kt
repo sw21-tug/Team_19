@@ -2,12 +2,11 @@ package com.tugraz.quizlet.backend.database
 
 import com.google.common.collect.ImmutableList
 import com.tugraz.quizlet.backend.database.model.Question
-import com.tugraz.quizlet.backend.database.model.User
 
 interface DBInterface {
     fun addQuestion(question: Question)
 
-    fun getAllQuestions() : ImmutableList<Question>
+    fun getAllQuestions(): ImmutableList<Question>
 
     fun getAllQuestionsAsync(callback: (ImmutableList<Question>) -> Unit)
 
@@ -15,7 +14,7 @@ interface DBInterface {
 
     fun addUser(email: String, password: String): Boolean
 
-    fun loginUser(email: String, password: String) : Boolean
+    fun loginUser(email: String, password: String): Boolean
 
     fun getHighscoreOfCurrentUser(): Int
 
