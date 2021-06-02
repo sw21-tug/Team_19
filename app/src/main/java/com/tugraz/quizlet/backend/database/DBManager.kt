@@ -5,7 +5,6 @@ import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.User
 import io.realm.Realm
 import io.realm.RealmChangeListener
-import io.realm.RealmResults
 import io.realm.kotlin.where
 import io.realm.mongodb.App
 import io.realm.mongodb.AppException
@@ -20,6 +19,7 @@ import kotlin.jvm.Throws
 class DBManager(private val quizletApp: App) : DBInterface {
     companion object {
         val LOG: Logger = Logger.getLogger(DBManager::class.java.name)
+        const val ANON_ID = "60a3cab5f8fa77c5b6172d89"
     }
 
     private lateinit var anon: io.realm.mongodb.User
@@ -42,8 +42,8 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun addQuestion(question: Question) {
-        question.userCreated = anon.id
-        val config = SyncConfiguration.Builder(anon, anon.id)
+        question.userCreated = ANON_ID
+        val config = SyncConfiguration.Builder(anon, ANON_ID)
             .allowWritesOnUiThread(true)
             .build()
 
@@ -53,28 +53,8 @@ class DBManager(private val quizletApp: App) : DBInterface {
         }
     }
 
-    override fun getAllQuestions(): ImmutableList<Question> {
-        val config = SyncConfiguration.Builder(anon, anon.id)
-            .allowWritesOnUiThread(true)
-            .allowQueriesOnUiThread(true)
-            .build()
-
-        var results: RealmResults<Question>? = null
-        val realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
-            results =
-                transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>
-        }
-
-        if (results == null || results!!.isEmpty()) {
-            return ImmutableList.of()
-        }
-
-        return ImmutableList.copyOf(results?.subList(0, results!!.size))
-    }
-
     override fun getAllQuestionsAsync(callback: (ImmutableList<Question>) -> Unit) {
-        val config = SyncConfiguration.Builder(anon, anon.id)
+        val config = SyncConfiguration.Builder(anon, ANON_ID)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
