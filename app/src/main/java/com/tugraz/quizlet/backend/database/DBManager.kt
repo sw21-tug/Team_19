@@ -144,7 +144,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getHighscoreOfCurrentUser(): Int {
-        var highscore: Long = -1
+        var highscore: Long? = -1
 
         val user = quizletApp.currentUser() ?: return 0
 
@@ -155,17 +155,19 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
         realm = Realm.getInstance(config)
         realm?.executeTransaction { transactionRealm ->
-            val result =
-                transactionRealm.where(User::class.java)?.findFirst()
-            highscore = result?.highscore!!
+            val result = transactionRealm.where(User::class.java)?.findFirst()
+
+            if(result != null) {
+                highscore = result.highscore
+            }
         }
 
 
-        if (Objects.equals(highscore, -1L)) {
+        if (Objects.equals(highscore, -1L) || highscore == null) {
             return 0
         }
 
-        return highscore.toInt()
+        return highscore!!.toInt()
     }
 
     override fun updateUserHighscore(newHighscore: Int) {
