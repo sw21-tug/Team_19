@@ -52,3 +52,5 @@ QL-011 User Account Backend QL-011\
 QL-003 Question Database QL-003\
 QL-001 Intro Screen QL-001\
 QL-009 Endscreen\
+QL-021 Language support for question database\
+QL-024 Advanced question UI frontend\
