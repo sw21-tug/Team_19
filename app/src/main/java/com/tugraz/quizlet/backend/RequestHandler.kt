@@ -64,7 +64,7 @@ class RequestHandler(private val dBInterface: DBInterface) {
         remainingQuestionForCurrentGame.addAll(dBInterface.getAllQuestions())
     }
 
-    fun fetchAddQuestionsAsync(callback: () -> Unit) {
+    fun fetchAllQuestionsAsync(callback: () -> Unit) {
         this.highscoreForCurrentGame = 0
         dBInterface.getAllQuestionsAsync{questions ->
             run {

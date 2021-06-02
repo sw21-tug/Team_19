@@ -40,8 +40,8 @@ class QuestionLoadingFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //SplashActivity.requestHandler.fetchAddQuestionsAsync(this::navigateToPlayFragment)
-        BackgroundGetQuestions().execute(this)
+        SplashActivity.requestHandler.fetchAllQuestionsAsync(this::navigateToPlayFragment)
+        //BackgroundGetQuestions().execute(this)
     }
 
     companion object {
