@@ -9,6 +9,7 @@ import io.realm.kotlin.where
 import io.realm.mongodb.App
 import io.realm.mongodb.AppException
 import io.realm.mongodb.Credentials
+import io.realm.mongodb.ErrorCode.Type.UNKNOWN
 import io.realm.mongodb.sync.SyncConfiguration
 import org.bson.types.ObjectId
 import java.lang.RuntimeException
@@ -79,17 +80,24 @@ class DBManager(private val quizletApp: App) : DBInterface {
         throw NotImplementedError()
     }
 
+    @Throws(Exception::class)
     override fun addUser(email: String, password: String): Boolean {
+        var addUser = false
         val thread = Thread(Runnable {
             try {
                 quizletApp.emailPassword.registerUser(email, password)
+                addUser = true
             } catch (e: Exception) {
+                addUser = false
                 e.printStackTrace()
             }
         })
 
         thread.start()
         thread.join()
+        if(addUser == false)
+            throw Exception()
+
         loginUser(email, password)
 
         // insert into custom user data
@@ -112,15 +120,25 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     // returns user with NULL, NULL, NULL if login fails
-    @Throws(AppException::class)
+    @Throws(Exception::class)
     override fun loginUser(email: String, password: String): Boolean {
+        var loginSuccessful = false
         val thread = Thread(Runnable {
-            val creds = Credentials.emailPassword(email, password)
-            quizletApp.login(creds)
+            try {
+                val creds = Credentials.emailPassword(email, password)
+                quizletApp.login(creds)
+                loginSuccessful = true
+            }
+            catch (exe: Exception) {
+                LOG.severe("something")
+            }
         })
 
         thread.start()
         thread.join()
+
+        if (loginSuccessful == false)
+            throw Exception()
 
         return true
     }

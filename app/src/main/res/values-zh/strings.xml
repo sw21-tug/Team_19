@@ -6,6 +6,7 @@
     <string name="app_login_email_description">電子郵件：</string>
     <string name="app_login_pw_description">密码：</string>
     <string name="app_start_exit_button">"結束"</string>
+    <string name="app_login_register">登记</string>
     <string name="app_start_layout_start_button" translatable="false">布局_开始</string>
     <string name="app_start_layout_plus_button" translatable="false">布局</string>
     <string name="app_start_layout_profile_button" translatable="false">布局配置文件</string>
