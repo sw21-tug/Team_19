@@ -32,6 +32,9 @@ class DBManager(private val quizletApp: App) : DBInterface {
             quizletApp.login(creds)
             anon = quizletApp.currentUser()
         })
+
+        thread.start()
+        thread.join()
     }
 
     override fun addQuestion(question: Question) {
