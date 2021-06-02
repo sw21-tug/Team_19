@@ -24,8 +24,6 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
     private lateinit var anon: io.realm.mongodb.User
 
-    private var realm: Realm? = null
-
     init {
         /** This needs to be here for the public question **/
         val thread = Thread(Runnable {
@@ -49,7 +47,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
             .allowWritesOnUiThread(true)
             .build()
 
-        realm = Realm.getInstance(config)
+        val realm = Realm.getInstance(config)
         realm?.executeTransactionAsync { transactionRealm ->
             transactionRealm.insert(question)
         }
@@ -62,7 +60,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
             .build()
 
         var results: RealmResults<Question>? = null
-        realm = Realm.getInstance(config)
+        val realm = Realm.getInstance(config)
         realm?.executeTransaction { transactionRealm ->
             results =
                 transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>
@@ -76,14 +74,14 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getAllQuestionsAsync(callback: (ImmutableList<Question>) -> Unit) {
-        val config = SyncConfiguration.Builder(anon!!, anon!!.id)
+        val config = SyncConfiguration.Builder(anon, anon.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
 
         Realm.getInstanceAsync(config, object : Realm.Callback() {
             override fun onSuccess(realm: Realm) {
-                val result = realm.where<Question>(Question::class.java).findAllAsync()
+                val result = realm.where(Question::class.java).findAllAsync()
 
                 result?.addChangeListener(RealmChangeListener{ fetchedResult ->
                     run {
@@ -125,7 +123,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
         val newUser = User(ObjectId(user.id), 0, user.id)
 
 
-        realm = Realm.getInstance(config)
+        val realm = Realm.getInstance(config)
         realm?.executeTransaction { transactionRealm ->
             transactionRealm.insert(newUser)
             LOG.severe("did something")
@@ -157,7 +155,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
             .allowQueriesOnUiThread(true)
             .build()
 
-        realm = Realm.getInstance(config)
+        val realm = Realm.getInstance(config)
         realm?.executeTransaction { transactionRealm ->
             val result = transactionRealm.where(User::class.java)?.findFirst()
 
@@ -182,7 +180,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
             .allowQueriesOnUiThread(true)
             .build()
 
-        realm = Realm.getInstance(config)
+        val realm = Realm.getInstance(config)
         realm?.executeTransaction { transactionRealm ->
             val thisuser: User =
                 transactionRealm.where<User>().findFirst()!!
