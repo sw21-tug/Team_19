@@ -10,10 +10,12 @@
     <string name="toast_language_change">語言已更改。</string>
     <string name="toast_wrong_answer">錯誤的答案</string>
     <string name="text_view_score">分數</string>
+    <string name="score_play_again">再玩一次</string>
     <string name="text_view_add_Question">添加一个问题！</string>
     <string name="app_start_add_question_question_Hint">在这里输入您的问题！</string>
     <string name="app_start_add_question_right_answer_hint">在这里输入您的正确答案！</string>
     <string name="app_start_add_question_wrong_answer_hint">在这里输入错误答案之一！</string>
     <string name="app_start_add_question_submit">保存问题</string>
     <string name="app_start_add_question_error">至少一个字段为空</string>
+    <string name="app_account_button">帐户</string>
 </resources>
