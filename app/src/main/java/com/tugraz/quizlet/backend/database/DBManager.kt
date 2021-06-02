@@ -23,7 +23,6 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
     private var anon: io.realm.mongodb.User? = null
 
-    private var user: io.realm.mongodb.User? = null
     private var realm: Realm? = null
 
     init {
@@ -71,8 +70,9 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getAllQuestionsAsync(callback: (ImmutableList<Question>) -> Unit) {
-        user = quizletApp.currentUser()
-        val config = SyncConfiguration.Builder(user!!, user!!.id)
+        val user = quizletApp.currentUser() ?: return
+
+        val config = SyncConfiguration.Builder(user, user.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
@@ -111,18 +111,19 @@ class DBManager(private val quizletApp: App) : DBInterface {
         loginUser(email, password)
 
         // insert into custom user data
-        user = quizletApp.currentUser()
 
-        val config = SyncConfiguration.Builder(user!!, user!!.id)
+        val user = quizletApp.currentUser() ?: return false
+
+        val config = SyncConfiguration.Builder(user, user.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
-        val user = User(ObjectId(user!!.id), 0, user!!.id)
+        val newUser = User(ObjectId(user.id), 0, user.id)
 
 
         realm = Realm.getInstance(config)
         realm?.executeTransaction { transactionRealm ->
-            transactionRealm.insert(user)
+            transactionRealm.insert(newUser)
             LOG.severe("did something")
         }
         return true
@@ -139,14 +140,16 @@ class DBManager(private val quizletApp: App) : DBInterface {
         thread.start()
         thread.join()
 
-        user = quizletApp.currentUser()
+        val user = quizletApp.currentUser() ?: return false
         return true
     }
 
     override fun getHighscoreOfCurrentUser(): Int {
         var highscore: Long = -1
 
-        val config = SyncConfiguration.Builder(user!!, user!!.id)
+        val user = quizletApp.currentUser() ?: return 0
+
+        val config = SyncConfiguration.Builder(user, user.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
@@ -167,7 +170,9 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun updateUserHighscore(newHighscore: Int) {
-        val config = SyncConfiguration.Builder(user!!, user!!.id)
+        val user = quizletApp.currentUser() ?: return
+
+        val config = SyncConfiguration.Builder(user, user.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
