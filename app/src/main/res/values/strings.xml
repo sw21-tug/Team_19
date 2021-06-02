@@ -30,4 +30,5 @@
     <string name="app_start_add_question_wrong_answer_hint">Enter one of the wrong answers here!</string>
     <string name="app_start_add_question_submit">Save question</string>
     <string name="app_start_add_question_error">At least one field is empty</string>
+    <string name="app_account_button">Account</string>
 </resources>
