@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.tugraz.quizlet.R
-import com.tugraz.quizlet.backend.database.model.Question
-import java.util.concurrent.Callable
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,7 +40,8 @@ class QuestionLoadingFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        SplashActivity.requestHandler.fetchAddQuestionsAsync(this::navigateToPlayFragment)
+        //SplashActivity.requestHandler.fetchAddQuestionsAsync(this::navigateToPlayFragment)
+        BackgroundGetQuestions().execute(this)
     }
 
     companion object {
