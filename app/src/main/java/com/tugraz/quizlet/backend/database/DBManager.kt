@@ -44,8 +44,8 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun addQuestion(question: Question) {
-        question.userCreated = anon!!.id
-        val config = SyncConfiguration.Builder(anon!!, anon!!.id)
+        question.userCreated = anon.id
+        val config = SyncConfiguration.Builder(anon, anon.id)
             .allowWritesOnUiThread(true)
             .build()
 
@@ -56,7 +56,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getAllQuestions(): ImmutableList<Question> {
-        val config = SyncConfiguration.Builder(anon!!, anon!!.id)
+        val config = SyncConfiguration.Builder(anon, anon.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
