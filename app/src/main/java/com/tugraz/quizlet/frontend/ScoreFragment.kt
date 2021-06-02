@@ -44,7 +44,7 @@ class ScoreFragment : Fragment() {
         val playAgainButton = view.findViewById<Button>(R.id.play_again)
         playAgainButton.setOnClickListener {
             val transaction = parentFragmentManager.beginTransaction();
-            val playFragment = PlayFragment()
+            val playFragment = QuestionLoadingFragment()
             transaction.addToBackStack("Score-Play")
             transaction.hide(this)
             transaction.replace(R.id.main_fragment_view, playFragment)

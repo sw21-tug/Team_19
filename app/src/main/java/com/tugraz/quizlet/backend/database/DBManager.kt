@@ -12,6 +12,7 @@ import io.realm.mongodb.AppException
 import io.realm.mongodb.Credentials
 import io.realm.mongodb.sync.SyncConfiguration
 import org.bson.types.ObjectId
+import java.lang.RuntimeException
 import java.util.*
 import java.util.logging.Logger
 import kotlin.jvm.Throws
@@ -21,7 +22,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
         val LOG: Logger = Logger.getLogger(DBManager::class.java.name)
     }
 
-    private var anon: io.realm.mongodb.User? = null
+    private lateinit var anon: io.realm.mongodb.User
 
     private var realm: Realm? = null
 
@@ -30,7 +31,12 @@ class DBManager(private val quizletApp: App) : DBInterface {
         val thread = Thread(Runnable {
             val creds = Credentials.anonymous()
             quizletApp.login(creds)
-            anon = quizletApp.currentUser()
+            val currentUser = quizletApp.currentUser()
+            if(currentUser != null) {
+                anon = currentUser
+            } else {
+                throw RuntimeException("Failed to load default/anonymous user!")
+            }
         })
 
         thread.start()
@@ -70,9 +76,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getAllQuestionsAsync(callback: (ImmutableList<Question>) -> Unit) {
-        val user = quizletApp.currentUser() ?: return
-
-        val config = SyncConfiguration.Builder(user, user.id)
+        val config = SyncConfiguration.Builder(anon!!, anon!!.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
@@ -83,10 +87,10 @@ class DBManager(private val quizletApp: App) : DBInterface {
 
                 result?.addChangeListener(RealmChangeListener{ fetchedResult ->
                     run {
-                        if (fetchedResult == null || fetchedResult.isEmpty())
+                        if (fetchedResult == null)
                             callback(ImmutableList.of())
                         else
-                            callback(ImmutableList.copyOf(fetchedResult.subList(0, result.size)))
+                            callback(ImmutableList.copyOf(fetchedResult))
                     }
                 })
             }
