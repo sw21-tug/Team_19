@@ -91,6 +91,10 @@ class RequestHandler(private val dBInterface: DBInterface) {
         return highscoreForCurrentGame
     }
 
+    fun resetHighscoreCurrentGame() {
+        this.highscoreForCurrentGame = -POINTS_FOR_RIGHT_ANSWER
+    }
+
     fun getHighscoreOfCurrentUser(): Int {
         return dBInterface.getHighscoreOfCurrentUser()
     }
@@ -123,5 +127,4 @@ class RequestHandler(private val dBInterface: DBInterface) {
     fun setHighscoreCurrentGame(highscore: Int) {
         this.highscoreForCurrentGame = highscore
     }
-
 }

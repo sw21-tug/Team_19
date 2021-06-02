@@ -160,6 +160,8 @@ class PlayFragment : Fragment(), View.OnClickListener {
             SplashActivity.requestHandler.endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase()
         )
 
+        SplashActivity.requestHandler.resetHighscoreCurrentGame()
+
         scoreFragment.arguments = arguments
         transaction.addToBackStack("Play-Score")
         transaction.hide(currentFragment)
