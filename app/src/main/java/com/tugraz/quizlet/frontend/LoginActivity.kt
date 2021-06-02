@@ -26,6 +26,12 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
         }
+        val register = findViewById<Button>(R.id.register)
+        register.setOnClickListener {
+            val email = findViewById<EditText>(R.id.editTextTextEmailAddress).text
+            val password = findViewById<EditText>(R.id.editTextTextPassword).text
+            register(email.toString(), password.toString())
+        }
     }
 
     private fun login(email: String, password: String): Boolean {
@@ -37,6 +43,14 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Wrong email and password!", Toast.LENGTH_SHORT).show()
             return false
 
+        }
+    }
+
+    private fun register(email: String, password: String){
+        try {
+            SplashActivity.requestHandler.addUser(email, password)
+        } catch (exception: AppException) {
+            Toast.makeText(this,"Invalid email or password", Toast.LENGTH_SHORT).show()
         }
     }
 }
