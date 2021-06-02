@@ -23,12 +23,11 @@
         <item>Science</item>
         <item>Games</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="text_view_add_Question">Add a question!</string>
     <string name="app_start_add_question_question_Hint">Enter your question here!</string>
     <string name="app_start_add_question_right_answer_hint">Enter your right answer here!</string>
     <string name="app_start_add_question_wrong_answer_hint">Enter one of the wrong answers here!</string>
     <string name="app_start_add_question_submit">Save question</string>
     <string name="app_start_add_question_error">At least one field is empty</string>
+    <string name="app_loading_text">Loading questions</string>
 </resources>

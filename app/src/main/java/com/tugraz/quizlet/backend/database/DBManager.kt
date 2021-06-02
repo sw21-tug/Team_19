@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList
 import com.tugraz.quizlet.backend.database.model.Question
 import com.tugraz.quizlet.backend.database.model.User
 import io.realm.Realm
-import io.realm.RealmResults
+import io.realm.RealmChangeListener
 import io.realm.kotlin.where
 import io.realm.mongodb.App
 import io.realm.mongodb.AppException
@@ -12,6 +12,7 @@ import io.realm.mongodb.Credentials
 import io.realm.mongodb.ErrorCode.Type.UNKNOWN
 import io.realm.mongodb.sync.SyncConfiguration
 import org.bson.types.ObjectId
+import java.lang.RuntimeException
 import java.util.*
 import java.util.logging.Logger
 import kotlin.jvm.Throws
@@ -19,19 +20,22 @@ import kotlin.jvm.Throws
 class DBManager(private val quizletApp: App) : DBInterface {
     companion object {
         val LOG: Logger = Logger.getLogger(DBManager::class.java.name)
+        const val ANON_ID = "60a3cab5f8fa77c5b6172d89"
     }
 
-    private var anon: io.realm.mongodb.User? = null
-
-    private var user: io.realm.mongodb.User? = null
-    private var realm: Realm? = null
+    private lateinit var anon: io.realm.mongodb.User
 
     init {
         /** This needs to be here for the public question **/
         val thread = Thread(Runnable {
             val creds = Credentials.anonymous()
             quizletApp.login(creds)
-            anon = quizletApp.currentUser()
+            val currentUser = quizletApp.currentUser()
+            if(currentUser != null) {
+                anon = currentUser
+            } else {
+                throw RuntimeException("Failed to load default/anonymous user!")
+            }
         })
 
         thread.start()
@@ -39,35 +43,37 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun addQuestion(question: Question) {
-        question.userCreated = anon!!.id
-        val config = SyncConfiguration.Builder(anon!!, anon!!.id)
+        question.userCreated = ANON_ID
+        val config = SyncConfiguration.Builder(anon, ANON_ID)
             .allowWritesOnUiThread(true)
             .build()
 
-        realm = Realm.getInstance(config)
-        realm?.executeTransactionAsync { transactionRealm ->
+        val realm = Realm.getInstance(config) ?: return
+        realm.executeTransactionAsync { transactionRealm ->
             transactionRealm.insert(question)
         }
     }
 
-    override fun getAllQuestions(): ImmutableList<Question> {
-        val config = SyncConfiguration.Builder(anon!!, anon!!.id)
+    override fun getAllQuestionsAsync(callback: (ImmutableList<Question>) -> Unit) {
+        val config = SyncConfiguration.Builder(anon, ANON_ID)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
 
-        var results: RealmResults<Question>? = null
-        realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
-            results =
-                transactionRealm.where(Question::class.java)?.findAll() as RealmResults<Question>
-        }
+        Realm.getInstanceAsync(config, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm) {
+                val result = realm.where(Question::class.java).findAllAsync() ?: return
 
-        if (results == null || results!!.isEmpty()) {
-            return ImmutableList.of()
-        }
-
-        return ImmutableList.copyOf(results?.subList(0, results!!.size))
+                result.addChangeListener(RealmChangeListener{ fetchedResult ->
+                    run {
+                        if (fetchedResult == null)
+                            callback(ImmutableList.of())
+                        else
+                            callback(ImmutableList.copyOf(fetchedResult))
+                    }
+                })
+            }
+        })
     }
 
     override fun getAllQuestionsForCategory(categoryName: String): ImmutableList<Question> {
@@ -95,18 +101,19 @@ class DBManager(private val quizletApp: App) : DBInterface {
         loginUser(email, password)
 
         // insert into custom user data
-        user = quizletApp.currentUser()
 
-        val config = SyncConfiguration.Builder(user!!, user!!.id)
+        val user = quizletApp.currentUser() ?: return false
+
+        val config = SyncConfiguration.Builder(user, user.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
-        val user = User(ObjectId(user!!.id), 0, user!!.id)
+        val newUser = User(ObjectId(user.id), 0, user.id)
 
 
-        realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
-            transactionRealm.insert(user)
+        val realm = Realm.getInstance(config) ?: return false
+        realm.executeTransaction { transactionRealm ->
+            transactionRealm.insert(newUser)
             LOG.severe("did something")
         }
         return true
@@ -126,46 +133,53 @@ class DBManager(private val quizletApp: App) : DBInterface {
                 LOG.severe("something")
             }
         })
+
         thread.start()
         thread.join()
 
         if (loginSuccessful == false)
             throw Exception()
-        user = quizletApp.currentUser()
+
         return true
     }
 
     override fun getHighscoreOfCurrentUser(): Int {
-        var highscore: Long = -1
+        var highscore: Long? = -1
 
-        val config = SyncConfiguration.Builder(user!!, user!!.id)
+        val user = quizletApp.currentUser() ?: return 0
+
+        val config = SyncConfiguration.Builder(user, user.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
 
-        realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
-            val result =
-                transactionRealm.where(User::class.java)?.findFirst()
-            highscore = result?.highscore!!
+        val realm = Realm.getInstance(config) ?: return 0
+        realm.executeTransaction { transactionRealm ->
+            val result = transactionRealm.where(User::class.java)?.findFirst()
+
+            if(result != null) {
+                highscore = result.highscore
+            }
         }
 
 
-        if (Objects.equals(highscore, -1L)) {
+        if (Objects.equals(highscore, -1L) || highscore == null) {
             return 0
         }
 
-        return highscore.toInt()
+        return highscore!!.toInt()
     }
 
     override fun updateUserHighscore(newHighscore: Int) {
-        val config = SyncConfiguration.Builder(user!!, user!!.id)
+        val user = quizletApp.currentUser() ?: return
+
+        val config = SyncConfiguration.Builder(user, user.id)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
 
-        realm = Realm.getInstance(config)
-        realm?.executeTransaction { transactionRealm ->
+        val realm = Realm.getInstance(config) ?: return
+        realm.executeTransaction { transactionRealm ->
             val thisuser: User =
                 transactionRealm.where<User>().findFirst()!!
             thisuser.highscore = newHighscore.toLong()

@@ -53,6 +53,7 @@ class RequestHandler(private val dBInterface: DBInterface) {
     }
 
     private fun getRealmListFromImmutableList(wrongAnswers: ImmutableList<String>): RealmList<String> {
+        LOG.fine("Processing getting all questions")
         val realmList = RealmList<String>()
         wrongAnswers.forEach {
             realmList.add(it)
@@ -60,12 +61,17 @@ class RequestHandler(private val dBInterface: DBInterface) {
         return realmList
     }
 
-    fun startNewGameAndReturnTheFirstQuestion() {
-        this.highscoreForCurrentGame = 0
-        remainingQuestionForCurrentGame.addAll(dBInterface.getAllQuestions())
+    fun fetchAllQuestionsAsyncAndSetRemainingQuestions(callback: () -> Unit) {
+        dBInterface.getAllQuestionsAsync{questions ->
+            run {
+                remainingQuestionForCurrentGame.addAll(questions)
+                callback()
+            }
+        }
     }
 
     private fun getNextQuestionAndUpdateRemaining(): Question? {
+        LOG.fine("Get Next Question")
         return remainingQuestionForCurrentGame.removeFirstOrNull()
     }
 
@@ -79,21 +85,18 @@ class RequestHandler(private val dBInterface: DBInterface) {
         if (getHighscoreOfCurrentUser() < highscoreForCurrentGame) {
             dBInterface.updateUserHighscore(this.highscoreForCurrentGame)
         }
+        LOG.fine("Ended current game with highscore: $highscoreForCurrentGame")
         return highscoreForCurrentGame
     }
 
+    fun resetHighscoreCurrentGame() {
+        LOG.finest("Current highscore was reset")
+        this.highscoreForCurrentGame = -POINTS_FOR_RIGHT_ANSWER
+    }
+
     fun getHighscoreOfCurrentUser(): Int {
+        LOG.fine("DB request of highest highscore for current user")
         return dBInterface.getHighscoreOfCurrentUser()
-    }
-
-    fun getAllQuestion(): ImmutableList<Question> {
-        LOG.fine("Processing getting all questions")
-        return dBInterface.getAllQuestions();
-    }
-
-    fun getAllQuestionForCategory(categoryName: String): ImmutableList<Question> {
-        LOG.fine("Processing getting all questions for category=$categoryName")
-        return dBInterface.getAllQuestionsForCategory(categoryName);
     }
 
     fun getHighscoreCurrentGame(): Int {
@@ -114,5 +117,4 @@ class RequestHandler(private val dBInterface: DBInterface) {
     fun setHighscoreCurrentGame(highscore: Int) {
         this.highscoreForCurrentGame = highscore
     }
-
 }

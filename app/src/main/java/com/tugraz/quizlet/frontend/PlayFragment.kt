@@ -12,7 +12,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.tugraz.quizlet.R
 import com.tugraz.quizlet.backend.database.model.Question
-import java.util.Collections.*
+
+import java.util.Collections.shuffle
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,6 +51,9 @@ class PlayFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        SplashActivity.requestHandler.resetHighscoreCurrentGame();
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_play, container, false)
 
@@ -57,7 +61,6 @@ class PlayFragment : Fragment(), View.OnClickListener {
             view.findViewById<Button>(ANSWER_BUTTONS[i]).setOnClickListener(this)
         }
 
-        SplashActivity.requestHandler.startNewGameAndReturnTheFirstQuestion()
         displayNewQuestion(view)
 
         return view
@@ -159,6 +162,8 @@ class PlayFragment : Fragment(), View.OnClickListener {
             "score",
             SplashActivity.requestHandler.endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase()
         )
+
+        SplashActivity.requestHandler.resetHighscoreCurrentGame()
 
         scoreFragment.arguments = arguments
         transaction.addToBackStack("Play-Score")
