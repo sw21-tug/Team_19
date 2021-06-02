@@ -21,12 +21,13 @@ class RequestHandler(private val dBInterface: DBInterface) {
     private var highscoreForCurrentGame = -POINTS_FOR_RIGHT_ANSWER
 
     // TODO: add boolean for feedback?
+    @Throws(Exception::class)
     fun addUser(email: String, password: String) {
         LOG.fine("Processing adding user with email=$email")
         dBInterface.addUser(email, password)
     }
 
-    @Throws(AppException::class)
+    @Throws(Exception::class)
     fun loginUser(email: String, password: String): Boolean {
         LOG.fine("Processing getting user with email=$email")
         return dBInterface.loginUser(email, password)

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tugraz.quizlet.R
 import io.realm.mongodb.AppException
+import java.lang.Exception
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,17 +21,22 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, StartActivity::class.java)
             val email = findViewById<EditText>(R.id.editTextTextEmailAddress).text
             val password = findViewById<EditText>(R.id.editTextTextPassword).text
-            login(email.toString(), password.toString())
-            startActivity(intent)
-            finish()
+            if(login(email.toString(), password.toString())){
+                startActivity(intent)
+                finish()
+            }
         }
     }
 
-    private fun login(email: String, password: String) {
+    private fun login(email: String, password: String): Boolean {
         try {
             SplashActivity.requestHandler.loginUser(email, password)
-        } catch (exception: AppException) {
+            return true
+
+        } catch (exception: Exception) {
             Toast.makeText(this, "Wrong email and password!", Toast.LENGTH_SHORT).show()
+            return false
+
         }
     }
 }
