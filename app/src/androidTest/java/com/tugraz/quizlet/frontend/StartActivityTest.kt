@@ -12,16 +12,30 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4ClassRunner::class)
-class LanguageTest {
+class StartActivityTest {
 
     @get: Rule
     val activityRule: ActivityScenarioRule<StartActivity> =
         ActivityScenarioRule(StartActivity::class.java)
 
+    @Test
+    fun test_isActivityInView() {
+        onView(withId(R.id.start)).check(matches(isDisplayed()))
+    }
 
     @Test
-    fun test_isLanguageSwitched() {
-        onView(withId(R.id.settings)).perform(click())
-        onView(withId(R.id.button_start)).check(matches(withText("播放")))
+    fun test_areFragmentButtonDisplayed() {
+
+        onView(withId(R.id.button_start))
+            .check(matches(isDisplayed()))
+        onView(withId(R.id.button_exit))
+            .check(matches(isDisplayed()))
     }
+
+    @Test
+    fun is_accountButtonDisplayed() {
+        onView(withId(R.id.account))
+            .check(matches(isDisplayed()))
+    }
+
 }
