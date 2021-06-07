@@ -1,7 +1,6 @@
 package com.tugraz.quizlet.frontend
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -34,7 +33,7 @@ class StartActivityTest {
 
     @Test
     fun is_accountButtonDisplayed() {
-        onView(withId(R.id.account))
+        onView(withId(R.id.button_account))
             .check(matches(isDisplayed()))
     }
 
