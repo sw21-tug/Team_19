@@ -51,7 +51,7 @@
             android:clickable="true"
             android:contentDescription="@string/app_start_layout_profile_button"
             android:focusable="true"
-            app:srcCompat="@drawable/profil"
+            app:srcCompat="@drawable/ic_baseline_account_circle_24"
             tools:layout_editor_absoluteX="154dp"
             tools:layout_editor_absoluteY="550dp" />
 
@@ -78,7 +78,7 @@
             android:contentDescription="@string/app_start_layout_settings_button"
             android:focusable="true"
             android:onClick="onSettingsClicked"
-            app:srcCompat="@drawable/settings_button"
+            app:srcCompat="@drawable/ic_baseline_language_24"
             tools:layout_editor_absoluteX="160dp"
             tools:layout_editor_absoluteY="578dp" />
 
