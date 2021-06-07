@@ -43,10 +43,19 @@ class StartActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    fun onProfileClicked(view: View) {
+        val transaction = supportFragmentManager.beginTransaction();
+        val accountFragment = AccountFragment()
+        transaction.replace(R.id.main_fragment_view, accountFragment)
+        transaction.commit()
+    }
+
     override fun onBackPressed() {
         val transaction = supportFragmentManager.beginTransaction();
         val startFragment = StartFragment()
         transaction.replace(R.id.main_fragment_view, startFragment)
         transaction.commit()
     }
+
+
 }
