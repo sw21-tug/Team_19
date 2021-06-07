@@ -27,4 +27,5 @@
     <string name="app_start_add_question_wrong_answer_hint">在这里输入错误答案之一！</string>
     <string name="app_start_add_question_submit">保存问题</string>
     <string name="app_start_add_question_error">至少一个字段为空</string>
+    <string name="app_loading_text">加载问题</string>
 </resources>
