@@ -31,4 +31,5 @@
     <string name="app_start_add_question_error">At least one field is empty</string>
     <string name="app_loading_text">Loading questions</string>
     <string name="app_account_button">Account</string>
+    <string name="text_view_account">Account</string>
 </resources>
