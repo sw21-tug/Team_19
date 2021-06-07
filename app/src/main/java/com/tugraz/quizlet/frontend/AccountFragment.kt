@@ -42,6 +42,9 @@ class AccountFragment : Fragment() {
 
         val emailView = view.findViewById<TextView>(R.id.text_view_account_email)
         emailView.text = SplashActivity.requestHandler.getEmailOfCurrentUser()
+
+        val questionCountView = view.findViewById<TextView>(R.id.text_view_total_questions)
+        questionCountView.text = SplashActivity.requestHandler.getQuestionCount()
         return view
     }
 

@@ -76,6 +76,15 @@ class DBManager(private val quizletApp: App) : DBInterface {
         })
     }
 
+    override fun getQuestionCount(): String {
+        val config = SyncConfiguration.Builder(anon, ANON_ID)
+            .allowWritesOnUiThread(true)
+            .allowQueriesOnUiThread(true)
+            .build()
+        val realm = Realm.getInstance(config) ?: return ""
+        return realm.where(Question::class.java).count().toString() ?: return ""
+    }
+
     override fun getAllQuestionsForCategory(categoryName: String): ImmutableList<Question> {
         throw NotImplementedError()
     }
