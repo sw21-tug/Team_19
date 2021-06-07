@@ -103,6 +103,10 @@ class RequestHandler(private val dBInterface: DBInterface) {
         return this.highscoreForCurrentGame
     }
 
+    fun getEmailOfCurrentUser(): String {
+        return dBInterface.getEmailOfCurrentUser()
+    }
+
     @VisibleForTesting
     fun setRemainingQuestionForCurrentGame(questions: ArrayList<Question>) {
         this.remainingQuestionForCurrentGame = questions

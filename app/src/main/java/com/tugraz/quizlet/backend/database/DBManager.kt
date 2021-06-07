@@ -186,4 +186,9 @@ class DBManager(private val quizletApp: App) : DBInterface {
         }
     }
 
+    override fun getEmailOfCurrentUser(): String {
+        val user = quizletApp.currentUser() ?: return ""
+        return user.profile.email.toString()
+    }
+
 }
