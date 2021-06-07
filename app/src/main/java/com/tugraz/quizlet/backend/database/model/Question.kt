@@ -15,10 +15,10 @@ open class Question(
     var userCreated: String? = null,
     @Required
     var wrongAnswers: RealmList<String> = RealmList()
-):RealmObject() {
+) : RealmObject() {
 
     init {
-        if(wrongAnswers.size > 3)
+        if (wrongAnswers.size > 3)
             throw InvalidParameterException("Invalid number of wrong answers. Must be 3")
     }
 

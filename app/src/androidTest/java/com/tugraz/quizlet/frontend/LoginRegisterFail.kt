@@ -1,9 +1,11 @@
 package com.tugraz.quizlet.frontend
 
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.*
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -16,22 +18,17 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class LoginRequestTest {
+class LoginRegisterFail {
 
     @Rule
     @JvmField
-    var mActivityTestRule = ActivityTestRule(SplashActivity::class.java)
+    var mActivityTestRule = ActivityTestRule(LoginActivity::class.java)
 
     @Test
-    fun loginRequestTest() {
-
-        val email = "test@test.com"
-        val password = "1234"
-
+    fun loginRegisterFail() {
         val appCompatEditText = onView(
             allOf(
                 withId(R.id.editTextTextEmailAddress),
@@ -40,22 +37,22 @@ class LoginRequestTest {
                         withId(android.R.id.content),
                         0
                     ),
-                    1
+                    2
                 ),
                 isDisplayed()
             )
         )
-        appCompatEditText.perform(replaceText(email), closeSoftKeyboard())
+        appCompatEditText.perform(replaceText("maxmustermann@mail.com"), closeSoftKeyboard())
 
         val appCompatEditText2 = onView(
             allOf(
-                withId(R.id.editTextTextEmailAddress), withText(email),
+                withId(R.id.editTextTextEmailAddress), withText("maxmustermann@mail.com"),
                 childAtPosition(
                     childAtPosition(
                         withId(android.R.id.content),
                         0
                     ),
-                    1
+                    2
                 ),
                 isDisplayed()
             )
@@ -70,44 +67,36 @@ class LoginRequestTest {
                         withId(android.R.id.content),
                         0
                     ),
-                    2
+                    1
                 ),
                 isDisplayed()
             )
         )
-        appCompatEditText3.perform(replaceText(password), closeSoftKeyboard())
+        appCompatEditText3.perform(pressImeActionButton())
 
-        val appCompatEditText4 = onView(
+        val appCompatButton = onView(
             allOf(
-                withId(R.id.editTextTextPassword), withText(password),
+                withId(R.id.register), withText("Register"),
                 childAtPosition(
                     childAtPosition(
                         withId(android.R.id.content),
                         0
                     ),
-                    2
+                    6
                 ),
                 isDisplayed()
             )
         )
-        appCompatEditText4.perform(pressImeActionButton())
+        appCompatButton.perform(click())
 
-        val materialButton = onView(
+        val button = onView(
             allOf(
-                withId(R.id.login), withText("Login"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(android.R.id.content),
-                        0
-                    ),
-                    5
-                ),
+                withId(R.id.register), withText("REGISTER"),
+                withParent(withParent(withId(android.R.id.content))),
                 isDisplayed()
             )
         )
-
-        materialButton.perform(click())
-        Mockito.verify(SplashActivity.requestHandler, Mockito.times(1)).loginUser(email, password)
+        button.check(matches(isDisplayed()))
     }
 
     private fun childAtPosition(

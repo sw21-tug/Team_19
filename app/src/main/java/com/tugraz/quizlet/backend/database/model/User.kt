@@ -8,4 +8,4 @@ open class User(
     @PrimaryKey var _id: ObjectId? = null,
     var highscore: Long? = null,
     var userCreated: String? = null
-): RealmObject() {}
+) : RealmObject() {}

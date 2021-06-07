@@ -18,10 +18,9 @@ class DBManagerUnitTest {
         private const val USER_ID = "user id"
     }
 
-
-    private lateinit var dbManager : DBManager
-    private lateinit var mockedApp : App
-    private lateinit var mockedUser : User
+    private lateinit var dbManager: DBManager
+    private lateinit var mockedApp: App
+    private lateinit var mockedUser: User
     private lateinit var mockedClient: MongoClient
     private lateinit var mockedMongoDatabase: MongoDatabase
     private lateinit var mockedMongoCollection: MongoCollection<Document>
@@ -33,14 +32,17 @@ class DBManagerUnitTest {
         mockedUser = Mockito.mock(User::class.java)
         mockedClient = Mockito.mock(MongoClient::class.java)
         mockedMongoDatabase = Mockito.mock(MongoDatabase::class.java)
-        mockedMongoCollection = Mockito.mock(MongoCollection::class.java) as MongoCollection<Document>
+        mockedMongoCollection =
+            Mockito.mock(MongoCollection::class.java) as MongoCollection<Document>
 
         Mockito.`when`(this.mockedApp.currentUser()).thenReturn(mockedUser)
         Mockito.`when`(this.mockedUser.getMongoClient(anyString())).thenReturn(mockedClient)
         Mockito.`when`(this.mockedUser.id).thenReturn(USER_ID)
         Mockito.`when`(this.mockedClient.getDatabase("Quizlet")).thenReturn(mockedMongoDatabase)
-        Mockito.`when`(this.mockedMongoDatabase.getCollection("Users")).thenReturn(mockedMongoCollection)
-        Mockito.`when`(this.mockedMongoDatabase.getCollection("Questions")).thenReturn(mockedMongoCollection)
+        Mockito.`when`(this.mockedMongoDatabase.getCollection("Users"))
+            .thenReturn(mockedMongoCollection)
+        Mockito.`when`(this.mockedMongoDatabase.getCollection("Questions"))
+            .thenReturn(mockedMongoCollection)
     }
 
     @After
@@ -52,9 +54,11 @@ class DBManagerUnitTest {
     fun testGetHighscoreOfCurrentUser() {
         val expectedHighscore = 420
         val expectedUserDocument = Document("_id", USER_ID)
-        val mockedResultTask = Mockito.mock(RealmResultTask::class.java) as RealmResultTask<Document>
+        val mockedResultTask =
+            Mockito.mock(RealmResultTask::class.java) as RealmResultTask<Document>
         val mockedDocument = Mockito.mock(Document::class.java)
-        Mockito.`when`(this.mockedMongoCollection.findOne(expectedUserDocument)).thenReturn(mockedResultTask)
+        Mockito.`when`(this.mockedMongoCollection.findOne(expectedUserDocument))
+            .thenReturn(mockedResultTask)
         Mockito.`when`(mockedResultTask.get()).thenReturn(mockedDocument)
         Mockito.`when`(mockedDocument["highscore"]).thenReturn(expectedHighscore)
 
@@ -71,14 +75,21 @@ class DBManagerUnitTest {
         val newHighscore = 420
         val expectedUserDocument = Document("_id", USER_ID)
         val expectedHighscoreDocument = Document("highscore", newHighscore)
-        val mockedResultTask = Mockito.mock(RealmResultTask::class.java) as RealmResultTask<UpdateResult>
+        val mockedResultTask =
+            Mockito.mock(RealmResultTask::class.java) as RealmResultTask<UpdateResult>
         val mockedUpdateResult = Mockito.mock(UpdateResult::class.java)
-        Mockito.`when`(this.mockedMongoCollection.updateOne(expectedUserDocument, expectedHighscoreDocument)).thenReturn(mockedResultTask)
+        Mockito.`when`(
+            this.mockedMongoCollection.updateOne(
+                expectedUserDocument,
+                expectedHighscoreDocument
+            )
+        ).thenReturn(mockedResultTask)
         Mockito.`when`(mockedResultTask.get()).thenReturn(mockedUpdateResult)
 
         dbManager.updateUserHighscore(newHighscore)
 
-        Mockito.verify(mockedMongoCollection, Mockito.times(1)).updateOne(expectedUserDocument, expectedHighscoreDocument)
+        Mockito.verify(mockedMongoCollection, Mockito.times(1))
+            .updateOne(expectedUserDocument, expectedHighscoreDocument)
         Mockito.verify(mockedResultTask, Mockito.times(1)).get()
     }
 }

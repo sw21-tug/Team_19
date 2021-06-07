@@ -1,12 +1,11 @@
 package com.tugraz.quizlet.frontend
 
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -22,45 +21,15 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class LoginTest {
+class LoginFail {
 
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(LoginActivity::class.java)
 
     @Test
-    fun loginTest() {
-        val appCompatEditText = onView(
-            allOf(
-                withId(R.id.editTextTextEmailAddress),
-                childAtPosition(
-                    childAtPosition(
-                        withId(android.R.id.content),
-                        0
-                    ),
-                    1
-                ),
-                isDisplayed()
-            )
-        )
-        appCompatEditText.perform(replaceText("test@test.com"), closeSoftKeyboard())
-
-        val appCompatEditText2 = onView(
-            allOf(
-                withId(R.id.editTextTextPassword),
-                childAtPosition(
-                    childAtPosition(
-                        withId(android.R.id.content),
-                        0
-                    ),
-                    2
-                ),
-                isDisplayed()
-            )
-        )
-        appCompatEditText2.perform(replaceText("123"), closeSoftKeyboard())
-
-        val materialButton = onView(
+    fun loginFail() {
+        val appCompatButton = onView(
             allOf(
                 withId(R.id.login), withText("Login"),
                 childAtPosition(
@@ -68,16 +37,21 @@ class LoginTest {
                         withId(android.R.id.content),
                         0
                     ),
-                    5
+                    0
                 ),
                 isDisplayed()
             )
         )
+        appCompatButton.perform(click())
 
-        Intents.init();
-        materialButton.perform(click())
-        intended(hasComponent(StartActivity::class.java.getName()))
-        Intents.release()
+        val button = onView(
+            allOf(
+                withId(R.id.login), withText("LOGIN"),
+                withParent(withParent(withId(android.R.id.content))),
+                isDisplayed()
+            )
+        )
+        button.check(matches(isDisplayed()))
     }
 
     private fun childAtPosition(

@@ -6,22 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ScoreFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="fill_parent"
+    <Button
+        android:id="@+id/play_again"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/pacifico"
-        android:text="@string/text_view_score"
-        android:textColor="#000000"
-        android:textSize="56sp"
-        android:textStyle="bold"
-        android:textAlignment="center"
+        android:text="@string/score_play_again"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_score" />
 
     <TextView
         android:id="@+id/text_view_score"
@@ -33,14 +26,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <Button
-        android:id="@+id/play_again"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/score_play_again"
+        android:fontFamily="@font/pacifico"
+        android:text="@string/text_view_score"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="56sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_score" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
