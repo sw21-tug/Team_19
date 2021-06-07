@@ -32,4 +32,6 @@
     <string name="app_loading_text">Loading questions</string>
     <string name="app_account_button">Account</string>
     <string name="text_view_account">Account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

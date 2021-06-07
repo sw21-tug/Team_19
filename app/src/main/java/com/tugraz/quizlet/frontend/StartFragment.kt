@@ -85,10 +85,10 @@ class StartFragment : Fragment(), View.OnClickListener {
                 }
                 R.id.button_account -> {
                     val transaction = parentFragmentManager.beginTransaction();
-                    val playFragment = QuestionLoadingFragment()
+                    val accountFragment = AccountFragment()
                     transaction.addToBackStack("Start-Play")
                     transaction.hide(this)
-                    transaction.add(R.id.main_fragment_view, playFragment)
+                    transaction.add(R.id.main_fragment_view, accountFragment)
                     transaction.commit()
                 }
                 R.id.button_exit -> {
