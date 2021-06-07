@@ -6,7 +6,6 @@
     <string name="app_login_password_example" translatable="false">*******</string>
     <string name="app_login_pw_description">Password:</string>
     <string name="app_login_button">Login</string>
-    <string name="app_login_register">Register</string>
     <string name="app_start_play_button">Play!</string>
     <string name="app_start_exit_button">Exit</string>
     <string name="app_start_layout_start_button" translatable="false">Layout_Start</string>
@@ -23,11 +22,13 @@
         <item>Science</item>
         <item>Games</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="text_view_add_Question">Add a question!</string>
     <string name="app_start_add_question_question_Hint">Enter your question here!</string>
     <string name="app_start_add_question_right_answer_hint">Enter your right answer here!</string>
     <string name="app_start_add_question_wrong_answer_hint">Enter one of the wrong answers here!</string>
     <string name="app_start_add_question_submit">Save question</string>
     <string name="app_start_add_question_error">At least one field is empty</string>
-    <string name="app_loading_text">Loading questions</string>
+    <string name="app_account_button">Account</string>
 </resources>
