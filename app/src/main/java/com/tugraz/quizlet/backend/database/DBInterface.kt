@@ -19,4 +19,6 @@ interface DBInterface {
     fun updateUserHighscore(newHighscore: Int)
 
     fun getEmailOfCurrentUser(): String
+
+    fun getQuestionCount() : String
 }
