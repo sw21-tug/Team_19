@@ -39,7 +39,9 @@ class AccountFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_account, container, false)
         val scoreView = view.findViewById<TextView>(R.id.text_view_account_score)
         scoreView.text = SplashActivity.requestHandler.getHighscoreOfCurrentUser().toString()
-        val email = SplashActivity.requestHandler.getEmailOfCurrentUser()
+
+        val emailView = view.findViewById<TextView>(R.id.text_view_account_email)
+        emailView.text = SplashActivity.requestHandler.getEmailOfCurrentUser()
         return view
     }
 
