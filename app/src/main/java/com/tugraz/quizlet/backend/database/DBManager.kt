@@ -2,6 +2,7 @@ package com.tugraz.quizlet.backend.database
 
 import com.google.common.collect.ImmutableList
 import com.tugraz.quizlet.backend.database.model.Question
+import com.tugraz.quizlet.backend.database.model.Question_category
 import com.tugraz.quizlet.backend.database.model.User
 import io.realm.Realm
 import io.realm.RealmChangeListener
@@ -83,6 +84,16 @@ class DBManager(private val quizletApp: App) : DBInterface {
             .build()
         val realm = Realm.getInstance(config) ?: return ""
         return realm.where(Question::class.java).count().toString() ?: return ""
+    }
+
+    override fun getQuestionCategoryCount(): String {
+        val config = SyncConfiguration.Builder(anon, ANON_ID)
+            .allowWritesOnUiThread(true)
+            .allowQueriesOnUiThread(true)
+            .build()
+        val realm = Realm.getInstance(config) ?: return ""
+        val categories = realm.where(Question_category::class.java).findAll()
+        return categories.stream().distinct().count().toString()
     }
 
     override fun getAllQuestionsForCategory(categoryName: String): ImmutableList<Question> {

@@ -45,6 +45,9 @@ class AccountFragment : Fragment() {
 
         val questionCountView = view.findViewById<TextView>(R.id.text_view_total_questions)
         questionCountView.text = SplashActivity.requestHandler.getQuestionCount()
+
+        val questionCountCategoryView = view.findViewById<TextView>(R.id.text_view_total_categories)
+        questionCountCategoryView.text = SplashActivity.requestHandler.getQuestionCategoryCount()
         return view
     }
 

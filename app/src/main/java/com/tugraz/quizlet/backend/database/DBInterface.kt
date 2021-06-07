@@ -20,5 +20,7 @@ interface DBInterface {
 
     fun getEmailOfCurrentUser(): String
 
-    fun getQuestionCount() : String
+    fun getQuestionCount(): String
+
+    fun getQuestionCategoryCount(): String
 }
