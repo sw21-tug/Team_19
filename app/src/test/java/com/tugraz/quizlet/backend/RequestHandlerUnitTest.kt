@@ -7,10 +7,9 @@ import com.tugraz.quizlet.backend.database.model.Question_category
 import io.realm.RealmList
 import org.bson.types.ObjectId
 import org.junit.After
-import org.junit.Assert.*
-import org.junit.Test
-
+import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Test
 import org.mockito.Mockito.*
 
 class RequestHandlerUnitTest {
@@ -61,10 +60,9 @@ class RequestHandlerUnitTest {
     @Test
     fun testStartNewGame() {
         val expectedQuestions: ImmutableList<Question> = generateRandomQuestion(5)
+        requestHandler.fetchAllQuestionsAsyncAndSetRemainingQuestions {-> {} }
 
-        `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
-        requestHandler.fetchAddQuestions()
-        verify(mockDBInterface, times(1)).getAllQuestions()
+        verify(mockDBInterface, times(1)).getAllQuestionsAsync {  }
         assertEquals(expectedQuestions, requestHandler.getRemainingQuestionForCurrentGame())
     }
 
