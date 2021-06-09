@@ -4,6 +4,7 @@ package com.tugraz.quizlet.frontend
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -104,11 +105,16 @@ class LoginSuccessful {
             )
         )
 
-        appCompatButton.perform(click())
+        try {
+            appCompatButton.perform()
+        } catch (ignored: NoMatchingViewException) {
+
+        }
+
         Thread.sleep(2000)
         val button = onView(
             allOf(
-                withId(R.id.button_start), withText("PLAY!"),
+                withId(R.id.button_start), withText("PLAY"),
                 withParent(withParent(withId(R.id.main_fragment_view))),
                 isDisplayed()
             )
