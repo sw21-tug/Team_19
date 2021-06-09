@@ -21,6 +21,9 @@ class LanguageTest {
 
     @Test
     fun test_isLanguageSwitched() {
+        Thread.sleep(5000)
+        onView(withId(R.id.settings)).perform(click())
+        onView(withId(R.id.settings)).perform(click())
         onView(withId(R.id.settings)).perform(click())
         onView(withId(R.id.button_start)).check(matches(withText("播放")))
     }
