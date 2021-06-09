@@ -59,15 +59,6 @@ class RequestHandlerUnitTest {
     }
 
     @Test
-    fun testGetAllQuestions() {
-        val expectedQuestions: ImmutableList<Question> = generateRandomQuestion(5)
-        `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
-        val actualQuestions = requestHandler.getAllQuestion()
-        verify(mockDBInterface, times(1)).getAllQuestions()
-        assertEquals(expectedQuestions, actualQuestions)
-    }
-
-    @Test
     fun testGetAllQuestionsOfCategoryWithFoundCategory() {
         val category = "hi"
         val expectedQuestions: ImmutableList<Question> =
