@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".frontend.AddQuestionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/scrollView2"
