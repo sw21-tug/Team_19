@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:background="@color/yellow"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -25,6 +25,7 @@
             android:contentDescription="@string/app_start_layout_start_button"
             android:focusable="true"
             app:srcCompat="@drawable/play_button"
+            android:onClick="onPlayClicked"
             tools:layout_editor_absoluteX="65dp"
             tools:layout_editor_absoluteY="607dp" />
 
@@ -55,19 +56,6 @@
             app:srcCompat="@drawable/ic_baseline_account_circle_24"
             tools:layout_editor_absoluteX="154dp"
             tools:layout_editor_absoluteY="550dp" />
-
-        <ImageView
-            android:id="@+id/highscore"
-            style="?borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:contentDescription="@string/app_start_layout_highscore_button"
-            android:focusable="true"
-            app:srcCompat="@drawable/highscore"
-            tools:layout_editor_absoluteX="112dp"
-            tools:layout_editor_absoluteY="559dp" />
 
         <ImageView
             android:id="@+id/settings"

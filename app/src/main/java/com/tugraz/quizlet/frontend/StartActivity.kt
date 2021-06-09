@@ -57,5 +57,11 @@ class StartActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    fun onPlayClicked(view: View) {
+        val transaction = supportFragmentManager.beginTransaction();
+        val playFragment = PlayFragment()
+        transaction.replace(R.id.main_fragment_view, playFragment)
+        transaction.commit()
+    }
 
 }
