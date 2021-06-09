@@ -26,5 +26,7 @@ class LanguageTest {
         onView(withId(R.id.settings)).perform(click())
         onView(withId(R.id.settings)).perform(click())
         onView(withId(R.id.button_start)).check(matches(withText("播放")))
+        onView(withId(R.id.settings)).perform(click())
+        onView(withId(R.id.button_start)).check(matches(withText("PLAY")))
     }
 }
