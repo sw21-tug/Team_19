@@ -7,6 +7,8 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -105,11 +107,15 @@ class LoginSuccessful {
             )
         )
 
+        Intents.init();
+
         try {
             appCompatButton.perform()
         } catch (ignored: NoMatchingViewException) {
 
         }
+
+        Intents.intended(IntentMatchers.hasComponent(StartActivity::class.java.name))
 
         Thread.sleep(2000)
         val button = onView(
@@ -120,6 +126,18 @@ class LoginSuccessful {
             )
         )
         button.check(matches(isDisplayed()))
+
+        val accountButton = onView(
+            allOf(
+                withId(R.id.button_account)
+            )
+        )
+
+        accountButton.perform(click())
+
+        onView(withId(R.id.accountFragment)).check(matches(isDisplayed()))
+
+        Intents.release()
     }
 
     private fun childAtPosition(
