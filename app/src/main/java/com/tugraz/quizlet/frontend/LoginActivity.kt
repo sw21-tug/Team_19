@@ -15,7 +15,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // TODO: Set new Text for lang support
         val login = findViewById<Button>(R.id.login)
         login.setOnClickListener {
             val intent = Intent(this, StartActivity::class.java)
@@ -44,7 +43,8 @@ class LoginActivity : AppCompatActivity() {
             return true
 
         } catch (exception: Exception) {
-            Toast.makeText(this, "Wrong email and password!", Toast.LENGTH_SHORT).show()
+            val toastText = getString(R.string.wrong_email_password)
+            Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show()
             return false
 
         }
@@ -55,7 +55,8 @@ class LoginActivity : AppCompatActivity() {
             SplashActivity.requestHandler.addUser(email, password)
             return true
         } catch (exception: Exception) {
-            Toast.makeText(this,"Invalid email or password or the User is already registered", Toast.LENGTH_SHORT).show()
+            val toastText = getString(R.string.invalid_email_password)
+            Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show()
             return false
         }
     }

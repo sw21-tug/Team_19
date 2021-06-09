@@ -10,7 +10,7 @@ class  BackgroundGetQuestions : AsyncTask<Any, Any, Any>()
 {
 
     override fun doInBackground(vararg params: Any?) {
-        Thread.sleep(3000) //TODO: just for trying call getquestsycro
+        Thread.sleep(3000)
         var fragment = params[0] as Fragment
         val transaction = fragment.parentFragmentManager.beginTransaction();
         val playFragment = PlayFragment()

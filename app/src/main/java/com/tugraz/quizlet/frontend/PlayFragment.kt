@@ -15,7 +15,6 @@ import com.tugraz.quizlet.backend.database.model.Question
 
 import java.util.Collections.shuffle
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -35,7 +34,6 @@ private var correctAnswerIndex = 0
  * create an instance of this fragment.
  */
 class PlayFragment : Fragment(), View.OnClickListener {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
@@ -75,7 +73,6 @@ class PlayFragment : Fragment(), View.OnClickListener {
          * @param param2 Parameter 2.
          * @return A new instance of fragment Play.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             PlayFragment().apply {
@@ -88,14 +85,12 @@ class PlayFragment : Fragment(), View.OnClickListener {
 
     private fun displayNewQuestion(view: View) {
 
-        //TODO Implement once database is ready
         val newQuestion =
             SplashActivity.requestHandler.getNextQuestionAndUpdateRemainingAndUpdateHighscore()
         currentQuestion = newQuestion
         val currentscore = view.findViewById<TextView>(R.id.text_view_current_score)
         currentscore.text = SplashActivity.requestHandler.getHighscoreCurrentGame().toString()
 
-        //TODO handle no new question
         if (newQuestion == null) {
             switchToScoreFragment(this)
             return
