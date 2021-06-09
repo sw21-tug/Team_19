@@ -42,6 +42,7 @@ class LoginFail {
                 isDisplayed()
             )
         )
+
         appCompatButton.perform(click())
 
         val button = onView(

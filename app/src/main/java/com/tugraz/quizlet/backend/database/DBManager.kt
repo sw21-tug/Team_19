@@ -78,7 +78,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getQuestionCount(): String {
-        val config = SyncConfiguration.Builder(anon, ANON_ID)
+        val config = SyncConfiguration.Builder(quizletApp.currentUser(), ANON_ID)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()
@@ -87,7 +87,7 @@ class DBManager(private val quizletApp: App) : DBInterface {
     }
 
     override fun getQuestionCategoryCount(): String {
-        val config = SyncConfiguration.Builder(anon, ANON_ID)
+        val config = SyncConfiguration.Builder(quizletApp.currentUser(), ANON_ID)
             .allowWritesOnUiThread(true)
             .allowQueriesOnUiThread(true)
             .build()

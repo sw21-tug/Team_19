@@ -7,10 +7,9 @@ import com.tugraz.quizlet.backend.database.model.Question_category
 import io.realm.RealmList
 import org.bson.types.ObjectId
 import org.junit.After
-import org.junit.Assert.*
-import org.junit.Test
-
+import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Test
 import org.mockito.Mockito.*
 
 class RequestHandlerUnitTest {
@@ -37,10 +36,11 @@ class RequestHandlerUnitTest {
     }
 
     @Test
-    fun testGetUser() {
+    fun testLoginUser() {
         val email: String = "test@mock.junit"
         val password: String = "123456"
         `when`(mockDBInterface.loginUser(email, password)).thenReturn(true)
+        requestHandler.loginUser(email, password)
         verify(mockDBInterface, times(1)).loginUser(email, password)
     }
 
@@ -56,55 +56,6 @@ class RequestHandlerUnitTest {
             Question(ObjectId(), category, question, answer, null, wrongAnswersRealmList)
         requestHandler.addQuestion(category, question, answer, wrongAnswersImmutableList)
         verify(mockDBInterface, times(1)).addQuestion(expectedQuestion)
-    }
-
-    @Test
-    fun testGetAllQuestions() {
-        val expectedQuestions: ImmutableList<Question> = generateRandomQuestion(5)
-        `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
-        val actualQuestions = requestHandler.getAllQuestion()
-        verify(mockDBInterface, times(1)).getAllQuestions()
-        assertEquals(expectedQuestions, actualQuestions)
-    }
-
-    @Test
-    fun testGetAllQuestionsOfCategoryWithFoundCategory() {
-        val category = "hi"
-        val expectedQuestions: ImmutableList<Question> =
-            generateRandomQuestionForCategory(4, category)
-        `when`(mockDBInterface.getAllQuestionsForCategory(category)).thenReturn(expectedQuestions)
-        val actualQuestions = requestHandler.getAllQuestionForCategory(category)
-        verify(mockDBInterface, times(1)).getAllQuestionsForCategory(category)
-        assertEquals(expectedQuestions, actualQuestions)
-    }
-
-    @Test
-    fun testGetAllQuestionsOfCategoryWithNoFoundCategory() {
-        val category = "category1"
-        `when`(mockDBInterface.getAllQuestionsForCategory(category)).thenReturn(ImmutableList.of())
-        val actualQuestions = requestHandler.getAllQuestionForCategory(category)
-        verify(mockDBInterface, times(1)).getAllQuestionsForCategory(category)
-        assertTrue(actualQuestions.isEmpty())
-    }
-
-    @Test
-    fun testStartNewGame() {
-        val expectedQuestions: ImmutableList<Question> = generateRandomQuestion(5)
-
-        `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
-        requestHandler.fetchAddQuestions()
-        verify(mockDBInterface, times(1)).getAllQuestions()
-        assertEquals(expectedQuestions, requestHandler.getRemainingQuestionForCurrentGame())
-    }
-
-    @Test
-    fun testStartNewGameNoQuestions() {
-        val expectedQuestions: ImmutableList<Question> = ImmutableList.of()
-
-        `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
-        requestHandler.fetchAddQuestions()
-        verify(mockDBInterface, times(1)).getAllQuestions()
-        assertEquals(expectedQuestions, requestHandler.getRemainingQuestionForCurrentGame())
     }
 
     @Test
@@ -125,14 +76,13 @@ class RequestHandlerUnitTest {
     @Test
     fun testEndGameWithNewHighscore() {
         val expectedHighscore = 3
-        val pointsPerRightAnswer = 5
         requestHandler.setHighscoreCurrentGame(expectedHighscore)
 
         `when`(mockDBInterface.getHighscoreOfCurrentUser()).thenReturn(0)
 
         val currHighscore =
             requestHandler.endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase()
-        assertEquals(expectedHighscore + pointsPerRightAnswer, currHighscore)
+        assertEquals(expectedHighscore, currHighscore)
         verify(mockDBInterface, times(1)).updateUserHighscore(currHighscore)
     }
 

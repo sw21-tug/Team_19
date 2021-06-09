@@ -38,10 +38,4 @@ class StartActivityTest {
             .check(matches(isDisplayed()))
     }
 
-    @Test
-    fun test_switchToAccountFragment() {
-        onView(withId(R.id.button_account)).perform(click())
-        onView(withId(R.id.accountFragment)).check(matches(isDisplayed()))
-    }
-
 }

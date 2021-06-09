@@ -4,8 +4,11 @@ package com.tugraz.quizlet.frontend
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -104,16 +107,37 @@ class LoginSuccessful {
             )
         )
 
-        appCompatButton.perform(click())
+        Intents.init();
+
+        try {
+            appCompatButton.perform()
+        } catch (ignored: NoMatchingViewException) {
+
+        }
+
+        Intents.intended(IntentMatchers.hasComponent(StartActivity::class.java.name))
+
         Thread.sleep(2000)
         val button = onView(
             allOf(
-                withId(R.id.button_start), withText("PLAY!"),
+                withId(R.id.button_start), withText("PLAY"),
                 withParent(withParent(withId(R.id.main_fragment_view))),
                 isDisplayed()
             )
         )
         button.check(matches(isDisplayed()))
+
+        val accountButton = onView(
+            allOf(
+                withId(R.id.button_account)
+            )
+        )
+
+        accountButton.perform(click())
+
+        onView(withId(R.id.accountFragment)).check(matches(isDisplayed()))
+
+        Intents.release()
     }
 
     private fun childAtPosition(
