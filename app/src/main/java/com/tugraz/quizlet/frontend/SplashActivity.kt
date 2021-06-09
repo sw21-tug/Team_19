@@ -28,7 +28,6 @@ class SplashActivity : AppCompatActivity() {
         )
 
         val dbManager = DBManager(quizletApp)
-        // TODO: make requestHandler Singleton?
         requestHandler = RequestHandler(dbManager)
 
         val handler = Handler()

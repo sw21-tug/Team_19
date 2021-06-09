@@ -15,7 +15,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // TODO: Set new Text for lang support
         val login = findViewById<Button>(R.id.login)
         login.setOnClickListener {
             val intent = Intent(this, StartActivity::class.java)

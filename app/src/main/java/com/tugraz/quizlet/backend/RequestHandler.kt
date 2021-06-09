@@ -20,7 +20,6 @@ class RequestHandler(private val dBInterface: DBInterface) {
     private var remainingQuestionForCurrentGame: ArrayList<Question> = ArrayList()
     private var highscoreForCurrentGame = -POINTS_FOR_RIGHT_ANSWER
 
-    // TODO: add boolean for feedback?
     @Throws(Exception::class)
     fun addUser(email: String, password: String) {
         LOG.fine("Processing adding user with email=$email")
@@ -33,7 +32,6 @@ class RequestHandler(private val dBInterface: DBInterface) {
         return dBInterface.loginUser(email, password)
     }
 
-    // TODO: add boolean for feedback?
     fun addQuestion(
         category: Question_category,
         question: String,
