@@ -17,6 +17,8 @@
     <string name="toast_wrong_answer">錯誤的答案</string>
     <string name="text_view_score">分數</string>
     <string name="score_play_again">再玩一次</string>
+    <string name="wrong_email_password">邮箱和密码错误！</string>
+    <string name="invalid_email_password">电子邮件或密码无效或用户已注册</string>
     <string-array name="app_start_add_question_category">
         <item>科学</item>
         <item>游戏</item>
