@@ -25,6 +25,7 @@
             android:contentDescription="@string/app_start_layout_start_button"
             android:focusable="true"
             app:srcCompat="@drawable/play_button"
+            android:onClick="onPlayClicked"
             tools:layout_editor_absoluteX="65dp"
             tools:layout_editor_absoluteY="607dp" />
 
