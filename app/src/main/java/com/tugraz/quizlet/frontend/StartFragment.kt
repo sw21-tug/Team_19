@@ -46,6 +46,9 @@ class StartFragment : Fragment(), View.OnClickListener {
         val exitButton = view.findViewById<Button>(R.id.button_exit)
         exitButton.setOnClickListener(this)
 
+        val accountButton = view.findViewById<Button>(R.id.button_account)
+        accountButton.setOnClickListener(this)
+
         return view
     }
 
@@ -78,6 +81,14 @@ class StartFragment : Fragment(), View.OnClickListener {
                     transaction.addToBackStack("Start-Play")
                     transaction.hide(this)
                     transaction.add(R.id.main_fragment_view, playFragment)
+                    transaction.commit()
+                }
+                R.id.button_account -> {
+                    val transaction = parentFragmentManager.beginTransaction();
+                    val accountFragment = AccountFragment()
+                    transaction.addToBackStack("Start-Play")
+                    transaction.hide(this)
+                    transaction.add(R.id.main_fragment_view, accountFragment)
                     transaction.commit()
                 }
                 R.id.button_exit -> {

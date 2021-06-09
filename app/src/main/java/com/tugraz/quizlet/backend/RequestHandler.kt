@@ -80,6 +80,14 @@ class RequestHandler(private val dBInterface: DBInterface) {
         return getNextQuestionAndUpdateRemaining()
     }
 
+    fun getQuestionCount() : String {
+        return dBInterface.getQuestionCount()
+    }
+
+    fun getQuestionCategoryCount() : String {
+        return dBInterface.getQuestionCategoryCount()
+    }
+
     fun endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase(): Int {
         remainingQuestionForCurrentGame.clear()
         if (getHighscoreOfCurrentUser() < highscoreForCurrentGame) {
@@ -101,6 +109,10 @@ class RequestHandler(private val dBInterface: DBInterface) {
 
     fun getHighscoreCurrentGame(): Int {
         return this.highscoreForCurrentGame
+    }
+
+    fun getEmailOfCurrentUser(): String {
+        return dBInterface.getEmailOfCurrentUser()
     }
 
     @VisibleForTesting

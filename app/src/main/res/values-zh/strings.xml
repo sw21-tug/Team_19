@@ -27,5 +27,9 @@
     <string name="app_start_add_question_wrong_answer_hint">在这里输入错误答案之一！</string>
     <string name="app_start_add_question_submit">保存问题</string>
     <string name="app_start_add_question_error">至少一个字段为空</string>
-    <string name="app_loading_text">加载问题</string>
+    <string name="app_account_button">帐户</string>
+    <string name="text_view_account">账户</string>
+    <string name="app_start_account_email">电子邮件</string>
+    <string name="app_start_total_questions">问题总数</string>
+    <string name="app_start_count_of_categories">类别数</string>
 </resources>

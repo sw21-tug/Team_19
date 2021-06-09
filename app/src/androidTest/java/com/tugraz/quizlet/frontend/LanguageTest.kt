@@ -18,19 +18,6 @@ class LanguageTest {
     val activityRule: ActivityScenarioRule<StartActivity> =
         ActivityScenarioRule(StartActivity::class.java)
 
-    @Test
-    fun test_isActivityInView() {
-        onView(withId(R.id.start)).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun test_areFragmentButtonDisplayed() {
-
-        onView(withId(R.id.button_start))
-            .check(matches(isDisplayed()))
-        onView(withId(R.id.button_exit))
-            .check(matches(isDisplayed()))
-    }
 
     @Test
     fun test_isLanguageSwitched() {
