@@ -36,10 +36,11 @@ class RequestHandlerUnitTest {
     }
 
     @Test
-    fun testGetUser() {
+    fun testLoginUser() {
         val email: String = "test@mock.junit"
         val password: String = "123456"
         `when`(mockDBInterface.loginUser(email, password)).thenReturn(true)
+        requestHandler.loginUser(email, password)
         verify(mockDBInterface, times(1)).loginUser(email, password)
     }
 
@@ -75,14 +76,13 @@ class RequestHandlerUnitTest {
     @Test
     fun testEndGameWithNewHighscore() {
         val expectedHighscore = 3
-        val pointsPerRightAnswer = 5
         requestHandler.setHighscoreCurrentGame(expectedHighscore)
 
         `when`(mockDBInterface.getHighscoreOfCurrentUser()).thenReturn(0)
 
         val currHighscore =
             requestHandler.endCurrentGameAndReturnCurrentHighscoreAndUpdateDatabase()
-        assertEquals(expectedHighscore + pointsPerRightAnswer, currHighscore)
+        assertEquals(expectedHighscore, currHighscore)
         verify(mockDBInterface, times(1)).updateUserHighscore(currHighscore)
     }
 
