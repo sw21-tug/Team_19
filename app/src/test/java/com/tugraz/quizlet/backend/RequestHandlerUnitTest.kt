@@ -58,25 +58,6 @@ class RequestHandlerUnitTest {
     }
 
     @Test
-    fun testStartNewGame() {
-        val expectedQuestions: ImmutableList<Question> = generateRandomQuestion(5)
-        requestHandler.fetchAllQuestionsAsyncAndSetRemainingQuestions {-> {} }
-
-        verify(mockDBInterface, times(1)).getAllQuestionsAsync {  }
-        assertEquals(expectedQuestions, requestHandler.getRemainingQuestionForCurrentGame())
-    }
-
-    @Test
-    fun testStartNewGameNoQuestions() {
-        val expectedQuestions: ImmutableList<Question> = ImmutableList.of()
-
-        `when`(mockDBInterface.getAllQuestions()).thenReturn(expectedQuestions)
-        requestHandler.fetchAddQuestions()
-        verify(mockDBInterface, times(1)).getAllQuestions()
-        assertEquals(expectedQuestions, requestHandler.getRemainingQuestionForCurrentGame())
-    }
-
-    @Test
     fun testNextQuestion() {
         val expectedQuestions: ImmutableList<Question> = generateRandomQuestion(10)
         requestHandler.setRemainingQuestionForCurrentGame(ArrayList(expectedQuestions))
