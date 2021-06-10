@@ -1,9 +1,14 @@
 package com.tugraz.quizlet.frontend
 
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -19,20 +24,15 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class LoginRequestTest {
+class LoginSuccessful {
 
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(SplashActivity::class.java)
 
     @Test
-    fun loginRequestTest() {
-
+    fun loginSuccessful() {
         Thread.sleep(5000)
-
-        val email = "test@test.com"
-        val password = "1234"
-
         val appCompatEditText = onView(
             allOf(
                 withId(R.id.editTextTextEmailAddress),
@@ -46,11 +46,11 @@ class LoginRequestTest {
                 isDisplayed()
             )
         )
-        appCompatEditText.perform(replaceText(email), closeSoftKeyboard())
+        appCompatEditText.perform(replaceText("mozartpanda@mail.com"), closeSoftKeyboard())
 
         val appCompatEditText2 = onView(
             allOf(
-                withId(R.id.editTextTextEmailAddress), withText(email),
+                withId(R.id.editTextTextEmailAddress), withText("mozartpanda@mail.com"),
                 childAtPosition(
                     childAtPosition(
                         withId(android.R.id.content),
@@ -76,11 +76,11 @@ class LoginRequestTest {
                 isDisplayed()
             )
         )
-        appCompatEditText3.perform(replaceText(password), closeSoftKeyboard())
+        appCompatEditText3.perform(replaceText("mozartpanda"), closeSoftKeyboard())
 
         val appCompatEditText4 = onView(
             allOf(
-                withId(R.id.editTextTextPassword), withText(password),
+                withId(R.id.editTextTextPassword), withText("mozartpanda"),
                 childAtPosition(
                     childAtPosition(
                         withId(android.R.id.content),
@@ -93,7 +93,7 @@ class LoginRequestTest {
         )
         appCompatEditText4.perform(pressImeActionButton())
 
-        val materialButton = onView(
+        val appCompatButton = onView(
             allOf(
                 withId(R.id.login), withText("Login"),
                 childAtPosition(
@@ -107,7 +107,37 @@ class LoginRequestTest {
             )
         )
 
-        materialButton.perform(click())
+        Intents.init();
+
+        try {
+            appCompatButton.perform()
+        } catch (ignored: NoMatchingViewException) {
+
+        }
+
+        Intents.intended(IntentMatchers.hasComponent(StartActivity::class.java.name))
+
+        Thread.sleep(2000)
+        val button = onView(
+            allOf(
+                withId(R.id.button_start), withText("PLAY"),
+                withParent(withParent(withId(R.id.main_fragment_view))),
+                isDisplayed()
+            )
+        )
+        button.check(matches(isDisplayed()))
+
+        val accountButton = onView(
+            allOf(
+                withId(R.id.button_account)
+            )
+        )
+
+        accountButton.perform(click())
+
+        onView(withId(R.id.accountFragment)).check(matches(isDisplayed()))
+
+        Intents.release()
     }
 
     private fun childAtPosition(

@@ -1,80 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/start"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/orange">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/main_fragment_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="80dp"
         android:background="@color/yellow"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
             android:id="@+id/play"
             style="?borderlessButtonStyle"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/app_start_layout_start_button"
+            android:focusable="true"
             app:srcCompat="@drawable/play_button"
+            android:onClick="onPlayClicked"
             tools:layout_editor_absoluteX="65dp"
-            tools:layout_editor_absoluteY="607dp"
-            android:contentDescription="@string/app_start_layout_start_button" />
+            tools:layout_editor_absoluteY="607dp" />
 
         <ImageView
             android:id="@+id/plus"
             style="?borderlessButtonStyle"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/app_start_layout_plus_button"
+            android:focusable="true"
+            android:onClick="onPlusClicked"
             app:srcCompat="@drawable/plus_icon"
             tools:layout_editor_absoluteX="119dp"
-            tools:layout_editor_absoluteY="619dp"
-            android:contentDescription="@string/app_start_layout_plus_button" />
+            tools:layout_editor_absoluteY="619dp" />
 
         <ImageView
             android:id="@+id/profil"
             style="?borderlessButtonStyle"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/profil"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/app_start_layout_profile_button"
+            android:onClick="onProfileClicked"
+            android:focusable="true"
+            app:srcCompat="@drawable/ic_baseline_account_circle_24"
             tools:layout_editor_absoluteX="154dp"
-            tools:layout_editor_absoluteY="550dp"
-            android:contentDescription="@string/app_start_layout_profile_button" />
-
-        <ImageView
-            android:id="@+id/highscore"
-            style="?borderlessButtonStyle"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/highscore"
-            tools:layout_editor_absoluteX="112dp"
-            tools:layout_editor_absoluteY="559dp"
-            android:contentDescription="@string/app_start_layout_highscore_button" />
+            tools:layout_editor_absoluteY="550dp" />
 
         <ImageView
             android:id="@+id/settings"
@@ -86,11 +67,20 @@
             android:contentDescription="@string/app_start_layout_settings_button"
             android:focusable="true"
             android:onClick="onSettingsClicked"
-            app:srcCompat="@drawable/settings_button"
+            app:srcCompat="@drawable/ic_baseline_language_24"
             tools:layout_editor_absoluteX="160dp"
             tools:layout_editor_absoluteY="578dp" />
 
     </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/main_fragment_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
